@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Sign Up Page</title>
+    <style>
+        @keyframes fadeOut {
+            0% {
+                opacity: 1;
+            }
+            100% {
+                opacity: 0;
+                pointer-events: none;
+            }
+        }
+
+        @keyframes fadeIn {
+            0% {
+                opacity: 0;
+            }
+            100% {
+                opacity: 1;}
+
+        }
+         
+         
+        
+
+        
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-image: url('/images/LANDING PAGE.png');
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            animation: bounce 2s ease-in-out infinite;
+            zoom: 0.75;
+            position: relative;
+            top: 100px;
+            
+        }
+
+        
+        .loginbox {
+            margin-top: 40px;
+            margin-right: 50px;
+            display:flex;
+            flex-direction:row ;
+            background-image: url('/images/Exclude.png');
+            border-radius: 35px;
+            padding: 20px;
+            width: 100%;
+            height: 800px;
+            max-width: 3000px;
+            
+            transition: ease-in 2s;
+            animation: fadeIn 4s ease forwards; 
+        }
+          
+
+        
+        .loginform {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .loginform input {
+            position: relative;
+            top: 260px;
+            right: 10px;
+            margin-top: 45px ;
+            width: 60%;
+            margin-left: 580px;
+            margin-bottom: 1px;
+            padding: 25px;
+            border: none;
+            border-bottom: 2px solid white;
+            background: transparent;
+            color: white;
+            outline: none;
+            font-size: 18px;
+           
+        }
+
+        .loginform input::placeholder {
+            color: white;
+        }
+        
+        .loginform .loginbtn {
+            position: relative;
+            left: 520px;
+            top: 380px;
+            width: 150px;
+            padding: 10px;
+            margin-left: 230px ;
+            background: transparent;
+            border: none;
+            border-radius: 5px;
+            font-size: 32px;
+            font-weight: bold;
+            color: white;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .loginform .loginbtn:hover {
+            color: #3498db;
+        }
+
+        .loginform .signuplink {
+            position: relative;
+            left: 650px;
+            top: 380px;
+            color: white;
+            margin-right: 470px;
+            text-align: center;
+            margin-top: 10px;
+        }
+
+        .loginform .signuplink a {
+            color: red;
+            text-decoration: none;
+        }
+
+        .loginform .signuplink a:hover {
+            text-decoration: underline;
+        }
+
+       .moveit-img2{
+        width: 7%;
+        height: 5%;
+        margin-bottom: 90px;
+        margin-left: 600px;
+        position: relative;
+        top: 660px;
+        right: 160px;
+       }
+               
+    </style>
+</head>
+<body>
+    <div class="overlay"> </div>
+    
+    <div class="loginbox">
+
+               
+        <div class="login-image"></div>
+        
+            <div class="loginform">
+                <input type="text" placeholder="Username" required>
+                <input type="password" placeholder="Password" required>
+                <button class="loginbtn">Log in</button>
+                <div class="signuplink">
+                Dont have an account? <a href="#">sign Up</a>
+            </div>
+        </div>
+
+        <input type="image" src="/images/MOVE-IT2.png" alt="image not found", class="moveit-img2">
+    </div>
+</body>
+</html>
