@@ -2,7 +2,7 @@
 $host = "localhost";
 $user = "root";
 $password = "";
-$dbname = "shipsmart"; // New database name
+$dbname = "shipsmart";
 
 try {
     // Connect to MySQL server
@@ -26,7 +26,8 @@ try {
     )";
 
     $pdo->exec($createUsersTable);
-    echo "Table 'Users' created successfully.";
+    echo "Table 'Users' created successfully.<br>";
 } catch (PDOException $e) {
     echo "Error: " . $e->getMessage();
 }
+?>

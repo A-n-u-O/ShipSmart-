@@ -7,9 +7,10 @@ if (isset($_SESSION['user_id']) || isset($_SESSION['user_email'])) {
     exit;
 }
 
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
+// Handle POST request
+if ($_SERVER["REQUEST_METHOD"] === "POST") {
     // Database connection
-    $conn = new mysqli("localhost", "root", "", "shipsmart"); // Update database name to 'shipsmart'
+    $conn = new mysqli("localhost", "root", "", "shipsmart");
 
     // Check connection
     if ($conn->connect_error) {
@@ -17,46 +18,56 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 
     // Get form data
-    $username = $_POST['username'];
-    $email = $_POST['email'];
-    $password = $_POST['password'];
+    $username = trim($_POST['username']);
+    $email = trim($_POST['email']);
+    $password = trim($_POST['password']);
+
+    // Basic validation
+    if (empty($username) || empty($email) || empty($password)) {
+        header("Location: register.php?error=All fields are required.");
+        exit;
+    }
+
+    // Check if email already exists
+    $emailCheck = $conn->prepare("SELECT * FROM Users WHERE email = ?");
+    $emailCheck->bind_param("s", $email);
+    $emailCheck->execute();
+    $result = $emailCheck->get_result();
+    if ($result->num_rows > 0) {
+        header("Location: register.php?error=Email is already registered.");
+        $emailCheck->close();
+        $conn->close();
+        exit;
+    }
+    $emailCheck->close();
 
     // Hash the password
     $hashed_password = password_hash($password, PASSWORD_DEFAULT);
 
-    // Prepare SQL to prevent SQL injection
+    // Insert the user into the database
     $stmt = $conn->prepare("INSERT INTO Users (name, email, password) VALUES (?, ?, ?)");
     $stmt->bind_param("sss", $username, $email, $hashed_password);
 
-    // Execute the statement
+    // Execute and handle results
     if ($stmt->execute()) {
-        // Redirect to login page after successful registration
         header("Location: login.php?success=Registration successful! Please log in.");
-        exit;
     } else {
-        // Handle error
-        $error = $stmt->error;
-        $stmt->close();
-        $conn->close();
-        header("Location: register.php?error=Registration failed: $error");
-        exit;
+        header("Location: register.php?error=Registration failed. Please try again.");
     }
 
-    // Close the connection
+    // Close resources
     $stmt->close();
     $conn->close();
+    exit;
 }
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Register - ShipSmart</title>
-
-    <!-- Bootstrap 5 CDN -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
     <div class="d-flex justify-content-center align-items-center" style="min-height: 100vh;">
