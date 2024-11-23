@@ -63,7 +63,7 @@ $current_page = basename($_SERVER['SCRIPT_NAME']);
       <a href="/ShipmentApp/pages/aboutUs.php" class="<?= $current_page == 'aboutUs.php' ? 'active' : '' ?>">About Us</a>
     </li>
     <li>
-      <a href="/ShipmentApp/Auth/logout.php">Logout</a>
+      <a href="../logout.php">Logout</a>
     </li>
   </ul>
 </nav>
