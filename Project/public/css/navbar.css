@@ -1,0 +1,120 @@
+/* navbar styles */
+
+/* General styles for the navbar */
+nav {
+  background-color: #333;
+  width: 250px; /* Adjust the width of the sidebar */
+  position: fixed; /* Fix the navbar to the left side */
+  height: 100%; /* Make it take the full height of the viewport */
+  top: 0;
+  left: 0;
+  padding-top: 20px;
+  overflow-y: auto; /* Allow scrolling if content overflows */
+}
+
+/* Styling the unordered list */
+nav ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+/* Styling each list item */
+nav ul li {
+  position: relative; /* Required for positioning of submenus */
+}
+
+/* Logo section styles */
+.logo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px;
+  color: aliceblue;
+}
+
+.logo img {
+  width: 50px;
+  height: 50px;
+  margin-right: 10px; /* Space between image and text */
+}
+
+.logo span {
+  font-size: 30px;
+  font-weight: bold;
+}
+
+/* Styling the links */
+nav ul li a {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px;
+  color: white;
+  text-decoration: none;
+  width: 80%; /* Ensure the link takes the full width */
+  margin: auto;
+}
+
+/* Styling the active link */
+nav ul li a.active {
+  background-color: #007bff;
+  font-weight: bold;
+  border-radius: 5px;
+}
+
+/* Hover effect for links */
+nav ul li a:hover {
+  background-color: #555;
+}
+
+/* Dropdown menu styles */
+nav ul li ul {
+  display: none; /* Hide the dropdown by default */
+  position: absolute;
+  top: 0;
+  left: 100%;
+  background-color: #444;
+  padding: 0;
+  width: 200px; /* Set width of dropdown */
+  z-index: 1000; /* Ensure it appears above other content */
+}
+
+/* Display dropdown when the 'show' class is added */
+nav ul li .drop-down.show {
+  display: block; /* Show the dropdown */
+}
+
+/* Display dropdown when parent list item is hovered */
+nav ul li:hover > ul {
+  display: block;
+}
+
+/* Styling links within the dropdown */
+nav ul li ul li a {
+  padding: 10px 20px;
+  background-color: #444;
+  color: white;
+}
+
+/* margin between adjacent links */
+nav ul li + li {
+  margin-top: 5px;
+}
+
+/* styling for the icon when dropdown is open */
+nav ul li > .drop-down.show {
+  display: block;
+}
+
+/* Toggle icon for dropdown visibility */
+.toggle-icon {
+  cursor: pointer;
+  font-size: 16px;
+  color: white;
+}
+
+/* Active dropdown  */
+nav ul li > .drop-down.show {
+  display: block;
+}

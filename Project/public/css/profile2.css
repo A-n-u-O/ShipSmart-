@@ -1,0 +1,160 @@
+/* General Styles */
+body {
+  font-family: 'Arial', sans-serif;
+  background-color: #f4f4f9;
+  margin: 0;
+  padding: 0;
+}
+
+/* Profile Page Layout */
+.profile-page {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Header Section */
+.profile-header {
+  display: flex;
+  justify-content: space-between;
+  padding: 20px;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.profile-info {
+  display: flex;
+  align-items: center;
+}
+
+.profile-picture {
+  position: relative;
+  margin-right: 20px;
+}
+
+.profile-picture img {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.edit-button {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  background-color: #3498db;
+  color: #fff;
+  border: none;
+  padding: 5px 10px;
+  font-size: 12px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.edit-button:hover {
+  background-color: #2980b9;
+}
+
+.user-details h1 {
+  font-size: 24px;
+  margin: 0;
+  color: #333;
+}
+
+.user-details p {
+  font-size: 16px;
+  margin: 5px 0;
+  color: #777;
+}
+
+.user-details .edit-button {
+  margin-top: 10px;
+}
+
+/* Account Settings */
+.account-settings {
+  margin-top: 40px;
+}
+
+.account-settings h2 {
+  font-size: 22px;
+  color: #333;
+  margin-bottom: 20px;
+}
+
+.setting-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.setting-item h3 {
+  font-size: 18px;
+  color: #333;
+}
+
+.setting-item button {
+  background-color: #2ecc71;
+  color: #fff;
+  border: none;
+  padding: 8px 15px;
+  font-size: 14px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.setting-item button:hover {
+  background-color: #27ae60;
+}
+
+/* Recent Activity Section */
+.activity-section {
+  margin-top: 40px;
+}
+
+.activity-section h2 {
+  font-size: 22px;
+  color: #333;
+  margin-bottom: 15px;
+}
+
+.activity-section ul {
+  list-style-type: none;
+  padding-left: 0;
+}
+
+.activity-section li {
+  font-size: 16px;
+  color: #555;
+  margin-bottom: 10px;
+}
+
+/* Footer */
+.footer {
+  display: flex;
+  justify-content: center;
+  padding: 20px;
+  border-top: 1px solid #e0e0e0;
+}
+
+.logout-button {
+  background-color: #e74c3c;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  font-size: 16px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.logout-button:hover {
+  background-color: #c0392b;
+}
