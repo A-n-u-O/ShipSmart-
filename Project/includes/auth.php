@@ -30,6 +30,7 @@ if (isset($_POST['email']) && isset($_POST['password'])) {
                 $_SESSION['user_email'] = $user_email;
 
                 // Redirect to dashboard
+                header("Location: ../dashboard/dashboard.php");
                 header("Location: ../views/dashboardMain.php");
                 exit;
             } else {
