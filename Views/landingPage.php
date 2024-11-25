@@ -160,7 +160,9 @@
         </div>
     </div>
 </footer>
-<script src="../js/landingPage.js"></script>
+<!-- The defer attribute in a <script> tag is used to indicate that the script should be executed after the HTML document has been completely 
+    parsed. -->
+<script src="../js/landingPage.js" defer></script>
 
 
 </html>
