@@ -3,7 +3,11 @@ session_start();
 include '../includes/functions.php';
 
 // Redirect to the dashboard if the user is already logged in
+if (isset($_SESSION['user_id'])) {
+    redirect('dashboard.php'); // Change to your dashboard page
+}
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -16,7 +20,7 @@ include '../includes/functions.php';
 <body>
     <div class="d-flex justify-content-center align-items-center" style="min-height: 100vh;">
         <div class="p-5 shadow rounded" style="max-width: 400px; width: 100%;">
-            <form method="POST" action="../includes/auth.php">
+            <form method="POST" action="auth.php"> <!-- Ensure this points to auth.php -->
                 <h2 class="text-center mb-4">Login</h2>
 
                 <!-- Display error message -->
