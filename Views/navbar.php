@@ -64,7 +64,8 @@ $current_page = basename($_SERVER['SCRIPT_NAME']);
     </li>
 
     <li>
-      <a href="../pages/logoutPage.php">Logout</a>
+    <a href="./logoutPage.php">Logout</a>
+
     </li>
   </ul>
 </nav>
