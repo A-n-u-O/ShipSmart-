@@ -2,9 +2,10 @@
 .notification {
     display: none; /* Initially hidden */
     position: fixed;
+    width: 60%;
     top: 20px;
     right: 20px;
-    background-color: #4CAF50; /* Green */
+    background-color: #4c8eaf; /* Green */
     color: white;
     padding: 15px;
     border-radius: 5px;
