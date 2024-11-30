@@ -8,7 +8,7 @@ $current_page = basename($_SERVER['SCRIPT_NAME']);
   <ul>
     <!-- Logo with image and text -->
     <li class="logo">
-      <img src="../Assets/images/Image.png" alt="ShipSmart-Logo">
+      <img src="../Assets/images/Shipsmart-icon-dark.png" alt="ShipSmart-Logo">
       <span>ShipSmart</span>
     </li>
 
@@ -49,7 +49,7 @@ $current_page = basename($_SERVER['SCRIPT_NAME']);
     <li>
       <a href="../pages/account.php" class="<?= $current_page == 'account.php' ? 'active' : '' ?>">Account <span class="toggle-icon">▼</span></a>
       <ul class="drop-down">
-        <li><a href="" class="<?= $current_page == 'profile.php' ? 'active' : '' ?>">Profile</a></li>
+        <li><a href="../pages/profile.php" class="<?= $current_page == 'profile.php' ? 'active' : '' ?>">Profile</a></li>
         <li><a href="../pages/notificationSettings.php" class="<?= $current_page == 'notificationSettings.php' ? 'active' : '' ?>">Notification Settings</a></li>
       </ul>
     </li>
@@ -57,6 +57,7 @@ $current_page = basename($_SERVER['SCRIPT_NAME']);
       <a href="../pages/support.php" class="<?= $current_page == 'support.php' ? 'active' : '' ?>">Support <span class="toggle-icon">▼</span></a>
       <ul class="drop-down">
         <li><a href="../pages/contactUs.php" class="<?= $current_page == 'contactUs.php' ? 'active' : '' ?>">Contact Us</a></li>
+        <li><a href="../pages/faqs.php" class="<?= $current_page == 'faqs.php' ? 'active' : '' ?>">FAQs</a></li>
       </ul>
     </li>
     <li>

@@ -4,11 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ShipSmart | Account | Profile</title>
-    <link rel="stylesheet" href="../public/navbar.css">
-    <link rel="stylesheet" href="./profile.css">
+    <link rel="stylesheet" href="../css/navbar.css">
+    <link rel="stylesheet" href="../css/profile.css">
 </head>
 <body>
-<?php include '../partials/navbar.php'; ?> <!-- Include the reusable navbar -->
+<?php include '../Views/navbar.php'; ?> <!-- Include the reusable navbar -->
 <div class="profile-page">
   <div class="profile-header">
     <!-- Profile Picture and Info Section -->

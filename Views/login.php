@@ -3,9 +3,14 @@ session_start();
 include '../includes/functions.php';
 
 // Redirect to the dashboard if the user is already logged in
+if (isset($_SESSION['user_id'])) {
+    redirect('dashboard.php'); // Change to your dashboard page
+}
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -13,6 +18,7 @@ include '../includes/functions.php';
     <link href="../css/login.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
+
 <body>
     <div class="d-flex justify-content-center align-items-center" style="min-height: 100vh;">
         <div class="p-5 shadow rounded" style="max-width: 400px; width: 100%;">
@@ -42,4 +48,5 @@ include '../includes/functions.php';
         </div>
     </div>
 </body>
+
 </html>
