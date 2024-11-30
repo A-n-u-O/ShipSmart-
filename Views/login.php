@@ -10,6 +10,7 @@ if (isset($_SESSION['user_id'])) {
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -17,10 +18,11 @@ if (isset($_SESSION['user_id'])) {
     <link href="../css/login.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
+
 <body>
     <div class="d-flex justify-content-center align-items-center" style="min-height: 100vh;">
         <div class="p-5 shadow rounded" style="max-width: 400px; width: 100%;">
-            <form method="POST" action="auth.php"> <!-- Ensure this points to auth.php -->
+            <form method="POST" action="../includes/auth.php">
                 <h2 class="text-center mb-4">Login</h2>
 
                 <!-- Display error message -->
@@ -46,4 +48,5 @@ if (isset($_SESSION['user_id'])) {
         </div>
     </div>
 </body>
+
 </html>
