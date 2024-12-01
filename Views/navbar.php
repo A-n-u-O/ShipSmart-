@@ -57,6 +57,7 @@ $current_page = basename($_SERVER['SCRIPT_NAME']);
       <a href="../pages/support.php" class="<?= $current_page == 'support.php' ? 'active' : '' ?>">Support <span class="toggle-icon">▼</span></a>
       <ul class="drop-down">
         <li><a href="../pages/contactUs.php" class="<?= $current_page == 'contactUs.php' ? 'active' : '' ?>">Contact Us</a></li>
+        <li><a href="../pages/helpCenter.php" class="<?= $current_page == 'helpCenter.php' ? 'active' : '' ?>">Help Center</a></li>
         <li><a href="../pages/faqs.php" class="<?= $current_page == 'faqs.php' ? 'active' : '' ?>">FAQs</a></li>
       </ul>
     </li>
