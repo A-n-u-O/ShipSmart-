@@ -7,6 +7,6 @@
     <link rel="stylesheet" href="../css/navbar.css">
   </head>
   <body>
-    <?php include '../partials/navbar.php'; ?> <!-- Include the reusable navbar -->
+    <?php include '../Views/navbar.php'; ?> <!-- Include the reusable navbar -->
   </body>
 </html>
