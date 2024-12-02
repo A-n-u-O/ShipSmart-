@@ -19,19 +19,25 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $pickup_date = $_POST['pickup_date'];
         $pickup_time = $_POST['pickup_time'];
         $pickup_address = $_POST['pickup_address'];
+        $phone_number = $_POST['phone_number']; // New field
+        $item_description = $_POST['item_description']; // New field
+        $item_weight = $_POST['item_weight']; // New field
         $user_id = $_SESSION['user_id'];
 
-        if (empty($pickup_date) || empty($pickup_time) || empty($pickup_address)) {
+        if (empty($pickup_date) || empty($pickup_time) || empty($pickup_address) || empty($phone_number) || empty($item_description) || empty($item_weight)) {
             throw new Exception('All fields are required.');
         }
 
-        $stmt = $pdo->prepare("INSERT INTO Bookings (user_id, pickup_date, pickup_time, pickup_location, status) VALUES (?, ?, ?, ?, 'Pending')");
-        $stmt->execute([$user_id, $pickup_date, $pickup_time, $pickup_address]);
+        $stmt = $pdo->prepare("INSERT INTO Bookings (user_id, pickup_date, pickup_time, pickup_location, phone_number, item_description, item_weight, status) VALUES (?, ?, ?, ?, ?, ?, ?, 'Pending')");
+        $stmt->execute([$user_id, $pickup_date, $pickup_time, $pickup_address, $phone_number, $item_description, $item_weight]);
 
         $_SESSION['current_booking'] = [
             'pickup_date' => $pickup_date,
             'pickup_time' => $pickup_time,
             'pickup_address' => $pickup_address,
+            'phone_number' => $phone_number,
+            'item_description' => $item_description,
+            'item_weight' => $item_weight,
         ];
 
         header('Location: confirmPickup.php');
@@ -56,7 +62,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <main class="schedule-pickup">
         <div class="company-info">
             <div class="company-profile">
-                <img src="../Assets/images/Image.png" alt="company logo" class="company-logo">
+                <img src="../Assets/images/Shipsmart-icon-light.png" alt="company logo" class="company-logo">
                 <h2>ShipSmart Shipping</h2>
                 <div class="company-details">
                     <p>Logistics support</p>
@@ -86,6 +92,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <div class="pickup-address">
                         <h3>Pickup Address</h3>
                         <input type="text" id="pickup_address" name="pickup_address" placeholder="Enter pickup address" autocomplete="off" required>
+                    </div>
+
+                    <div class="phone-number">
+                        <h3>Phone Number</h3>
+                        <input type="text" id="phone_number" name="phone_number" placeholder="Enter your phone number" autocomplete="off" required>
+                    </div>
+
+                    <div class="item-description">
+                        <h3>Item Description</h3>
+                        <input type="text" id="item_description" name="item_description" placeholder="Describe the item(s)" autocomplete="off" required>
+                    </div>
+
+                    <div class="item-weight">
+                        <h3>Item Weight (kg)</h3>
+                        <input type="number" id="item_weight" name="item_weight" placeholder="Enter item weight" step="0.1" min="0" required>
                     </div>
                 </div>
 
