@@ -23,6 +23,16 @@ try {
     $bookings = [];
 }
 
+// Fetch available couriers for the user to choose
+try {
+    $courier_stmt = $pdo->prepare("SELECT courier_id, first_name, last_name, phone_number, available_time FROM Couriers WHERE available_time > NOW() AND is_available = 1");
+    $courier_stmt->execute();
+    $couriers = $courier_stmt->fetchAll(PDO::FETCH_ASSOC);
+} catch (Exception $e) {
+    $_SESSION['error_message'] = "Error fetching couriers: " . $e->getMessage();
+    $couriers = [];
+}
+
 // Handle booking update
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     try {
@@ -30,22 +40,24 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $new_date = $_POST['pickup_date'];
         $new_time = $_POST['pickup_time'];
         $new_address = $_POST['pickup_address'];
+        $selected_courier = $_POST['courier_id'];
 
         // Validate input
-        if (empty($new_date) || empty($new_time) || empty($new_address)) {
+        if (empty($new_date) || empty($new_time) || empty($new_address) || empty($selected_courier)) {
             throw new Exception('All fields are required');
         }
 
         // Update booking
         $stmt = $pdo->prepare("
             UPDATE Bookings 
-            SET pickup_date = ?, pickup_time = ?, pickup_location = ? 
+            SET pickup_date = ?, pickup_time = ?, pickup_location = ?, courier_id = ? 
             WHERE booking_id = ? AND user_id = ?
         ");
         $stmt->execute([
             $new_date, 
             $new_time, 
             $new_address, 
+            $selected_courier, 
             $booking_id, 
             $_SESSION['user_id']
         ]);
@@ -102,6 +114,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <div class="form-group">
                     <label for="pickup_address">New Pickup Address:</label>
                     <textarea name="pickup_address" id="pickup_address" required></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="courier_id">Select Courier:</label>
+                    <select name="courier_id" id="courier_id" required>
+                        <?php if (!empty($couriers)): ?>
+                            <?php foreach ($couriers as $courier): ?>
+                                <option value="<?= htmlspecialchars($courier['courier_id']) ?>">
+                                    <?= htmlspecialchars($courier['first_name'] . ' ' . $courier['last_name']) ?> - <?= htmlspecialchars($courier['phone_number']) ?> 
+                                </option>
+                            <?php endforeach; ?>
+                        <?php else: ?>
+                            <option value="">No couriers available</option>
+                        <?php endif; ?>
+                    </select>
                 </div>
 
                 <button type="submit">Update Booking</button>

@@ -38,28 +38,33 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $error_messages['item_weight'] = 'Item weight is required.';
     }
 
-    // If there are no errors, proceed with database insertion
-    if (empty($error_messages)) {
-        try {
-            $stmt = $pdo->prepare("INSERT INTO Bookings (user_id, pickup_date, pickup_time, pickup_location, delivery_location, phone_number, item_description, item_weight, status) VALUES (?, ?, ?, ?, ?, ?, ?, ?, 'Pending')");
-            $stmt->execute([$_SESSION['user_id'], $pickup_date, $pickup_time, $pickup_address, $delivery_location, $phone_number, $item_description, $item_weight]);
+  
+        // Insert the booking into the database
+        $stmt = $pdo->prepare("INSERT INTO Bookings (user_id, pickup_date, pickup_time, pickup_location,, delivery_location, phone_number, item_description, item_weight, status) VALUES (?, ?, ?, ?, 'Pending')");
+        $stmt->execute([$user_id, $pickup_date, $pickup_time, $pickup_address, $delivery_location, $phone_number, $item_description, $item_weight]);
 
-            // Set the current booking in session
-            $_SESSION['current_booking'] = [
-                'pickup_date' => $pickup_date,
-                'pickup_time' => $pickup_time,
-                'pickup_address' => $pickup_address,
-                'delivery_location' => $delivery_location,
+        // Fetch the last inserted booking ID
+        $booking_id = $pdo->lastInsertId();
+
+        // Store booking details and ID in the session
+        $_SESSION['current_booking'] = [
+            'booking_id' => $booking_id,
+            'pickup_date' => $pickup_date,
+            'pickup_time' => $pickup_time,
+            'pickup_address' => $pickup_address,
+          'delivery_location' => $delivery_location,
                 'phone_number' => $phone_number,
                 'item_description' => $item_description,
                 'item_weight' => $item_weight,
-            ];
+        ];
 
-            header('Location: confirmPickup.php');
-            exit();
-        } catch (Exception $e) {
-            $error_messages['general'] = 'An error occurred while scheduling the pickup. Please try again.';
-        }
+        // Redirect to choose courier page (confirm the booking)
+        header('Location: chooseCourier.php');
+        exit();
+    } catch (Exception $e) {
+        // Store error message in the session
+        $_SESSION['error_message'] = $e->getMessage();
+
     }
 }
 ?>
