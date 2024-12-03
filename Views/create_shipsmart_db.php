@@ -36,6 +36,7 @@ try {
         last_name VARCHAR(50) NOT NULL,
         phone_number VARCHAR(15) NOT NULL,
         available_time TIME NOT NULL,
+        is_available BOOLEAN DEFAULT TRUE, -- Availability column
         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
         updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
     )";

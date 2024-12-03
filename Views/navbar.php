@@ -38,7 +38,7 @@ $current_page = basename($_SERVER['SCRIPT_NAME']);
       <a href="../pages/trackShipment.php" class="<?= $current_page == 'trackShipment.php' ? 'active' : '' ?>">Track Shipment</a>
     </li>
     <li>
-      <a href="../pages/couriers.php" class="<?= $current_page == 'couriers.php' ? 'active' : '' ?>">Available Couriers</a>
+      <a href="../pages/courier.php" class="<?= $current_page == 'couriers.php' ? 'active' : '' ?>">Available Couriers</a>
     </li>
     <li>
       <a href="../pages/ratesAndPricing.php" class="<?= $current_page == 'ratesAndPricing.php' ? 'active' : '' ?>">Rates & Pricing</a>

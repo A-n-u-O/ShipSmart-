@@ -9,7 +9,7 @@ body {
 
 /* Main content styling */
 .edit-pickup {
-  max-width: 600px;
+  max-width: 700px;
   margin: 40px auto;
   padding: 20px;
   background-color: #fff;
@@ -82,6 +82,62 @@ textarea {
   font-size: 14px;
   box-sizing: border-box;
   width: 100%;
+}
+
+/* Courier cards styling */
+.courier-card {
+  display: flex;
+  flex-direction: row;
+  background-color: #f1f1f1;
+  padding: 15px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.courier-card img {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  margin-right: 20px;
+}
+
+.courier-card .courier-info {
+  flex-grow: 1;
+}
+
+.courier-card .courier-info h3 {
+  font-size: 18px;
+  margin-bottom: 8px;
+}
+
+.courier-card .courier-info p {
+  font-size: 14px;
+  margin: 4px 0;
+  color: #555;
+}
+
+.courier-card .courier-info .rating {
+  color: #ffcc00;
+}
+
+.courier-card .courier-info .availability {
+  font-weight: bold;
+}
+
+.courier-card button {
+  padding: 8px 16px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background-color 0.2s ease-in-out;
+}
+
+.courier-card button:hover {
+  background-color: #0056b3;
 }
 
 /* Submit button styling */

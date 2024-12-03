@@ -40,8 +40,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             'pickup_address' => $pickup_address,
         ];
 
-        // Redirect to confirmation page
-        header('Location: confirmPickup.php');
+        // Redirect to choose courier page (confirm the booking)
+        header('Location: chooseCourier.php');
         exit();
     } catch (Exception $e) {
         // Store error message in the session
@@ -49,6 +49,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 }
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>

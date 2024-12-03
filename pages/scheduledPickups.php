@@ -40,7 +40,7 @@ if (isset($_POST['delete_booking_id'])) {
         $pdo->commit();
         
         $_SESSION['success_message'] = "Pickup successfully canceled.";
-        header('Location: scheduledPickup.php');
+        header('Location: scheduledPickups.php');
         exit();
     } catch (Exception $e) {
         if ($pdo->inTransaction()) {
@@ -49,18 +49,20 @@ if (isset($_POST['delete_booking_id'])) {
         
         error_log("Deletion error: " . $e->getMessage());
         $_SESSION['error_message'] = "Error deleting pickup: " . $e->getMessage();
-        header('Location: scheduledPickup.php');
+        header('Location: scheduledPickups.php');
         exit();
     }
 }
 
-// Fetch user's scheduled pickups
+// Fetch user's scheduled pickups with courier details
 try {
     $stmt = $pdo->prepare("
         SELECT b.booking_id, b.pickup_date, b.pickup_time, b.pickup_location, b.status, 
-               s.tracking_number, s.current_status
+               s.tracking_number, s.current_status, 
+               c.first_name AS courier_first_name, c.last_name AS courier_last_name, c.phone_number AS courier_phone, c.is_available AS courier_available
         FROM Bookings b
         LEFT JOIN Shipments s ON b.booking_id = s.booking_id
+        LEFT JOIN Couriers c ON b.courier_id = c.courier_id
         WHERE b.user_id = ?
         ORDER BY b.pickup_date DESC, b.pickup_time DESC
     ");
@@ -112,6 +114,11 @@ try {
                             <p>Tracking Number: <?= sanitizeOutput($pickup['tracking_number']) ?></p>
                             <p>Shipment Status: <?= sanitizeOutput($pickup['current_status']) ?></p>
                         <?php endif; ?>
+
+                        <h4>Courier Information</h4>
+                        <p>Name: <?= sanitizeOutput($pickup['courier_first_name'] . ' ' . $pickup['courier_last_name']); ?></p>
+                        <p>Phone: <?= sanitizeOutput($pickup['courier_phone']); ?></p>
+                        <p>Available: <?= $pickup['courier_available'] ? 'Yes' : 'No'; ?></p>
 
                         <div class="position-button">
                             <form action="scheduledPickups.php" method="POST" onsubmit="return confirm('Are you sure you want to cancel this pickup?');">
