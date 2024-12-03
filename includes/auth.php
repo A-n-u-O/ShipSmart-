@@ -22,12 +22,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['email']) && isset($_P
             $user_id = $user['user_id'];
             $user_email = $user['email'];
             $user_password = $user['password']; // Hashed password
+            $username = $user['username']; // Fetch username
 
             // Verify the password
             if (password_verify($password, $user_password)) {
                 // Set session variables
                 $_SESSION['user_id'] = $user_id;
                 $_SESSION['user_email'] = $user_email;
+                $_SESSION['username'] = $username; // Store username in session
 
                 // After successful login, set the login message
                 $_SESSION['login_message'] = "You are now logged in.";

@@ -2,8 +2,15 @@
 session_start();
 require_once 'db_connection.php';
 
-// Check if user is logged in and has a current booking
-if (!isset($_SESSION['user_id']) || !isset($_SESSION['current_booking'])) {
+if (!isset($_SESSION['user_id'])) {
+    header('Location: login.php');
+    exit();
+}
+
+$current_booking = $_SESSION['current_booking'] ?? null;
+
+if (!$current_booking) {
+    // Redirect to schedulePickup.php if no booking is found
     header('Location: schedulePickup.php');
     exit();
 }
@@ -44,11 +51,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $stmt = $pdo->prepare("INSERT INTO Shipments (booking_id, tracking_number, current_status) VALUES (?, ?, 'Pending')");
         $stmt->execute([$booking_id, $tracking_number]);
 
-        // Clear the current booking from session
-        unset($_SESSION['current_booking']);
 
-        // Redirect to scheduled pickups
-        header('Location: scheduledPickups.php');
+        unset($_SESSION['current_booking']);
+        header('Location: pickupConfirmation.php');
         exit();
     } catch (Exception $e) {
         $_SESSION['error_message'] = $e->getMessage();
@@ -61,39 +66,51 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Confirm Pickup</title>
+    <title>ShipSmart | Schedule Pickup | Confirm Pickup</title>
     <link rel="stylesheet" href="../css/navbar.css">
     <link rel="stylesheet" href="../css/confirmPickup.css">
 </head>
 <body>
-    <?php include '../Views/navbar.php'; ?> <!-- Include reusable navbar -->
+    <?php include '../Views/navbar.php'; ?>
 
     <main class="confirm-pickup">
-        <h1>Confirm Your Pickup</h1>
-        
-        <!-- Display Error Message -->
-        <?php if (isset($_SESSION['error_message'])): ?>
-            <div class="alert alert-danger"><?= $_SESSION['error_message']; unset($_SESSION['error_message']); ?></div>
-        <?php endif; ?>
-
-        <div class="pickup-details">
-            <h2>Pickup Details</h2>
-            <p>Date: <?= htmlspecialchars($_SESSION['current_booking']['pickup_date']); ?></p>
-            <p>Time: <?= htmlspecialchars($_SESSION['current_booking']['pickup_time']); ?></p>
-            <p>Address: <?= htmlspecialchars($_SESSION['current_booking']['pickup_address']); ?></p>
+        <div class="company-info">
+            <h2>ShipSmart Shipping</h2>
+            <p>Logistics support | Mon-Fri, 8:30-11:00 AM</p>
         </div>
 
-        <div class="courier-details">
+          <!-- Display Error Message -->
+
+        <div class="confirm-pickup-container">
+            <?php if (isset($_SESSION['error_message'])): ?>
+                <div class="alert-message"><?= $_SESSION['error_message']; unset($_SESSION['error_message']); ?></div>
+            <?php endif; ?>
+
+            <h2>Confirm Pickup Details</h2>
+            <div class="pickup-details">
+                          <h2>Pickup Details</h2>
+                <p><strong>Pickup Date:</strong> <?= htmlspecialchars($_SESSION['current_booking']['pickup_date']); ?></p>
+                <p><strong>Pickup Time:</strong> <?= htmlspecialchars($_SESSION['current_booking']['pickup_time']); ?></p>
+                <p><strong>Pickup Address:</strong> <?= htmlspecialchars($_SESSION['current_booking']['pickup_address'] ?? 'N/A'); ?></p>
+                <p><strong>Delivery Address:</strong> <?= htmlspecialchars($_SESSION['current_booking']['delivery_location'] ?? 'N/A'); ?></p>
+                <p><strong>Phone Number:</strong> <?= htmlspecialchars($_SESSION['current_booking']['phone_number'] ?? 'N/A'); ?></p>
+                <p><strong>Item Description:</strong> <?= htmlspecialchars($_SESSION['current_booking']['item_description'] ?? 'N/A'); ?></p>
+                <p><strong>Item Weight:</strong> <?= htmlspecialchars($_SESSION['current_booking']['item_weight'] ?? 'N/A'); ?> kg</p>
+            </div>
+          <div class="courier-details">
             <h2>Selected Courier</h2>
             <p>Name: <?= htmlspecialchars($courier['first_name'] . ' ' . $courier['last_name']); ?></p>
             <p>Phone: <?= htmlspecialchars($courier['phone_number']); ?></p>
             <p>Availability Time: <?= htmlspecialchars($courier['available_time']); ?></p>
         </div>
 
-        <form method="POST" action="confirmPickup.php">
-            <button type="submit" id="confirm-btn">Confirm Pickup</button>
-            <a href="chooseCourier.php" id="edit-btn">Choose Another Courier</a>
-        </form>
+            <form method="POST" action="confirmPickup.php">
+                <button type="submit" class="confirm-btn" id="confirm-btn">Confirm Pickup</button>
+                          <a href="chooseCourier.php" id="edit-btn">Choose Another Courier</a>
+
+            </form>
+        </div>
     </main>
+    <script src="../js/confirmPickup.js" defer></script>
 </body>
 </html>

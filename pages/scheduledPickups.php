@@ -2,7 +2,6 @@
 session_start();
 require_once 'db_connection.php';
 
-// Check if user is logged in
 if (!isset($_SESSION['user_id'])) {
     header('Location: login.php');
     exit();
@@ -74,6 +73,7 @@ try {
 }
 ?>
 
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -82,6 +82,7 @@ try {
     <title>Scheduled Pickups</title>
     <link rel="stylesheet" href="../css/navbar.css">
     <link rel="stylesheet" href="../css/scheduledPickups.css">
+    <script src="../js/scheduledPickups.js"></script>
 </head>
 <body>
     <?php include '../Views/navbar.php'; ?>
@@ -130,11 +131,10 @@ try {
                     </div>
                 <?php endforeach; ?>
             </div>
+   
         <?php else: ?>
-            <p id="scheduled-details">No pickups scheduled yet.</p>
+            <p>No scheduled pickups.</p>
         <?php endif; ?>
-
-        <button id="edit-schedule-btn" onclick="window.location.href='editPickupDetails.php'">Edit Pickup Details</button>
     </main>
 
     <script>

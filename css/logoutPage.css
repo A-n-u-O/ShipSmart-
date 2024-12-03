@@ -1,75 +1,115 @@
-/* logoutPage.css */
-
-@keyframes fadeOut {
-    0% { opacity: 1; }
-    100% { opacity: 0; pointer-events: none; }
-}
-
-@keyframes fadeIn {
-    0% { opacity: 0; }
-    100% { opacity: 1; }
-}
-
+/* Adjusting body background */
 body {
+    background-color: #002233;
+    color: #fff;
     font-family: Arial, sans-serif;
-    background-image: url('/images/LANDING PAGE.png'); /* Background image */
-    height: 100vh;
+    margin: 0;
+    padding: 0;
+}
+
+/* Main form container styling */
+.form-container {
+    max-width: 700px;
+    margin: 30px auto;
+    background-color: #002233;
+    padding: 30px;
+    border-radius: 20px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
     display: flex;
     justify-content: center;
     align-items: center;
-    margin: 0;
-    animation: fadeIn 1s ease forwards;
+    height: 80vh; /* Center vertically */
 }
 
-.logout-container {
-    display: flex;
-    flex-direction: column;
-    background-image: url('/images/Exclude.png'); /* Background for logout box */
-    border-radius: 35px;
-    padding: 20px;
+/* Form styling */
+.form {
     width: 100%;
-    max-width: 400px; /* Adjusted for better sizing */
-    box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.5);
-    text-align: center; /* Center text */
+    text-align: center;
 }
 
-.logout-container h2 {
+/* Heading */
+.heading {
+    color: #fff;
+    font-size: 1.5rem;
+    font-weight: 800;
     margin-bottom: 20px;
 }
 
-.logout-container p {
-    margin-bottom: 20px;
-    color: #555; /* Text color */
+/* Subtitle text */
+.c1 {
+    color: #87a4b6;
+    font-size: 1rem;
+    margin-bottom: 30px;
 }
 
-button {
-    background-color: #007BFF; /* Primary button color */
-    color: white;
-    border: none;
+/* Button container for Yes and No buttons */
+.button-container {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+}
+
+/* Styling for the No button container */
+.reset-button-container {
+    flex-basis: 48%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.reset-button a {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #7F7FFF;
     padding: 10px 20px;
-    border-radius: 5px;
+    color: #fff;
+    font-weight: bold;
+    border-radius: 20px;
+    text-decoration: none;
+    width: 100%;
+    text-align: center;
+    box-sizing: border-box;
+}
+
+/* Styling for the Yes button container */
+.send-button {
+    flex-basis: 48%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.send-button button {
+    background-color: #FF6090;
+    padding: 10px 20px;
+    color: #fff;
+    font-weight: bold;
+    border-radius: 20px;
+    border: none;
+    width: auto;
+    text-align: center;
+    box-sizing: border-box;
     cursor: pointer;
-    margin: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
-button:hover {
-    background-color: #0056b3; /* Darker shade on hover */
+.send-button button:hover {
+    background-color: #FF4990;
 }
 
-.cancel-button {
-    background-color: #f44336; /* Red background for cancel button */
-    color: white;
+/* Icon size and positioning */
+.reset-button a img, .send-button button img {
+    width: 18px;
+    height: 18px;
+    margin-right: 10px;
+    object-fit: contain;
 }
 
-.cancel-button:hover {
-    background-color: #c62828; /* Darker red on hover */
+/* Hover effect for the No button */
+.reset-button a:hover {
+    background-color: #B08CFF;
 }
 
-.back-button {
-    background-color: #e0e0e0; /* Light gray background */
-    color: #333; /* Dark text color */
-}
-
-.back-button:hover {
-    background-color: #d5d5d5; /* Darker gray on hover */
-}

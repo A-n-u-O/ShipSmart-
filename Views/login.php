@@ -1,10 +1,35 @@
 <?php
 session_start();
-include '../includes/functions.php';
+include '../config/database.php'; // Include the database connection file
+include '../includes/functions.php'; // Include the redirect function
 
-// Redirect to the dashboard if the user is already logged in
+// Check if the user is already logged in and redirect to the dashboard
 if (isset($_SESSION['user_id'])) {
-    redirect('dashboard.php'); // Change to your dashboard page
+    redirect('dashboard.php'); // Redirect to dashboard page
+}
+
+// Handle login logic if the form is submitted
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    $email = $_POST['email'];
+    $password = $_POST['password'];
+
+    // Validate email and password
+    $stmt = $pdo->prepare("SELECT user_id, name, email, password FROM users WHERE email = :email");
+    $stmt->execute(['email' => $email]);
+    $user = $stmt->fetch(PDO::FETCH_ASSOC);
+
+    // Verify the password
+    if ($user && password_verify($password, $user['password'])) {
+        // Store the user data in the session
+        $_SESSION['user_id'] = $user['user_id'];  // Store user_id in session
+        $_SESSION['username'] = $user['name'];    // Store username (name) in session
+        $_SESSION['user_email'] = $user['email']; // Store email in session
+
+        // Redirect to dashboard
+        redirect('dashboard.php');
+    } else {
+        $error = "Invalid credentials. Please try again.";
+    }
 }
 ?>
 
@@ -14,7 +39,7 @@ if (isset($_SESSION['user_id'])) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login - ShipSmart</title>
+    <title>Login | ShipSmart</title>
     <link href="../css/login.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
@@ -22,13 +47,13 @@ if (isset($_SESSION['user_id'])) {
 <body>
     <div class="d-flex justify-content-center align-items-center" style="min-height: 100vh;">
         <div class="p-5 shadow rounded" style="max-width: 400px; width: 100%;">
-            <form method="POST" action="../includes/auth.php">
+            <form method="POST" action="login.php">
                 <h2 class="text-center mb-4">Login</h2>
 
-                <!-- Display error message -->
-                <?php if (isset($_GET['error'])) { ?>
+                <!-- Display error message if login failed -->
+                <?php if (isset($error)) { ?>
                     <div class="alert alert-danger" role="alert">
-                        <?= htmlspecialchars($_GET['error']); ?>
+                        <?= htmlspecialchars($error); ?>
                     </div>
                 <?php } ?>
 

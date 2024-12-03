@@ -72,7 +72,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 }
 ?>
 
-<!-- HTML for editPickupDetails.php -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -81,6 +80,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <title>Edit Pickup Details</title>
     <link rel="stylesheet" href="../css/navbar.css">
     <link rel="stylesheet" href="../css/editPickup.css">
+    <script src="../js/editPickupDetails.js" defer></script>
 </head>
 <body>
     <?php include '../Views/navbar.php'; ?>
