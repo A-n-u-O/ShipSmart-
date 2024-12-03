@@ -38,9 +38,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $error_messages['item_weight'] = 'Item weight is required.';
     }
 
-  
+    try {
         // Insert the booking into the database
-        $stmt = $pdo->prepare("INSERT INTO Bookings (user_id, pickup_date, pickup_time, pickup_location,, delivery_location, phone_number, item_description, item_weight, status) VALUES (?, ?, ?, ?, 'Pending')");
+        $stmt = $pdo->prepare("INSERT INTO Bookings (user_id, pickup_date, pickup_time, pickup_location, delivery_location, phone_number, item_description, item_weight, status) VALUES (?, ?, ?, ?, ?, ?, ?, ?, 'Pending')");
         $stmt->execute([$user_id, $pickup_date, $pickup_time, $pickup_address, $delivery_location, $phone_number, $item_description, $item_weight]);
 
         // Fetch the last inserted booking ID
@@ -52,10 +52,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             'pickup_date' => $pickup_date,
             'pickup_time' => $pickup_time,
             'pickup_address' => $pickup_address,
-          'delivery_location' => $delivery_location,
-                'phone_number' => $phone_number,
-                'item_description' => $item_description,
-                'item_weight' => $item_weight,
+            'delivery_location' => $delivery_location,
+            'phone_number' => $phone_number,
+            'item_description' => $item_description,
+            'item_weight' => $item_weight,
         ];
 
         // Redirect to choose courier page (confirm the booking)
@@ -64,14 +64,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     } catch (Exception $e) {
         // Store error message in the session
         $_SESSION['error_message'] = $e->getMessage();
-
     }
 }
 ?>
 
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -79,7 +77,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <link rel="stylesheet" href="../css/navbar.css">
     <link rel="stylesheet" href="../css/schedulePickup.css">
 </head>
-
 <body>
     <?php include '../Views/navbar.php'; ?>
     <main class="schedule-pickup">
@@ -98,7 +95,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                 <label>Pickup Time</label>
                 <input type="time" id="pickup_time" name="pickup_time" required>
-                <div class="error-message" id="error_time"><?= $error_messages['pickup_time'] ?? ''; ?></div>
+                <div class="error-message"><?= $error_messages['pickup_time'] ?? ''; ?></div>
 
                 <label>Pickup Address</label>
                 <input type="text" id="pickup_address" name="pickup_address" placeholder="Enter pickup address" required>
