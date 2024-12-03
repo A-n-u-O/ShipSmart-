@@ -1,102 +1,148 @@
-
-/* container styles */
-.container {
-  width: 100%; /* Full width */
-  max-width: 1200px; /* Max width for larger screens */
-  margin: 0 auto; /* Center the container */
-  padding: 20px; /* Optional padding */
-  margin-top: 40px;
+/* General Styles */
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f9f9f9;
+  color: #333;
+  margin-left: 250px; /* Space for navbar */
 }
 
-
-/* Dashboard Styles */
+/* Dashboard Container */
 .dashboard {
   display: flex;
+  flex-direction: column;
   padding: 20px;
-  margin-left: 250px; /* Space for the fixed sidebar */
-  flex-wrap: wrap;
-  justify-content: space-evenly;
-  align-items: flex-start; /* Align items to the start */
+  width: calc(100% - 250px); /* Avoid navbar overlap */
 }
 
+/* Overview Section */
 .overview {
-  width: 65%;
-  padding: 20px;
   background: #f4f4f4;
   border-radius: 8px;
-  margin-right: 20px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Add shadow for depth */
+  padding: 20px;
+  margin-bottom: 20px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
 
+.overview h1 span {
+  color: #5385ba;
+}
 
 .stats {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 30px;
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
 }
 
 .stat-item {
-  background: #5385ba;
+  background: linear-gradient(135deg, #007bff, #5385ba);
+  color: #fff;
   padding: 15px;
   border-radius: 8px;
-  color: white;
-  font-weight: bold;
   text-align: center;
-  transition: background 0.3s; /* Smooth background transition */
+  font-weight: bold;
+  flex: 1;
+  transition: transform 0.2s, background 0.3s;
 }
 
 .stat-item:hover {
-  background: #0056b3; /* Darker shade on hover */
+  transform: translateY(-5px);
+  background: linear-gradient(135deg, #0056b3, #3a6d8a);
 }
 
-.quick-actions {
-  width: 50%;
-  padding: 20px;
-  background: #f4f4f4;
+/* Recent Bookings Section */
+.recent-bookings {
+  background: #fefefe;
   border-radius: 8px;
-  margin-top: 6%;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Add shadow for depth */
+  padding: 20px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
 
-.quick-actions h3 {
+.recent-bookings h3 {
   margin-bottom: 15px;
 }
 
-.quick-actions ul {
+.recent-bookings ul {
   list-style: none;
   padding: 0;
 }
 
-.quick-actions li {
+.recent-bookings li {
   margin: 10px 0;
+  padding: 10px;
+  border-bottom: 1px solid #ddd;
 }
 
-.quick-actions a {
-  text-decoration: none;
-  color: #5385ba;
-  font-weight: bold;
+.recent-bookings li strong {
+  color: #007bff;
+}
+
+.recent-bookings .view-details {
+  background: linear-gradient(135deg, #007bff, #5385ba);
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
   cursor: pointer;
-  transition: color 0.3s; /* Smooth color transition */
+  transition: background 0.3s, transform 0.2s;
 }
 
-.quick-actions a:hover {
-  color: #0056b3;
+.recent-bookings .view-details:hover {
+  background: linear-gradient(135deg, #0056b3, #3a6d8a);
+  transform: scale(1.05);
 }
 
-/* Make the dashboard responsive */
+/* Modal Styles */
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1000;
+  left: 250px; /* Prevent overlap with navbar */
+  top: 0;
+  width: calc(100% - 250px);
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  align-items: center;
+  justify-content: center;
+}
+
+.modal-content {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  width: 90%;
+  max-width: 600px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.close-btn {
+  float: right;
+  font-size: 20px;
+  font-weight: bold;
+  color: #333;
+  cursor: pointer;
+}
+
+.close-btn:hover {
+  color: #007bff;
+}
+
+/* Responsive Design */
 @media (max-width: 768px) {
-  .dashboard {
-    flex-direction: column;
+  body {
     margin-left: 0;
   }
 
-  .overview,
-  .quick-actions {
+  .dashboard {
     width: 100%;
-    margin-right: 0;
   }
 
-  .stats {
-    grid-template-columns: 1fr;
+  nav {
+    width: 100%;
+    height: auto;
+  }
+
+  .modal {
+    left: 0;
+    width: 100%;
   }
 }

@@ -2,31 +2,21 @@
 session_start();
 require_once 'db_connection.php';
 
-// Check if user is logged in
 if (!isset($_SESSION['user_id'])) {
     header('Location: login.php');
     exit();
 }
 
-// Fetch user's scheduled pickups
+$user_id = $_SESSION['user_id'];
+
 try {
-    $stmt = $pdo->prepare("
-        SELECT b.booking_id, b.pickup_date, b.pickup_time, b.pickup_location, b.status, 
-               s.tracking_number, s.current_status
-        FROM Bookings b
-        LEFT JOIN Shipments s ON b.booking_id = s.booking_id
-        WHERE b.user_id = ?
-        ORDER BY b.pickup_date DESC, b.pickup_time DESC
-    ");
-    $stmt->execute([$_SESSION['user_id']]);
-    $pickups = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    $stmt = $pdo->prepare("SELECT * FROM Bookings WHERE user_id = ? AND status = 'Scheduled' ORDER BY pickup_date, pickup_time");
+    $stmt->execute([$user_id]);
+    $scheduled_pickups = $stmt->fetchAll(PDO::FETCH_ASSOC);
 } catch (Exception $e) {
     $_SESSION['error_message'] = $e->getMessage();
-    $pickups = [];
 }
 ?>
-
-<!-- HTML for scheduledPickups.php -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -35,33 +25,24 @@ try {
     <title>Scheduled Pickups</title>
     <link rel="stylesheet" href="../css/navbar.css">
     <link rel="stylesheet" href="../css/scheduledPickups.css">
+    <script src="../js/scheduledPickups.js"></script>
 </head>
 <body>
     <?php include '../Views/navbar.php'; ?>
-
-    <main class="scheduled-pickups">
-        <h1>Your Scheduled Pickups</h1>
-        
-        <?php if (!empty($pickups)): ?>
-            <div class="pickup-list">
-                <?php foreach ($pickups as $pickup): ?>
-                    <div class="pickup-item">
-                        <h3>Pickup on <?= htmlspecialchars($pickup['pickup_date']) ?></h3>
-                        <p>Time: <?= htmlspecialchars($pickup['pickup_time']) ?></p>
-                        <p>Address: <?= htmlspecialchars($pickup['pickup_location']) ?></p>
-                        <p>Booking Status: <?= htmlspecialchars($pickup['status']) ?></p>
-                        <?php if (!empty($pickup['tracking_number'])): ?>
-                            <p>Tracking Number: <?= htmlspecialchars($pickup['tracking_number']) ?></p>
-                            <p>Shipment Status: <?= htmlspecialchars($pickup['current_status']) ?></p>
-                        <?php endif; ?>
-                    </div>
-                <?php endforeach; ?>
-            </div>
+    <main>
+        <h1>Scheduled Pickups</h1>
+        <?php if (!empty($scheduled_pickups)): ?>
+            <?php foreach ($scheduled_pickups as $pickup): ?>
+                <div class="pickup-item">
+                    <p><strong>Date:</strong> <?= htmlspecialchars($pickup['pickup_date']); ?></p>
+                    <p><strong>Time:</strong> <?= htmlspecialchars($pickup['pickup_time']); ?></p>
+                    <p><strong>Pickup:</strong> <?= htmlspecialchars($pickup['pickup_location']); ?></p>
+                    <p><strong>Delivery:</strong> <?= htmlspecialchars($pickup['delivery_location']); ?></p>
+                </div>
+            <?php endforeach; ?>
         <?php else: ?>
-            <p id="scheduled-details">No pickups scheduled yet.</p>
+            <p>No scheduled pickups.</p>
         <?php endif; ?>
-
-        <button id="edit-schedule-btn" onclick="window.location.href='editPickupDetails.php'">Edit Pickup Details</button>
     </main>
 </body>
 </html>

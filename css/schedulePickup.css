@@ -1,224 +1,48 @@
-:root {
-  --primary-color: #87a0bb;
-  --secondary-color: #2d4761;
-  --accent-color: #83a0aa;
-  --background-color: #f5f5f5;
-  --text-color: #333;
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f9f9f9;
+  color: #333;
+  margin-left: 300px;/*space for navbar*/
 }
 
-/* Main Content */
+
+
+.fade-in {
+  opacity: 0;
+  animation: fadeIn 0.5s forwards;
+}
+
+@keyframes fadeIn {
+  to {
+      opacity: 1;
+  }
+}
+
 .schedule-pickup {
-  margin-left: 300px;
+  max-width: 800px;
+  margin: 20px auto;
   padding: 20px;
-  font-family: system-ui, sans-serif;
-  background-color: var(--background-color);
-  max-width: 100%;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
 
-/* Page Heading */
-.schedule-pickup h1 {
-  text-align: center;
-  color: var(--text-color);
-  margin-bottom: 5px;
-}
-
-.schedule-pickup .subtitle {
-  text-align: center;
-  color: #666;
-  margin-bottom: 30px;
-}
-
-/* Company Info Section */
-.company-info {
-  background: white;
-  padding: 15px;
-  border-radius: 10px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 20px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-.company-profile {
-  display: flex;
-  align-items: center;
-  gap: 15px;
-}
-
-.company-logo {
-  width: 50px;
-  height: 50px;
-  border-radius: 50%;
-  background: #ddd;
-}
-
-.company-details {
-  margin-left: 50px;
-}
-
-.company-details h2 {
-  margin: 0;
-  font-size: 1.1rem;
-}
-
-.company-details p {
-  margin: 2px 0;
-  color: #666;
-  font-size: 0.9rem;
-}
-
-.action-buttons {
-  display: flex;
-  gap: 10px;
-}
-
-.action-btn {
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  border: none;
-  background: var(--accent-color);
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.action-btn :hover {
-  background-color: var(--primary-color);
-  color: white;
-}
-
-/* schedule-pickup-container */
-.schedule-pickup-container {
-  display: flex;
-  gap: 20px;
-}
-
-/* Calendar */
-.calendar-container {
-  background: white;
-  width: 100%;
-  padding: 20px;
-  border-radius: 10px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-.detail-choosing {
-  flex-basis: 60%;
-  display: flex;
-  flex-direction: column-reverse;
-}
-
-.calendar-header {
-  width: auto;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 15px;
-}
-
-.nav-btn {
-  background: none;
-  border: none;
-  font-size: 1.5rem;
-  cursor: pointer;
-  color: var(--text-color);
-}
-
-.calendar {
-  width: 80%;
-  border-collapse: collapse;
-}
-
-.calendar th {
-  padding: 10px;
-  color: #666;
-  font-weight: normal;
-}
-
-.calendar td {
-  padding: 10px;
-  text-align: center;
-  cursor: pointer;
-}
-
-.current-month {
-  color: var(--text-color);
-}
-
-.other-month {
-  color: #ccc;
-}
-
-td.selected {
-  background: var(--primary-color);
-  color: white;
-  border-radius: 20%;
-}
-
-/* Time Slots */
-.time-slots {
-  margin-bottom: 20px;
-  width: 80%;
-}
-
-.time-slots h3 {
-  margin-bottom: 15px;
-  color: var(--text-color);
-}
-
-.slots {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
-  gap: 10px;
-}
-
-.time-btn {
-  padding: 10px;
-  background: var(--accent-color);
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-}
-
-.time-btn.active {
-  background: var(--primary-color);
-  color: white;
-}
-
-/* Pickup address */
-.pickup-address,
-.phone-number,
-.item-description,
-.item-weight {
-  margin-bottom: 20px;
-}
-
-.pickup-details {
-  display: flex;
-  justify-content: center;
+.error-message {
+  color: red;
+  font-size: 0.9em;
+  transition: opacity 0.5s ease;
 }
 
 .confirm-pickup-btn {
-  background: var(--accent-color);
-  border: none;
+  background-color: #007bff;
   color: white;
-  padding: 12px 30px;
-  font-size: 1.1rem;
+  padding: 10px 15px;
+  border: none;
   border-radius: 5px;
   cursor: pointer;
-  transition: background 0.3s ease;
+  margin-top: 20px;
 }
 
 .confirm-pickup-btn:hover {
-  background: var(--primary-color);
-}
-
-/* Alert Message */
-.alert-message {
-  color: red;
-  margin-bottom: 20px;
-  font-weight: bold;
+  background-color: #0056b3;
 }
