@@ -25,18 +25,26 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             throw new Exception('All fields are required.');
         }
 
+        // Insert the booking into the database
         $stmt = $pdo->prepare("INSERT INTO Bookings (user_id, pickup_date, pickup_time, pickup_location, status) VALUES (?, ?, ?, ?, 'Pending')");
         $stmt->execute([$user_id, $pickup_date, $pickup_time, $pickup_address]);
 
+        // Fetch the last inserted booking ID
+        $booking_id = $pdo->lastInsertId();
+
+        // Store booking details and ID in the session
         $_SESSION['current_booking'] = [
+            'booking_id' => $booking_id,
             'pickup_date' => $pickup_date,
             'pickup_time' => $pickup_time,
             'pickup_address' => $pickup_address,
         ];
 
+        // Redirect to confirmation page
         header('Location: confirmPickup.php');
         exit();
     } catch (Exception $e) {
+        // Store error message in the session
         $_SESSION['error_message'] = $e->getMessage();
     }
 }

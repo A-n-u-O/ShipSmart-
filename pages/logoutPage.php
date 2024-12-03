@@ -22,12 +22,12 @@ if (!isset($_SESSION['user_id'])) {
         <h2>Logout Confirmation</h2>
         <p>Are you sure you want to log out? If you log out, you will need to log in again to access your account.</p>
         
-        <form action="logout.php" method="POST">
+        <form action="../logout.php" method="POST">
             <input type="hidden" name="confirm" value="yes">
             <button type="submit" class="logout-button">Yes, Log Out</button>
         </form>
 
-        <form action="./views/dashboard.php" method="GET"> <!-- Redirecting to the dashboard in views folder -->
+        <form action="../Views/dashboard.php" method="GET"> <!-- Redirecting to the dashboard in views folder -->
             <button type="submit" class="cancel-button">Cancel</button>
         </form>
 

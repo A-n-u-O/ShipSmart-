@@ -32,10 +32,12 @@ try {
     // Create the Couriers table
     $createCouriersTable = "CREATE TABLE IF NOT EXISTS Couriers (
         courier_id INT AUTO_INCREMENT PRIMARY KEY,
-        name VARCHAR(100) NOT NULL,
-        rating DECIMAL(3,2),
-        contact_info VARCHAR(100),
-        available BOOLEAN DEFAULT TRUE
+        first_name VARCHAR(50) NOT NULL,
+        last_name VARCHAR(50) NOT NULL,
+        phone_number VARCHAR(15) NOT NULL,
+        available_time TIME NOT NULL,
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+        updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
     )";
     $pdo->exec($createCouriersTable);
     echo "Table 'Couriers' created successfully.<br>";
