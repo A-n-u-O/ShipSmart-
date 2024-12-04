@@ -63,6 +63,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -70,6 +71,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <link rel="stylesheet" href="../css/navbar.css">
     <link rel="stylesheet" href="../css/confirmPickup.css">
 </head>
+
 <body>
     <?php include '../Views/navbar.php'; ?>
 
@@ -79,16 +81,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <p>Logistics support | Mon-Fri, 8:30-11:00 AM</p>
         </div>
 
-          <!-- Display Error Message -->
+        <!-- Display Error Message -->
 
         <div class="confirm-pickup-container">
             <?php if (isset($_SESSION['error_message'])): ?>
-                <div class="alert-message"><?= $_SESSION['error_message']; unset($_SESSION['error_message']); ?></div>
+                <div class="alert-message"><?= $_SESSION['error_message'];
+                                            unset($_SESSION['error_message']); ?></div>
             <?php endif; ?>
 
             <h2>Confirm Pickup Details</h2>
             <div class="pickup-details">
-                          <h2>Pickup Details</h2>
+                <h2>Pickup Details</h2>
                 <p><strong>Pickup Date:</strong> <?= htmlspecialchars($_SESSION['current_booking']['pickup_date']); ?></p>
                 <p><strong>Pickup Time:</strong> <?= htmlspecialchars($_SESSION['current_booking']['pickup_time']); ?></p>
                 <p><strong>Pickup Address:</strong> <?= htmlspecialchars($_SESSION['current_booking']['pickup_address'] ?? 'N/A'); ?></p>
@@ -97,20 +100,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <p><strong>Item Description:</strong> <?= htmlspecialchars($_SESSION['current_booking']['item_description'] ?? 'N/A'); ?></p>
                 <p><strong>Item Weight:</strong> <?= htmlspecialchars($_SESSION['current_booking']['item_weight'] ?? 'N/A'); ?> kg</p>
             </div>
-          <div class="courier-details">
-            <h2>Selected Courier</h2>
-            <p>Name: <?= htmlspecialchars($courier['first_name'] . ' ' . $courier['last_name']); ?></p>
-            <p>Phone: <?= htmlspecialchars($courier['phone_number']); ?></p>
-            <p>Availability Time: <?= htmlspecialchars($courier['available_time']); ?></p>
-        </div>
+            <div class="courier-details">
+                <h2>Selected Courier</h2>
+                <p>Name: <?= htmlspecialchars($courier['first_name'] . ' ' . $courier['last_name']); ?></p>
+                <p>Phone: <?= htmlspecialchars($courier['phone_number']); ?></p>
+                <p>Availability Time: <?= htmlspecialchars($courier['available_time']); ?></p>
+            </div>
 
             <form method="POST" action="confirmPickup.php">
                 <button type="submit" class="confirm-btn" id="confirm-btn">Confirm Pickup</button>
-                          <a href="chooseCourier.php" id="edit-btn">Choose Another Courier</a>
+                <a href="chooseCourier.php" id="edit-btn">Choose Another Courier</a>
 
             </form>
         </div>
     </main>
     <script src="../js/confirmPickup.js" defer></script>
 </body>
+
 </html>

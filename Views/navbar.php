@@ -59,9 +59,9 @@ $current_page = basename($_SERVER['SCRIPT_NAME']);
         <span class="toggle-icon">▼</span>
       </a>
       <ul class="drop-down">
+      <li><a href="../pages/chooseCourier.php" class="<?= $current_page == 'chooseCourier.php' ? 'active' : '' ?>">Choose Courier</a></li>
         <li><a href="../pages/courierProfiles.php" class="<?= $current_page == 'courierProfiles.php' ? 'active' : '' ?>">Courier Profiles</a></li>
         <li><a href="../pages/courierRatings.php" class="<?= $current_page == 'courierRatings.php' ? 'active' : '' ?>">Courier Ratings</a></li>
-        <li><a href="../pages/applyAsCourier.php" class="<?= $current_page == 'applyAsCourier.php' ? 'active' : '' ?>">Apply as Courier</a></li>
       </ul>
     </li>
 

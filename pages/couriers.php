@@ -80,7 +80,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Edit Pickup Details</title>
     <link rel="stylesheet" href="../css/navbar.css">
-    <link rel="stylesheet" href="../css/editPickup.css">
+    <link rel="stylesheet" href="../css/couriers.css">
 </head>
 <body>
     <?php include '../Views/navbar.php'; ?>

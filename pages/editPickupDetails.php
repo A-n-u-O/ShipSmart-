@@ -70,6 +70,28 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $_SESSION['error_message'] = $e->getMessage();
     }
 }
+
+// Fetch the selected booking details if editing a specific booking
+if (isset($_GET['booking_id'])) {
+    $booking_id = $_GET['booking_id'];
+    try {
+        $stmt = $pdo->prepare("
+            SELECT booking_id, pickup_date, pickup_time, pickup_location, courier_id 
+            FROM Bookings 
+            WHERE booking_id = ? AND user_id = ?
+        ");
+        $stmt->execute([$booking_id, $_SESSION['user_id']]);
+        $booking = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        if (!$booking) {
+            $_SESSION['error_message'] = 'Booking not found.';
+            header('Location: scheduledPickups.php');
+            exit();
+        }
+    } catch (Exception $e) {
+        $_SESSION['error_message'] = "Error fetching booking: " . $e->getMessage();
+    }
+}
 ?>
 
 <!DOCTYPE html>
@@ -79,7 +101,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Edit Pickup Details</title>
     <link rel="stylesheet" href="../css/navbar.css">
-    <link rel="stylesheet" href="../css/editPickup.css">
+    <link rel="stylesheet" href="../css/couriers.css">
     <script src="../js/editPickupDetails.js" defer></script>
 </head>
 <body>
@@ -94,7 +116,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <label for="booking_id">Select Booking to Edit:</label>
                     <select name="booking_id" id="booking_id" required>
                         <?php foreach ($bookings as $booking): ?>
-                            <option value="<?= htmlspecialchars($booking['booking_id']) ?>">
+                            <option value="<?= htmlspecialchars($booking['booking_id']) ?>" <?= isset($booking['booking_id']) && $booking['booking_id'] == $booking['booking_id'] ? 'selected' : '' ?>>
                                 <?= htmlspecialchars($booking['pickup_date'] . ' at ' . $booking['pickup_time']) ?>
                             </option>
                         <?php endforeach; ?>
@@ -103,17 +125,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                 <div class="form-group">
                     <label for="pickup_date">New Pickup Date:</label>
-                    <input type="date" name="pickup_date" id="pickup_date" required>
+                    <input type="date" name="pickup_date" id="pickup_date" value="<?= isset($booking['pickup_date']) ? htmlspecialchars($booking['pickup_date']) : '' ?>" required>
                 </div>
 
                 <div class="form-group">
                     <label for="pickup_time">New Pickup Time:</label>
-                    <input type="time" name="pickup_time" id="pickup_time" required>
+                    <input type="time" name="pickup_time" id="pickup_time" value="<?= isset($booking['pickup_time']) ? htmlspecialchars($booking['pickup_time']) : '' ?>" required>
                 </div>
 
                 <div class="form-group">
                     <label for="pickup_address">New Pickup Address:</label>
-                    <textarea name="pickup_address" id="pickup_address" required></textarea>
+                    <textarea name="pickup_address" id="pickup_address" required><?= isset($booking['pickup_location']) ? htmlspecialchars($booking['pickup_location']) : '' ?></textarea>
                 </div>
 
                 <div class="form-group">
@@ -121,7 +143,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <select name="courier_id" id="courier_id" required>
                         <?php if (!empty($couriers)): ?>
                             <?php foreach ($couriers as $courier): ?>
-                                <option value="<?= htmlspecialchars($courier['courier_id']) ?>">
+                                <option value="<?= htmlspecialchars($courier['courier_id']) ?>" <?= isset($booking['courier_id']) && $booking['courier_id'] == $courier['courier_id'] ? 'selected' : '' ?>>
                                     <?= htmlspecialchars($courier['first_name'] . ' ' . $courier['last_name']) ?> - <?= htmlspecialchars($courier['phone_number']) ?> 
                                 </option>
                             <?php endforeach; ?>

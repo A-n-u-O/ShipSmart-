@@ -58,7 +58,8 @@ try {
     $stmt = $pdo->prepare("
         SELECT b.booking_id, b.pickup_date, b.pickup_time, b.pickup_location, b.status, 
                s.tracking_number, s.current_status, 
-               c.first_name AS courier_first_name, c.last_name AS courier_last_name, c.phone_number AS courier_phone, c.is_available AS courier_available
+               c.first_name AS courier_first_name, c.last_name AS courier_last_name, 
+               c.contact_info AS courier_phone, c.is_available AS courier_available
         FROM Bookings b
         LEFT JOIN Shipments s ON b.booking_id = s.booking_id
         LEFT JOIN Couriers c ON b.courier_id = c.courier_id
@@ -122,6 +123,14 @@ try {
                         <p>Available: <?= $pickup['courier_available'] ? 'Yes' : 'No'; ?></p>
 
                         <div class="position-button">
+                            <!-- Edit Button to Select Booking for Editing -->
+                            <form action="editPickupDetails.php" method="GET">
+                                <button type="submit" class="edit-btn" name="booking_id" value="<?= $pickup['booking_id'] ?>">
+                                    Edit
+                                </button>
+                            </form>
+
+                            <!-- Delete Button -->
                             <form action="scheduledPickups.php" method="POST" onsubmit="return confirm('Are you sure you want to cancel this pickup?');">
                                 <button type="submit" class="cancel-btn" name="delete_booking_id" value="<?= $pickup['booking_id'] ?>">
                                     Delete
