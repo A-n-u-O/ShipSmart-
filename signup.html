@@ -8,9 +8,9 @@
                    
         .overlay {
             position: fixed;
-            width: 100%;
+            width: 105%;
             height: 150%;
-            background: url('/Assets/images/SIGN UP.png'); 
+            background: url('/ShipSmart-/Assets/images/overlay.jpg'); 
             background-size: cover;
             z-index: 10;
             opacity: 1;
@@ -19,14 +19,12 @@
         }  
                             
         body {
-            margin: 0;
             font-family: Arial, sans-serif;
-            background-image: url('Assets/images/SIGN UP II.png');
+            background-image: url('/ShipSmart-/Assets/images/signup_background.png');
             height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
-            animation: bounce 2s ease-in-out infinite;
             transform: translateY(10px);
             zoom: 0.75;
             position: relative;
@@ -36,6 +34,7 @@
         .signupbox {
             display: flex;
             flex-direction: column;
+            background-color: rgb(26, 26, 44);
             background-image: url('Assets/images/Rectangle 1.png');
             border-radius: 35px;
             padding: 20px;
@@ -90,7 +89,7 @@
         }
 
         .signupform .loginlink a {
-            color: red;
+            color: rgb(245, 132, 132);
             text-decoration: none;
         }
 
@@ -99,9 +98,10 @@
         }
 
        .moveit-img{
-        margin-bottom: 90px;
-        margin-left: 800px;
-        width: 200px;
+        border-radius: 12px;
+        margin-bottom: 80px;
+        margin-left: 1000px;
+        width: 50px;
         height: auto;
 
 
@@ -126,11 +126,11 @@
                 <input type="password" placeholder="Password" required>
                 <button class="signupbtn">Sign Up</button>
                 <div class="loginlink">
-                Already have an account? <a href="#">Log In</a>
+                Already have an account? <a href="login.html">Log In</a>
             </div>
         </div>
 
-        <input type="image" src="Assets/images/MOVE-IT.png" alt="image not found", class="moveit-img">
+        <input type="image" src="/ShipSmart-/Assets/images/Shipsmart-icon-dark.png" alt="image not found", class="moveit-img">
     </div>
     <script src="signup.js"></script>
 </body>
