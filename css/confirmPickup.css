@@ -1,3 +1,28 @@
-.confirm-pickup{
-    margin-left: 300px;
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f9f9f9;
+    color: #333;
+    margin-left: 300px;/*space for navbar*/
+}
+
+.confirmation-message {
+    max-width: 600px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #e7f3fe;
+    border-left: 6px solid #2196F3;
+    border-radius: 5px;
+}
+
+.back-to-home-btn {
+    background-color: #28a745;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.back-to-home-btn:hover {
+    background-color: #218838;
 }
