@@ -173,7 +173,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 <body>
     <form class="form_main" method="POST" action="signup.php">
         <p class="heading">
-            <img src="../Assets/images/shipsmartLogoDark.png" alt="Logo" class="logo">
+            <img src="../Assets/images/shipsmartLogoLight.png" alt="Logo" class="logo">
             Sign Up
         </p>
 

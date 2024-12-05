@@ -8,7 +8,7 @@ $current_page = basename($_SERVER['SCRIPT_NAME']);
   <ul>
     <!-- Logo with image and text -->
     <li class="logo">
-      <img src="../Assets/images/Shipsmart-icon-dark.png" alt="ShipSmart-Logo">
+      <img src="../Assets/images/shipsmartLogoLight.png" alt="ShipSmart-Logo">
       <span>ShipSmart</span>
     </li>
 

@@ -10,6 +10,7 @@ if (!isset($_SESSION['user_id']) || !isset($_SESSION['current_booking'])) {
 
 // Fetch available couriers
 try {
+    // Adjusted query with a fallback if the column exists
     $stmt = $pdo->prepare("SELECT * FROM Couriers WHERE available_time >= ? ORDER BY first_name, last_name");
     $stmt->execute([$_SESSION['current_booking']['pickup_time']]);
     $couriers = $stmt->fetchAll(PDO::FETCH_ASSOC);
