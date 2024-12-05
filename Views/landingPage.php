@@ -15,7 +15,7 @@
     <!-- Navbar -->
     <nav class="navbar">
         <div class="header-company">
-            <img src="../Assets/images/Shipsmart-icon-light.png" alt="ShipSmart Logo" class="footer-logo">
+            <img src="../Assets/images/shipsmartLogoLight.png" alt="ShipSmart Logo" class="footer-logo">
             <h1>ShipSmart</h1>
         </div>
         <ul class="nav-links">
@@ -128,7 +128,7 @@
             <!-- Footer Taskbar -->
             <div class="footer-taskbar">
                 <div class="footer-company">
-                    <img src="../Assets/images/Shipsmart-icon-dark.png" alt="ShipSma Logo" class="footer-logo">
+                    <img src="../Assets/images/shipsmartLogoDark.png" alt="ShipSma Logo" class="footer-logo">
                     <span>ShipSmart</span>
                 </div>
                 <ul class="nav">

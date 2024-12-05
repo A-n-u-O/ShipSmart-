@@ -47,6 +47,14 @@ main.choose-courier {
   flex-direction: column;
 }
 
+/* Adjustments for mobile responsiveness */
+@media (max-width: 600px) {
+  .courier-item {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+
 .courier-item input {
   margin-bottom: 10px;
 }
@@ -89,4 +97,37 @@ input[type="radio"] {
 
 .back-btn:hover {
   text-decoration: underline;
+}
+
+/* Accessibility: Focus state for radio and select inputs */
+input[type="radio"]:focus,
+select:focus {
+  outline: 2px solid #007bff;
+  outline-offset: 2px;
+}
+
+/* Dark mode support */
+@media (prefers-color-scheme: dark) {
+  body {
+    background-color: #121212;
+    color: #f9f9f9;
+  }
+
+  .choose-courier h1 {
+    color: #80b3ff;
+  }
+
+  .courier-item {
+    background-color: #333;
+    border-color: #444;
+  }
+
+  .select-courier-btn {
+    background-color: #007bff;
+    color: #fff;
+  }
+
+  .select-courier-btn:hover {
+    background-color: #0056b3;
+  }
 }

@@ -66,7 +66,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['courier_id'])) {
         <h1>Select Courier</h1>
 
         <?php if (isset($_SESSION['error_message'])): ?>
-            <div class="error-message"><?= htmlspecialchars($_SESSION['error_message']); unset($_SESSION['error_message']); ?></div>
+            <div class="error-message" role="alert">
+                <?= htmlspecialchars($_SESSION['error_message']); unset($_SESSION['error_message']); ?>
+            </div>
         <?php endif; ?>
 
         <div class="courier-list">
@@ -85,15 +87,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['courier_id'])) {
                         <?php endforeach; ?>
                     </div>
 
-                    <button type="submit" class="select-courier-btn">Select Courier</button>
+                    <button type="submit" class="select-courier-btn" aria-label="Confirm courier selection">Select Courier</button>
                 </form>
             <?php else: ?>
-                <p>No available couriers at this time.</p>
+                <p class="no-courier-message">No available couriers at this time.</p>
             <?php endif; ?>
         </div>
 
         <div class="actions">
-            <a href="schedulePickup.php" class="back-btn">Back to Schedule</a>
+            <a href="schedulePickup.php" class="back-btn" aria-label="Return to schedule page">Back to Schedule</a>
         </div>
     </main>
 </body>
