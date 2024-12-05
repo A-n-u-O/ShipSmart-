@@ -13,7 +13,7 @@ $current_page = basename($_SERVER['SCRIPT_NAME']);
     <!-- Home with sub-menu -->
     <li>
       <a href="../Views/dashboard.php" class="<?= $current_page == 'dashboard.php' ? 'active' : '' ?>">
-        <img src="../Assets/icons/homeIcon.svg" alt="Home Icon" class="nav-icon">
+        <img src="../Assets/icons/dashboardIcon.svg" alt="Home Icon" class="nav-icon">
         Dashboard
         <span class="toggle-icon">▼</span>
       </a>
