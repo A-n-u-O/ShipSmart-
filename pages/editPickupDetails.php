@@ -108,7 +108,7 @@ if (isset($_GET['booking_id'])) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Edit Pickup Details</title>
     <link rel="stylesheet" href="../css/navbar.css">
-    <link rel="stylesheet" href="../css/couriers.css">
+    <link rel="stylesheet" href="../css/editPickupDetails.css">
     <script src="../js/editPickupDetails.js" defer></script>
 </head>
 <body>
