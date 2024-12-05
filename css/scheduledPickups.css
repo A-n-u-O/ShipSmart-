@@ -4,6 +4,19 @@ body {
   color: #333;
   margin-left: 300px; /*space for navbar*/
 }
+@keyframes fadeOut {
+  0% {
+      opacity: 1;
+  }
+  80% {
+      opacity: 0.9;
+  }
+  100% {
+      opacity: 0;
+      display: none;
+  }
+}
+
 
 .scheduled-pickups {
   max-width: 60%;
@@ -36,7 +49,7 @@ body {
 .cancel-btn {
   background-color: #f44336;
   border: none;
-  color: white;
+  color: black;
   text-align: center;
   padding: 10px 20px;
   border-radius: 5px;
@@ -112,15 +125,3 @@ body {
   animation: fadeOut 5s forwards; /* Auto dismiss after 5 seconds */
 }
 
-@keyframes fadeOut {
-  0% {
-      opacity: 1;
-  }
-  80% {
-      opacity: 0.9;
-  }
-  100% {
-      opacity: 0;
-      display: none;
-  }
-}

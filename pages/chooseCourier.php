@@ -10,9 +10,13 @@ if (!isset($_SESSION['user_id']) || !isset($_SESSION['current_booking'])) {
 
 // Fetch available couriers
 try {
-    // Adjusted query with a fallback if the column exists
-    $stmt = $pdo->prepare("SELECT * FROM Couriers WHERE available_time >= ? ORDER BY first_name, last_name");
-    $stmt->execute([$_SESSION['current_booking']['pickup_time']]);
+    $stmt = $pdo->prepare("
+        SELECT courier_id, first_name, last_name, contact_info, available_time 
+        FROM Couriers 
+        WHERE available = 1 
+        ORDER BY first_name, last_name
+    ");
+    $stmt->execute();
     $couriers = $stmt->fetchAll(PDO::FETCH_ASSOC);
 } catch (Exception $e) {
     $_SESSION['error_message'] = "Error fetching couriers: " . $e->getMessage();
@@ -26,7 +30,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['courier_id'])) {
         $booking_id = $_SESSION['current_booking']['booking_id'];
 
         // Update the booking with selected courier
-        $stmt = $pdo->prepare("UPDATE Bookings SET courier_id = ?, status = 'Confirmed' WHERE booking_id = ? AND user_id = ?");
+        $stmt = $pdo->prepare("
+            UPDATE Bookings 
+            SET courier_id = ?, status = 'Confirmed' 
+            WHERE booking_id = ? AND user_id = ?
+        ");
         $stmt->execute([$courier_id, $booking_id, $_SESSION['user_id']]);
 
         // Store courier details in session
@@ -52,25 +60,25 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['courier_id'])) {
     <link rel="stylesheet" href="../css/chooseCourier.css">
 </head>
 <body>
-    <?php include '../Views/navbar.php'; ?> <!-- Include reusable navbar -->
+    <?php include '../Views/navbar.php'; ?>
 
     <main class="choose-courier">
         <h1>Select Courier</h1>
 
         <?php if (isset($_SESSION['error_message'])): ?>
-            <div class="error-message"><?= $_SESSION['error_message']; unset($_SESSION['error_message']); ?></div>
+            <div class="error-message"><?= htmlspecialchars($_SESSION['error_message']); unset($_SESSION['error_message']); ?></div>
         <?php endif; ?>
 
         <div class="courier-list">
             <?php if (!empty($couriers)): ?>
-                <form method="POST" action="">
+                <form method="POST">
                     <div class="courier-options">
                         <?php foreach ($couriers as $courier): ?>
                             <div class="courier-item">
                                 <input type="radio" name="courier_id" id="courier_<?= $courier['courier_id'] ?>" value="<?= $courier['courier_id'] ?>" required>
                                 <label for="courier_<?= $courier['courier_id'] ?>">
                                     <strong><?= htmlspecialchars($courier['first_name'] . ' ' . $courier['last_name']) ?></strong>
-                                    <p>Phone: <?= htmlspecialchars($courier['phone_number']) ?></p>
+                                    <p>Phone: <?= htmlspecialchars($courier['contact_info']) ?></p>
                                     <p>Available Time: <?= htmlspecialchars($courier['available_time']) ?></p>
                                 </label>
                             </div>
@@ -80,7 +88,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['courier_id'])) {
                     <button type="submit" class="select-courier-btn">Select Courier</button>
                 </form>
             <?php else: ?>
-                <p>No available couriers at the selected time.</p>
+                <p>No available couriers at this time.</p>
             <?php endif; ?>
         </div>
 

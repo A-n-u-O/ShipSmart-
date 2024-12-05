@@ -28,7 +28,7 @@ if (isset($_POST['delete_booking_id'])) {
             throw new Exception("You are not authorized to delete this booking.");
         }
         
-        // Delete associated shipments first (if they exist)
+        // Delete associated shipments first
         $delete_shipments_stmt = $pdo->prepare("DELETE FROM Shipments WHERE booking_id = ?");
         $delete_shipments_stmt->execute([$booking_id]);
         
@@ -45,11 +45,7 @@ if (isset($_POST['delete_booking_id'])) {
         if ($pdo->inTransaction()) {
             $pdo->rollBack();
         }
-        
-        error_log("Deletion error: " . $e->getMessage());
         $_SESSION['error_message'] = "Error deleting pickup: " . $e->getMessage();
-        header('Location: scheduledPickups.php');
-        exit();
     }
 }
 
@@ -59,7 +55,7 @@ try {
         SELECT b.booking_id, b.pickup_date, b.pickup_time, b.pickup_location, b.status, 
                s.tracking_number, s.current_status, 
                c.first_name AS courier_first_name, c.last_name AS courier_last_name, 
-               c.contact_info AS courier_phone, c.is_available AS courier_available
+               c.contact_info AS courier_phone, c.available AS courier_available
         FROM Bookings b
         LEFT JOIN Shipments s ON b.booking_id = s.booking_id
         LEFT JOIN Couriers c ON b.courier_id = c.courier_id
@@ -89,62 +85,73 @@ try {
     <?php include '../Views/navbar.php'; ?>
 
     <main class="scheduled-pickups">
-        <h1>Your Scheduled Pickups</h1>
-        
-        <?php 
-        if (isset($_SESSION['error_message'])) {
-            echo '<div class="error-message">' . sanitizeOutput($_SESSION['error_message']) . '</div>';
-            unset($_SESSION['error_message']);
+    <h1>Your Scheduled Pickups</h1>
+
+    <?php 
+    $messages = [
+        'error' => $_SESSION['error_message'] ?? null,
+        'success' => $_SESSION['success_message'] ?? null,
+    ];
+    foreach ($messages as $type => $message) {
+        if ($message) {
+            $class = $type === 'error' ? 'error-message' : 'success-message';
+            echo "<div class='$class' id='{$type}Message'>" . sanitizeOutput($message) . "</div>";
+            unset($_SESSION[$type . '_message']);
         }
+    }
+    ?>
 
-        if (isset($_SESSION['success_message'])): ?>
-            <div class="success-message" id="successMessage">
-                <?= sanitizeOutput($_SESSION['success_message']); ?>
-            </div>
-            <?php unset($_SESSION['success_message']); ?>
-        <?php endif; ?>
-        
-        <?php if (!empty($pickups)): ?>
-            <div class="pickup-list">
-                <?php foreach ($pickups as $pickup): ?>
-                    <div class="pickup-item">
-                        <h3>Pickup on <?= sanitizeOutput($pickup['pickup_date']) ?></h3>
-                        <p>Time: <?= sanitizeOutput($pickup['pickup_time']) ?></p>
-                        <p>Address: <?= sanitizeOutput($pickup['pickup_location']) ?></p>
-                        <p>Booking Status: <?= sanitizeOutput($pickup['status']) ?></p>
-                        <?php if (!empty($pickup['tracking_number'])): ?>
-                            <p>Tracking Number: <?= sanitizeOutput($pickup['tracking_number']) ?></p>
-                            <p>Shipment Status: <?= sanitizeOutput($pickup['current_status']) ?></p>
-                        <?php endif; ?>
+    <?php if (!empty($pickups)): ?>
+        <div class="pickup-list">
+            <?php foreach ($pickups as $pickup): ?>
+                <div class="pickup-item">
+                    <h3>Pickup on <?= sanitizeOutput($pickup['pickup_date']) ?></h3>
+                    <p>Time: <?= sanitizeOutput($pickup['pickup_time']) ?></p>
+                    <p>Address: <?= sanitizeOutput($pickup['pickup_location']) ?></p>
+                    <p class="status <?= strtolower(sanitizeOutput($pickup['status'])) ?>">
+                        Booking Status: <?= sanitizeOutput($pickup['status']) ?>
+                    </p>
 
+                    <?php if ($pickup['tracking_number']): ?>
+                        <p>Tracking Number: <?= sanitizeOutput($pickup['tracking_number']) ?></p>
+                        <p>Shipment Status: <?= sanitizeOutput($pickup['current_status']) ?></p>
+                    <?php endif; ?>
+
+                    <?php if ($pickup['courier_first_name']): ?>
                         <h4>Courier Information</h4>
                         <p>Name: <?= sanitizeOutput($pickup['courier_first_name'] . ' ' . $pickup['courier_last_name']); ?></p>
                         <p>Phone: <?= sanitizeOutput($pickup['courier_phone']); ?></p>
                         <p>Available: <?= $pickup['courier_available'] ? 'Yes' : 'No'; ?></p>
+                    <?php else: ?>
+                        <p>No courier has been assigned yet.</p>
+                    <?php endif; ?>
 
-                        <div class="position-button">
-                            <!-- Edit Button to Select Booking for Editing -->
-                            <form action="editPickupDetails.php" method="GET">
-                                <button type="submit" class="edit-btn" name="booking_id" value="<?= $pickup['booking_id'] ?>">
-                                    Edit
-                                </button>
-                            </form>
+                    <div class="position-button">
+                        <form action="editPickupDetails.php" method="GET">
+                            <button type="submit" class="edit-btn" name="booking_id" value="<?= $pickup['booking_id'] ?>" 
+                                    aria-label="Edit pickup details for booking ID <?= sanitizeOutput($pickup['booking_id']); ?>">
+                                Edit
+                            </button>
+                        </form>
 
-                            <!-- Delete Button -->
-                            <form action="scheduledPickups.php" method="POST" onsubmit="return confirm('Are you sure you want to cancel this pickup?');">
-                                <button type="submit" class="cancel-btn" name="delete_booking_id" value="<?= $pickup['booking_id'] ?>">
-                                    Delete
-                                </button>
-                            </form>
-                        </div>
+                        <form action="scheduledPickups.php" method="POST" onsubmit="return confirm('Are you sure you want to cancel this pickup?');">
+                            <button type="submit" class="cancel-btn" name="delete_booking_id" value="<?= $pickup['booking_id'] ?>" 
+                                    aria-label="Cancel pickup for booking ID <?= sanitizeOutput($pickup['booking_id']); ?>">
+                                Delete
+                            </button>
+                        </form>
                     </div>
-                <?php endforeach; ?>
-            </div>
-   
-        <?php else: ?>
+                </div>
+            <?php endforeach; ?>
+        </div>
+    <?php else: ?>
+        <div class="no-pickups">
+            <img src="../images/no-pickups.png" alt="No pickups scheduled">
             <p>No scheduled pickups.</p>
-        <?php endif; ?>
-    </main>
+        </div>
+    <?php endif; ?>
+</main>
+
 
     <script>
         // Remove success message after a few seconds
