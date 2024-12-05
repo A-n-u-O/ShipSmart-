@@ -1,7 +1,7 @@
-/* General Navbar Styles */
+/* Styles */
 nav {
   background-color: #333;
-  width: 250px; /* Adjust the width of the sidebar */
+  width: 270px; /* Adjust the width of the sidebar */
   position: fixed; /* Fix the navbar to the left side */
   height: 100%; /* Full height of the viewport */
   top: 0;
@@ -48,15 +48,22 @@ nav ul li {
 /* Link Styles */
 nav ul li a {
   display: flex;
-  justify-content: space-between; /* Space between link text and toggle icon */
+  /* justify-content: space-between;  */
   align-items: center;
   padding: 10px 20px;
   color: white;
+  gap: 20px;
   text-decoration: none;
   width: 80%; /* Center-align the link content */
   margin: auto;
   border-radius: 5px;
   transition: background-color 0.3s ease;
+}
+
+nav ul li a .nav-icon {
+  /* margin-right: 8px; */
+  width: 20px;
+  height: 20px;
 }
 
 /* Hover Effect for Links */
@@ -120,4 +127,66 @@ nav ul li + li {
   font-size: 16px;
   cursor: pointer;
   color: white;
+  margin-left: auto;
+
+}
+
+/* Move Logout Button to the Bottom */
+nav .logout {
+  margin-top: auto; /* Pushes the logout button to the bottom */
+  /* margin: 10px; */
+}
+
+/* Logout Link Styles */
+nav .logout a {
+  display: flex;
+  align-items: center;
+  /* justify-content: space-between; */
+  padding: 10px 20px;
+  color: white;
+  text-decoration: none;
+  width: 80%;
+  margin: auto;
+  border-radius: 5px;
+  gap: 20px;
+  background-color: #0a407a; /* Set background color for logout button */
+  transition: background-color 0.3s ease;
+}
+
+/* Hover Effect for Logout Button */
+nav .logout a:hover {
+  background-color: #1c74d2; /* Make it darker when hovered */
+}
+
+/* Icon for the logout button */
+nav .logout a .nav-icon {
+  /* margin-right: 10px; */
+  font-size: 18px;
+  width: 20px;
+  height: 20px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  nav ul {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  nav ul li {
+    margin-bottom: 15px;
+  }
+
+  nav .logo span {
+    font-size: 18px;
+  }
+
+  nav ul li a {
+    font-size: 18px;
+    padding: 10px 0;
+  }
+
+  nav ul li .drop-down {
+    width: 100%;
+  }
 }
