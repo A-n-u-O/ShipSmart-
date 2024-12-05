@@ -1,93 +1,128 @@
-/* General Styles */
+/* Full Page Styling */
 body {
-    margin: 0;
-    font-family: Arial, sans-serif;
-    background-color: #f8f9fa; /* Light background for contrast */
-  }
-  
-  /* Centering container */
-  .d-flex {
-    display: flex;
-  }
-  
-  .justify-content-center {
-    justify-content: center;
-  }
-  
-  .align-items-center {
-    align-items: center;
-  }
-  
-  .shadow {
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
-  }
-  
-  .rounded {
-    border-radius: 10px; /* Rounded corners for the form */
-  }
-  
-  /* Form Styles */
-  form {
-    width: 100%;
-  }
-  
-  /* Heading Style */
-  h2 {
-    font-size: 24px;
-    font-weight: bold;
-    color: #333;
-  }
-  
-  /* Label Styles */
-  .form-label {
-    font-size: 14px;
-    font-weight: 500;
-    color: #555;
-  }
-  
-  /* Input Field Styles */
-  .form-control {
-    font-size: 14px;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    transition: border-color 0.3s ease;
-  }
-  
-  .form-control:focus {
-    outline: none;
-    border-color: #007bff; /* Highlight border on focus */
-    box-shadow: 0 0 5px rgba(0, 123, 255, 0.25); /* Glow effect */
-  }
-  
-  /* Button Styles */
-  .btn-primary {
-    background-color: #007bff;
-    border-color: #007bff;
-    font-size: 16px;
-    padding: 10px;
-    border-radius: 5px;
-    transition: background-color 0.3s ease;
-  }
-  
-  .btn-primary:hover {
-    background-color: #0056b3;
-    border-color: #004085;
-  }
-  
-  /* Link Styles */
-  a {
-    text-decoration: none;
-    color: #007bff;
-  }
-  
-  a:hover {
-    text-decoration: underline;
-  }
-  
-  /* Alert Box */
-  .alert {
-    font-size: 14px;
-    margin-bottom: 15px;
-  }
-  
+  margin: 0;
+  font-family: Arial, sans-serif;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(to bottom right, #6db1ff, #ffffff);
+}
+
+/* Form Container */
+.form_main {
+  width: 400px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: rgb(255, 255, 255);
+  padding: 40px;
+  border-radius: 30px;
+  box-shadow: 0px 10px 40px rgba(0, 0, 0, 0.1);
+}
+
+.heading {
+  font-size: 2.5em;
+  color: #333;
+  font-weight: bold;
+  margin: 15px 0 30px 0;
+  display: flex;
+  align-items: center;
+  /* Align logo and text */
+  flex-direction: column;
+}
+
+/* Logo styling */
+.logo {
+  width: 100px;
+  height: auto;
+  margin-right: 10px;
+  /* Space between logo and text */
+  vertical-align: middle;
+}
+
+
+
+.inputContainer {
+  width: 100%;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.inputIcon {
+  position: absolute;
+  left: 10px;
+  pointer-events: none;
+  /* Ensures the SVG doesn't block input focus */
+  width: 20px;
+  height: 20px
+}
+
+.inputField {
+  width: 100%;
+  height: 50px;
+  background-color: transparent;
+  border: none;
+  border-bottom: 2px solid #ccc;
+  color: #333;
+  font-size: 1em;
+  padding-left: 40px;
+  box-sizing: border-box;
+  transition: all 0.3s ease;
+  z-index: 1;
+  /* Ensure input is clickable */
+}
+
+.inputField:focus {
+  outline: none;
+  border-bottom: 2px solid #6db1ff;
+}
+
+.inputField::placeholder {
+  color: #999;
+  font-size: 1em;
+}
+
+#button {
+  width: 100%;
+  border: none;
+  background-color: #0056b3;
+  color: white;
+  height: 50px;
+  border-radius: 25px;
+  font-size: 1em;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+#button:hover {
+  background-color: #003d82;
+}
+
+.signupContainer {
+  margin-top: 20px;
+  text-align: center;
+}
+
+.signupContainer p {
+  font-size: 1em;
+  font-weight: 500;
+  color: #333;
+}
+
+.signupContainer a {
+  font-size: 1em;
+  font-weight: bold;
+  color: #0056b3;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.signupContainer a:hover {
+  color: #003d82;
+}
