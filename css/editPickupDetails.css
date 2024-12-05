@@ -1,20 +1,19 @@
 /* General styling for the edit pickup details page */
 body {
   font-family: Arial, sans-serif;
-  margin: 0;
-  padding: 0;
-  background-color: #f8f9fa;
+  background-color: #f9f9f9;
   color: #333;
+  margin-left: 300px; /*space for navbar*/
 }
 
 /* Main content styling */
 .edit-pickup {
-  max-width: 700px;
-  margin: 40px auto;
+  max-width: 800px;
+  margin: 20px auto;
   padding: 20px;
   background-color: #fff;
   border-radius: 8px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
 
 .edit-pickup h1 {
@@ -154,6 +153,15 @@ button[type="submit"] {
 
 button[type="submit"]:hover {
   background-color: #0056b3;
+}
+
+.error {
+  border: 1px solid red;
+}
+
+.error-message {
+  color: red;
+  font-size: 0.875em;
 }
 
 /* No bookings message */

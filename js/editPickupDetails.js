@@ -1,6 +1,11 @@
 document.addEventListener("DOMContentLoaded", () => {
     const pickupDateInput = document.getElementById("pickup_date");
     const pickupTimeInput = document.getElementById("pickup_time");
+    const phoneNumberInput = document.getElementById("phone_number");
+
+    // Ensure only today or future dates can be picked
+    const today = new Date().toISOString().split("T")[0];
+    pickupDateInput.setAttribute("min", today);
 
     const validateTime = (event) => {
         const [hours] = event.target.value.split(":").map(Number);
@@ -24,6 +29,21 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     };
 
+    // Validate Nigerian phone numbers
+    const validatePhoneNumber = (event) => {
+        const phoneNumber = event.target.value;
+        const phoneRegex = /^(?:\+234|0)\d{10}$/;
+        const errorPhone = document.getElementById('error_phone_number');
+        if (!phoneRegex.test(phoneNumber)) {
+            errorPhone.textContent = "Please enter a valid Nigerian phone number (e.g., +234XXXXXXXXXX or 0XXXXXXXXXX).";
+            event.target.classList.add('error');
+        } else {
+            errorPhone.textContent = "";  // Clear error message
+            event.target.classList.remove('error');
+        }
+    };
+
     pickupTimeInput.addEventListener("input", validateTime);
     pickupDateInput.addEventListener("input", validateDate);
+    phoneNumberInput.addEventListener("input", validatePhoneNumber);
 });

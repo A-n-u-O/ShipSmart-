@@ -1,8 +1,10 @@
 document.addEventListener("DOMContentLoaded", () => {
+  // Set the minimum date for pickup to today
   const today = new Date();
   const minDate = today.toISOString().split("T")[0];
   document.getElementById("pickup_date").setAttribute("min", minDate);
 
+  // Validate pickup time to ensure it's between 9 AM and 5 PM
   const validateTime = (event) => {
       const [hours] = event.target.value.split(":").map(Number);
       const errorTime = document.getElementById('error_time');
@@ -14,6 +16,7 @@ document.addEventListener("DOMContentLoaded", () => {
       }
   };
 
+  // Validate pickup date to ensure it's not on the weekend
   const validateDate = (event) => {
       const dayOfWeek = new Date(event.target.value).getDay();
       const errorDate = document.getElementById('error_date');
@@ -25,10 +28,10 @@ document.addEventListener("DOMContentLoaded", () => {
       }
   };
 
+  // Confirm pickup and validate form before submission
   const confirmPickup = document.getElementById("confirm-pickup-btn");
   confirmPickup.addEventListener("click", (event) => {
     event.preventDefault();
-    // Validate the form
     const form = confirmPickup.closest("form");
     const formData = new FormData(form);
     const formInputs = form.querySelectorAll("input");
@@ -44,11 +47,11 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     if (isValid) {
-      // Submit the form
       form.submit();
     }
   });
 
+  // Add event listeners for time and date validation
   document.getElementById("pickup_time").addEventListener("input", validateTime);
   document.getElementById("pickup_date").addEventListener("input", validateDate);
 });

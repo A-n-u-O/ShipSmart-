@@ -46,3 +46,12 @@ body {
 .confirm-pickup-btn:hover {
   background-color: #0056b3;
 }
+
+.error {
+  border: 1px solid red;
+}
+
+.error-message {
+  color: red;
+  font-size: 0.875em;
+}

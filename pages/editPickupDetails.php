@@ -1,4 +1,4 @@
-<?php
+<?php 
 session_start();
 require_once 'db_connection.php';
 
@@ -41,16 +41,22 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $new_time = $_POST['pickup_time'];
         $new_address = $_POST['pickup_address'];
         $selected_courier = $_POST['courier_id'];
+        $phone_number = $_POST['phone_number']; // Added phone number field
 
         // Validate input
-        if (empty($new_date) || empty($new_time) || empty($new_address) || empty($selected_courier)) {
+        if (empty($new_date) || empty($new_time) || empty($new_address) || empty($selected_courier) || empty($phone_number)) {
             throw new Exception('All fields are required');
+        }
+
+        // Validate Nigerian phone number (starts with 0, followed by 9 digits)
+        if (!preg_match('/^0\d{9}$/', $phone_number)) {
+            throw new Exception('Invalid Nigerian phone number. Must start with 0 and contain 10 digits.');
         }
 
         // Update booking
         $stmt = $pdo->prepare("
             UPDATE Bookings 
-            SET pickup_date = ?, pickup_time = ?, pickup_location = ?, courier_id = ? 
+            SET pickup_date = ?, pickup_time = ?, pickup_location = ?, courier_id = ?, phone_number = ? 
             WHERE booking_id = ? AND user_id = ?
         ");
         $stmt->execute([
@@ -58,6 +64,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $new_time, 
             $new_address, 
             $selected_courier, 
+            $phone_number, 
             $booking_id, 
             $_SESSION['user_id']
         ]);
@@ -76,7 +83,7 @@ if (isset($_GET['booking_id'])) {
     $booking_id = $_GET['booking_id'];
     try {
         $stmt = $pdo->prepare("
-            SELECT booking_id, pickup_date, pickup_time, pickup_location, courier_id 
+            SELECT booking_id, pickup_date, pickup_time, pickup_location, courier_id, phone_number 
             FROM Bookings 
             WHERE booking_id = ? AND user_id = ?
         ");
@@ -136,6 +143,11 @@ if (isset($_GET['booking_id'])) {
                 <div class="form-group">
                     <label for="pickup_address">New Pickup Address:</label>
                     <textarea name="pickup_address" id="pickup_address" required><?= isset($booking['pickup_location']) ? htmlspecialchars($booking['pickup_location']) : '' ?></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="phone_number">Phone Number (Nigerian only):</label>
+                    <input type="text" name="phone_number" id="phone_number" value="<?= isset($booking['phone_number']) ? htmlspecialchars($booking['phone_number']) : '' ?>" required>
                 </div>
 
                 <div class="form-group">
