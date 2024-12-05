@@ -86,7 +86,7 @@ nav ul li ul.drop-down {
   left: 0;
   background-color: #444;
   padding: 10px 0;
-  min-width: 250px; /* Dropdown menu width */
+  min-width: 270px; /* Dropdown menu width */
   border-radius: 5px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
   z-index: 1000; /* Ensure the dropdown appears above other content */
@@ -119,7 +119,7 @@ nav ul li ul.drop-down li a:hover {
 
 /* Margin Between Adjacent List Items */
 nav ul li + li {
-  margin-top: 5px;
+  margin-top: 2px;
 }
 
 /* Toggle Icon Styles */

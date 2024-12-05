@@ -14,7 +14,7 @@ $current_page = basename($_SERVER['SCRIPT_NAME']);
     <li>
       <a href="../Views/dashboard.php" class="<?= $current_page == 'dashboard.php' ? 'active' : '' ?>">
         <img src="../Assets/icons/homeIcon.svg" alt="Home Icon" class="nav-icon">
-        Home
+        Dashboard
         <span class="toggle-icon">▼</span>
       </a>
       <ul class="drop-down">
@@ -68,101 +68,100 @@ $current_page = basename($_SERVER['SCRIPT_NAME']);
         Available Couriers
         <span class="toggle-icon">▼</span>
       </a>
-      < <ul class="drop-down">
-    <li><a href="../pages/chooseCourier.php" class="<?= $current_page == 'chooseCourier.php' ? 'active' : '' ?>">
-        Choose Courier</a></li>
-    <li><a href="../pages/courierProfiles.php" class="<?= $current_page == 'courierProfiles.php' ? 'active' : '' ?>">
-        Courier Profiles</a></li>
-    <li><a href="../pages/courierRatings.php" class="<?= $current_page == 'courierRatings.php' ? 'active' : '' ?>">
-        Courier Ratings</a></li>
-  </ul>
-  </li>
+      <ul class="drop-down">
+        <li><a href="../pages/chooseCourier.php" class="<?= $current_page == 'chooseCourier.php' ? 'active' : '' ?>">
+            Choose Courier</a></li>
+        <li><a href="../pages/courierProfiles.php" class="<?= $current_page == 'courierProfiles.php' ? 'active' : '' ?>">
+            Courier Profiles</a></li>
+        <li><a href="../pages/courierRatings.php" class="<?= $current_page == 'courierRatings.php' ? 'active' : '' ?>">
+            Courier Ratings</a></li>
+      </ul>
+    </li>
 
-  <!-- Rates & Pricing with sub-menu -->
-  <li>
-    <a href="../pages/ratesAndPricing.php" class="<?= $current_page == 'ratesAndPricing.php' ? 'active' : '' ?>">
-      <img src="../Assets/icons/priceTagIcon.svg" alt="Rates Icon" class="nav-icon">
-      Rates & Pricing
-      <span class="toggle-icon">▼</span>
-    </a>
-    <ul class="drop-down">
-      <li><a href="../pages/domesticRates.php" class="<?= $current_page == 'domesticRates.php' ? 'active' : '' ?>">
-          Domestic Rates</a></li>
-      <li><a href="../pages/internationalRates.php" class="<?= $current_page == 'internationalRates.php' ? 'active' : '' ?>">
-          International Rates</a></li>
-      <li><a href="../pages/discountsAndOffers.php" class="<?= $current_page == 'discountsAndOffers.php' ? 'active' : '' ?>">
-          Discounts & Offers</a></li>
-    </ul>
-  </li>
+    <!-- Rates & Pricing with sub-menu -->
+    <li>
+      <a href="../pages/ratesAndPricing.php" class="<?= $current_page == 'ratesAndPricing.php' ? 'active' : '' ?>">
+        <img src="../Assets/icons/priceTagIcon.svg" alt="Rates Icon" class="nav-icon">
+        Rates & Pricing
+        <span class="toggle-icon">▼</span>
+      </a>
+      <ul class="drop-down">
+        <li><a href="../pages/domesticRates.php" class="<?= $current_page == 'domesticRates.php' ? 'active' : '' ?>">
+            Domestic Rates</a></li>
+        <li><a href="../pages/internationalRates.php" class="<?= $current_page == 'internationalRates.php' ? 'active' : '' ?>">
+            International Rates</a></li>
+        <li><a href="../pages/discountsAndOffers.php" class="<?= $current_page == 'discountsAndOffers.php' ? 'active' : '' ?>">
+            Discounts & Offers</a></li>
+      </ul>
+    </li>
 
-  <!-- Manage Bookings with sub-menu -->
-  <li>
-    <a href="../pages/manageBookings.php" class="<?= $current_page == 'manageBookings.php' ? 'active' : '' ?>">
-      <img src="../Assets/icons/ticketIcon.svg" alt="Bookings Icon" class="nav-icon">
-      Manage Bookings
-      <span class="toggle-icon">▼</span>
-    </a>
-    <ul class="drop-down">
-      <li><a href="../pages/viewBookings.php" class="<?= $current_page == 'viewBookings.php' ? 'active' : '' ?>">
-          View Bookings</a></li>
-      <li><a href="../pages/cancelBooking.php" class="<?= $current_page == 'cancelBooking.php' ? 'active' : '' ?>">
-          Cancel Booking</a></li>
-      <li><a href="../pages/modifyBooking.php" class="<?= $current_page == 'modifyBooking.php' ? 'active' : '' ?>">
-          Modify Booking</a></li>
-    </ul>
-  </li>
+    <!-- Manage Bookings with sub-menu -->
+    <li>
+      <a href="../pages/manageBookings.php" class="<?= $current_page == 'manageBookings.php' ? 'active' : '' ?>">
+        <img src="../Assets/icons/manageIcon.svg" alt="Bookings Icon" class="nav-icon">
+        Manage Bookings
+        <span class="toggle-icon">▼</span>
+      </a>
+      <ul class="drop-down">
+        <li><a href="../pages/viewBookings.php" class="<?= $current_page == 'viewBookings.php' ? 'active' : '' ?>">
+            View Bookings</a></li>
+        <li><a href="../pages/cancelBooking.php" class="<?= $current_page == 'cancelBooking.php' ? 'active' : '' ?>">
+            Cancel Booking</a></li>
+        <li><a href="../pages/modifyBooking.php" class="<?= $current_page == 'modifyBooking.php' ? 'active' : '' ?>">
+            Modify Booking</a></li>
+      </ul>
+    </li>
 
-  <!-- Support with sub-menu -->
-  <li>
-    <a href="../pages/support.php" class="<?= $current_page == 'support.php' ? 'active' : '' ?>">
-      <img src="../Assets/icons/supportIcon.svg" alt="Support Icon" class="nav-icon">
-      Support
-      <span class="toggle-icon">▼</span>
-    </a>
-    <ul class="drop-down">
-      <li><a href="../pages/contactUs.php" class="<?= $current_page == 'contactUs.php' ? 'active' : '' ?>">
-          Contact Us</a></li>
-      <li><a href="../pages/helpCenter.php" class="<?= $current_page == 'helpCenter.php' ? 'active' : '' ?>">
-          Help Center</a></li>
-      <li><a href="../pages/faqs.php" class="<?= $current_page == 'faqs.php' ? 'active' : '' ?>">
-          FAQs</a></li>
-    </ul>
-  </li>
+    <!-- Support with sub-menu -->
+    <li>
+      <a href="../pages/support.php" class="<?= $current_page == 'support.php' ? 'active' : '' ?>">
+        <img src="../Assets/icons/supportIcon.svg" alt="Support Icon" class="nav-icon">
+        Support
+        <span class="toggle-icon">▼</span>
+      </a>
+      <ul class="drop-down">
+        <li><a href="../pages/contactUs.php" class="<?= $current_page == 'contactUs.php' ? 'active' : '' ?>">
+            Contact Us</a></li>
+        <li><a href="../pages/helpCenter.php" class="<?= $current_page == 'helpCenter.php' ? 'active' : '' ?>">
+            Help Center</a></li>
+        <li><a href="../pages/faqs.php" class="<?= $current_page == 'faqs.php' ? 'active' : '' ?>">
+            FAQs</a></li>
+      </ul>
+    </li>
 
-  <!-- About Us with sub-menu -->
-  ```php
-  <li>
-    <a href="../pages/aboutUs.php" class="<?= $current_page == 'aboutUs.php' ? 'active' : '' ?>">
-      <img src="../Assets/icons/aboutIcon.svg" alt="About Us Icon" class="nav-icon">
-      About Us
-      <span class="toggle-icon">▼</span>
-    </a>
-    <ul class="drop-down">
-      <li><a href="../pages/ourStory.php" class="<?= $current_page == 'ourStory.php' ? 'active' : '' ?>">
-          Our Story</a></li>
-      <li><a href="../pages/mission.php" class="<?= $current_page == 'mission.php' ? 'active' : '' ?>">
-          Mission & Vision</a></li>
-      <li><a href="../pages/team.php" class="<?= $current_page == 'team.php' ? 'active' : '' ?>">
-          Meet the Team</a></li>
-    </ul>
-  </li>
+    <!-- About Us with sub-menu -->
+    <li>
+      <a href="../pages/aboutUs.php" class="<?= $current_page == 'aboutUs.php' ? 'active' : '' ?>">
+        <img src="../Assets/icons/aboutIcon.svg" alt="About Us Icon" class="nav-icon">
+        About Us
+        <span class="toggle-icon">▼</span>
+      </a>
+      <ul class="drop-down">
+        <li><a href="../pages/ourStory.php" class="<?= $current_page == 'ourStory.php' ? 'active' : '' ?>">
+            Our Story</a></li>
+        <li><a href="../pages/mission.php" class="<?= $current_page == 'mission.php' ? 'active' : '' ?>">
+            Mission & Vision</a></li>
+        <li><a href="../pages/team.php" class="<?= $current_page == 'team.php' ? 'active' : '' ?>">
+            Meet the Team</a></li>
+      </ul>
+    </li>
 
-  <!-- Account with sub-menu -->
-  <li>
-    <a href="../pages/account.php" class="<?= $current_page == 'account.php' ? 'active' : '' ?>">
-      <img src="../Assets/icons/profileIcon.svg" alt="Account Icon" class="nav-icon">
-      Account
-      <span class="toggle-icon">▼</span>
-    </a>
-    <ul class="drop-down">
-      <li><a href="../pages/profile.php" class="<?= $current_page == 'profile.php' ? 'active' : '' ?>">
-          Profile</a></li>
-      <li><a href="../pages/editProfile.php" class="<?= $current_page == 'editProfile.php' ? 'active' : '' ?>">
-          Edit Profile</a></li>
-      <li><a href="../pages/notificationSettings.php" class="<?= $current_page == 'notificationSettings.php' ? 'active' : '' ?>">
-          Notifications</a></li>
-    </ul>
-  </li>
+    <!-- Account with sub-menu -->
+    <li>
+      <a href="../pages/account.php" class="<?= $current_page == 'account.php' ? 'active' : '' ?>">
+        <img src="../Assets/icons/profileIcon.svg" alt="Account Icon" class="nav-icon">
+        Account
+        <span class="toggle-icon">▼</span>
+      </a>
+      <ul class="drop-down">
+        <li><a href="../pages/profile.php" class="<?= $current_page == 'profile.php' ? 'active' : '' ?>">
+            Profile</a></li>
+        <li><a href="../pages/editProfile.php" class="<?= $current_page == 'editProfile.php' ? 'active' : '' ?>">
+            Edit Profile</a></li>
+        <li><a href="../pages/notificationSettings.php" class="<?= $current_page == 'notificationSettings.php' ? 'active' : '' ?>">
+            Notifications</a></li>
+      </ul>
+    </li>
   </ul>
 
   <!-- Logout section with a button -->
