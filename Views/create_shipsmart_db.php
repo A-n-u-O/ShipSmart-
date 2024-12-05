@@ -5,105 +5,64 @@ $password = "";
 $dbname = "shipsmart";
 
 try {
-    // Connect to MySQL server
+    // Connect to the MySQL server
     $pdo = new PDO("mysql:host=$host", $user, $password);
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-    // Create the new database
-    $pdo->exec("CREATE DATABASE IF NOT EXISTS $dbname");
-    echo "Database 'shipsmart' created successfully.<br>";
-
-    // Switch to the new database
+    // Use the existing database
     $pdo->exec("USE $dbname");
 
-    // Create the Users table
-    $createUsersTable = "CREATE TABLE IF NOT EXISTS Users (
-        user_id INT AUTO_INCREMENT PRIMARY KEY,
-        name VARCHAR(50) NOT NULL,
-        email VARCHAR(100) UNIQUE NOT NULL,
-        password VARCHAR(255) NOT NULL,
-        phone VARCHAR(20),
-        address TEXT,
-        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-    )";
-    $pdo->exec($createUsersTable);
-    echo "Table 'Users' created successfully.<br>";
+    // Check if the 'phone_number' column exists in the 'bookings' table
+    $stmt = $pdo->query("SHOW COLUMNS FROM bookings LIKE 'phone_number'");
+    if ($stmt->rowCount() == 0) {
+        // Add the 'phone_number' column if it doesn't exist
+        $pdo->exec("ALTER TABLE bookings ADD COLUMN phone_number VARCHAR(20)");
+    }
 
-    // Create the Couriers table
-    $createCouriersTable = "CREATE TABLE IF NOT EXISTS Couriers (
-        courier_id INT AUTO_INCREMENT PRIMARY KEY,
-        first_name VARCHAR(50) NOT NULL,
-        last_name VARCHAR(50) NOT NULL,
-        phone_number VARCHAR(15) NOT NULL,
-        available_time TIME NOT NULL,
-        is_available BOOLEAN DEFAULT TRUE, -- Availability column
-        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-        updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
-    )";
-    $pdo->exec($createCouriersTable);
-    echo "Table 'Couriers' created successfully.<br>";
+    // Check if the 'item_description' column exists in the 'bookings' table
+    $stmt = $pdo->query("SHOW COLUMNS FROM bookings LIKE 'item_description'");
+    if ($stmt->rowCount() == 0) {
+        // Add the 'item_description' column if it doesn't exist
+        $pdo->exec("ALTER TABLE bookings ADD COLUMN item_description TEXT");
+    }
 
-    // Create the Bookings table
-    $createBookingsTable = "CREATE TABLE IF NOT EXISTS Bookings (
-        booking_id INT AUTO_INCREMENT PRIMARY KEY,
-        user_id INT,
-        courier_id INT,
-        pickup_location TEXT NOT NULL,
-        delivery_location TEXT NOT NULL,
-        pickup_date DATE NOT NULL,
-        pickup_time TIME NOT NULL,
-        status ENUM('Pending', 'Confirmed', 'In Transit', 'Delivered', 'Cancelled') DEFAULT 'Pending',
-        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-        updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-        FOREIGN KEY (user_id) REFERENCES Users(user_id),
-        FOREIGN KEY (courier_id) REFERENCES Couriers(courier_id)
-    )";
-    $pdo->exec($createBookingsTable);
-    echo "Table 'Bookings' created successfully.<br>";
+    // Check if the 'item_weight' column exists in the 'bookings' table
+    $stmt = $pdo->query("SHOW COLUMNS FROM bookings LIKE 'item_weight'");
+    if ($stmt->rowCount() == 0) {
+        // Add the 'item_weight' column if it doesn't exist
+        $pdo->exec("ALTER TABLE bookings ADD COLUMN item_weight DECIMAL(10,2)");
+    }
 
-    // Create the Shipments table
-    $createShipmentsTable = "CREATE TABLE IF NOT EXISTS Shipments (
-        shipment_id INT AUTO_INCREMENT PRIMARY KEY,
-        booking_id INT,
-        tracking_number VARCHAR(50) UNIQUE NOT NULL,
-        current_status ENUM('Pending', 'Picked Up', 'In Transit', 'Out for Delivery', 'Delivered', 'Delayed') DEFAULT 'Pending',
-        current_location TEXT,
-        estimated_delivery DATETIME,
-        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-        updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-        FOREIGN KEY (booking_id) REFERENCES Bookings(booking_id)
-    )";
-    $pdo->exec($createShipmentsTable);
-    echo "Table 'Shipments' created successfully.<br>";
+    // Check if the 'rating' column exists in the 'couriers' table
+    $stmt = $pdo->query("SHOW COLUMNS FROM couriers LIKE 'rating'");
+    if ($stmt->rowCount() == 0) {
+        // Add the 'rating' column if it doesn't exist
+        $pdo->exec("ALTER TABLE couriers ADD COLUMN rating DECIMAL(3,2) DEFAULT 0.0");
+    }
 
-    // Create the Rates table
-    $createRatesTable = "CREATE TABLE IF NOT EXISTS Rates (
-        rate_id INT AUTO_INCREMENT PRIMARY KEY,
-        courier_id INT,
-        weight_min DECIMAL(10,2),
-        weight_max DECIMAL(10,2),
-        base_rate DECIMAL(10,2) NOT NULL,
-        additional_rate DECIMAL(10,2),
-        FOREIGN KEY (courier_id) REFERENCES Couriers(courier_id)
-    )";
-    $pdo->exec($createRatesTable);
-    echo "Table 'Rates' created successfully.<br>";
+    // Check if the 'contact_info' column exists in the 'couriers' table
+    $stmt = $pdo->query("SHOW COLUMNS FROM couriers LIKE 'contact_info'");
+    if ($stmt->rowCount() == 0) {
+        // Add the 'contact_info' column if it doesn't exist
+        $pdo->exec("ALTER TABLE couriers ADD COLUMN contact_info TEXT");
+    }
 
-    // Create the Notifications table
-    $createNotificationsTable = "CREATE TABLE IF NOT EXISTS Notifications (
-        notification_id INT AUTO_INCREMENT PRIMARY KEY,
-        user_id INT,
-        shipment_id INT,
-        type ENUM('Booking', 'Shipment Status', 'Delivery', 'Support') NOT NULL,
-        message TEXT NOT NULL,
-        is_read BOOLEAN DEFAULT FALSE,
-        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-        FOREIGN KEY (user_id) REFERENCES Users(user_id),
-        FOREIGN KEY (shipment_id) REFERENCES Shipments(shipment_id)
-    )";
-    $pdo->exec($createNotificationsTable);
-    echo "Table 'Notifications' created successfully.<br>";
+    // Check if the 'available' column exists in the 'couriers' table
+    $stmt = $pdo->query("SHOW COLUMNS FROM couriers LIKE 'available'");
+    if ($stmt->rowCount() == 0) {
+        // Add the 'available' column if it doesn't exist
+        $pdo->exec("ALTER TABLE couriers ADD COLUMN available TINYINT(1) DEFAULT 1");
+    }
 
+    // Check if the 'courier_id' column exists in the 'notifications' table
+    $stmt = $pdo->query("SHOW COLUMNS FROM notifications LIKE 'courier_id'");
+    if ($stmt->rowCount() == 0) {
+        // Add the 'courier_id' column if it doesn't exist
+        $pdo->exec("ALTER TABLE notifications ADD COLUMN courier_id INT AFTER shipment_id");
+        $pdo->exec("ALTER TABLE notifications ADD FOREIGN KEY (courier_id) REFERENCES couriers(courier_id)");
+    }
+
+    echo "Database schema updated successfully.<br>";
 } catch (PDOException $e) {
     echo "Error: " . $e->getMessage();
 }
