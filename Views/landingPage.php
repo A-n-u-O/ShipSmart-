@@ -128,7 +128,11 @@
             <!-- Footer Taskbar -->
             <div class="footer-taskbar">
                 <div class="footer-company">
+<<<<<<< HEAD
                     <img src="../Assets/images/shipsmartLogoDark.png" alt="ShipSma Logo" class="footer-logo">
+=======
+                    <img src="../Assets/images/Shipsmart-icon-dark.png" alt="ShipSma Logo" class="footer-logo">
+>>>>>>> tomisin
                     <span>ShipSmart</span>
                 </div>
                 <ul class="nav">
