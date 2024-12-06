@@ -1,73 +1,96 @@
 document.addEventListener("DOMContentLoaded", () => {
-  // Set the minimum date for pickup to today
-  const today = new Date();
-  const minDate = today.toISOString().split("T")[0];
-  document.getElementById("pickup_date").setAttribute("min", minDate);
+    const pickupDateInput = document.getElementById("pickup_date");
+    const pickupTimeInput = document.getElementById("pickup_time");
+    const phoneNumberInput = document.getElementById("phone_number");
+    const itemDescriptionInput = document.getElementById("item_description");
+    const errorMessages = {
+        date: document.getElementById('error_date'),
+        time: document.getElementById ('error_time'),
+        description: document.getElementById('error_description'),
+        phone: document.getElementById('error_phone_number')
+    };
 
-  // Validate pickup time to ensure it's between 9 AM and 5 PM
-  const validateTime = (event) => {
-      const [hours] = event.target.value.split(":").map(Number);
-      const errorTime = document.getElementById('error_time');
-      if (hours < 9 || hours >= 17) {
-          errorTime.textContent = "Please select a time between 9:00 AM and 5:00 PM.";
-          event.target.value = ""; // Reset invalid time
-      } else {
-          errorTime.textContent = ""; // Clear error message
-      }
-  };
+    // Set the minimum date for pickup to today and maximum to 3 months from today
+    const today = new Date();
+    const minDate = today.toISOString().split("T")[0];
+    const maxDate = new Date();
+    maxDate.setMonth(maxDate.getMonth() + 3);
+    const maxDateString = maxDate.toISOString().split("T")[0];
 
-  // Validate pickup date to ensure it's not on the weekend
-  const validateDate = (event) => {
-      const dayOfWeek = new Date(event.target.value).getDay();
-      const errorDate = document.getElementById('error_date');
-      if (dayOfWeek === 0 || dayOfWeek === 6) {
-          errorDate.textContent = "Pickup is only available Monday to Friday.";
-          event.target.value = ""; // Reset invalid date
-      } else {
-          errorDate.textContent = ""; // Clear error message
-      }
-  };
+    pickupDateInput.setAttribute("min", minDate);
+    pickupDateInput.setAttribute("max", maxDateString);
 
-  // Confirm pickup and validate form before submission
-  const confirmPickup = document.getElementById("confirm-pickup-btn");
-  if (confirmPickup) {
-      confirmPickup.addEventListener("click", (event) => {
-          event.preventDefault();
-          const form = confirmPickup.closest("form");
-          const formData = new FormData(form);
-          const formInputs = form.querySelectorAll("input, textarea");
-          let isValid = true;
+    const validateTime = (event) => {
+        const [hours] = event.target.value.split(":").map(Number);
+        if (hours < 9 || hours >= 17) {
+            errorMessages.time.textContent = "Please select a time between 9:00 AM and 5:00 PM.";
+            event.target.value = ""; // Reset invalid time
+        } else {
+            errorMessages.time.textContent = ""; // Clear error message
+        }
+    };
 
-          formInputs.forEach((input) => {
-              if (input.required && input.value.trim() === "") {
-                  input.classList.add("error");
-                  isValid = false;
-              } else {
-                  input.classList.remove("error");
-              }
-          });
+    const validateDate = (event) => {
+        const dayOfWeek = new Date(event.target.value).getDay();
+        if (dayOfWeek === 0 || dayOfWeek === 6) {
+            errorMessages.date.textContent = "Pickup is only available Monday to Friday.";
+            event.target.value = ""; // Reset invalid date
+        } else {
+            errorMessages.date.textContent = ""; // Clear error message
+        }
+    };
 
-          if (isValid) {
-              form.submit();
-          }
-      });
-  } else {
-      console.error("Element with ID 'confirm-pickup-btn' not found.");
-  }
+    const validateDescription = (event) => {
+        const words = event.target.value.trim().split(/\s+/);
+        if (words.length < 3) {
+            errorMessages.description.textContent = "Description must be at least 3 words.";
+        } else {
+            errorMessages.description.textContent = ""; // Clear error message
+        }
+    };
 
-  // Add event listeners for time and date validation
-  const pickupTimeInput = document.getElementById("pickup_time");
-  const pickupDateInput = document.getElementById("pickup_date");
+    const validatePhoneNumber = (event) => {
+        const phoneNumber = event.target.value;
+        const phoneRegex = /^(?:\+234|0)\d{10}$/;
+        if (!phoneRegex.test(phoneNumber)) {
+            errorMessages.phone.textContent = "Please enter a valid Nigerian phone number (e.g., +234XXXXXXXXXX or 0XXXXXXXXXX).";
+            event.target.classList.add('error');
+        } else {
+            errorMessages.phone.textContent = "";  // Clear error message
+            event.target.classList.remove('error');
+        }
+    };
 
-  if (pickupTimeInput) {
-      pickupTimeInput.addEventListener("input", validateTime);
-  } else {
-      console.error("Element with ID 'pickup_time' not found.");
-  }
+    // Confirm pickup and validate form before submission
+    const confirmPickup = document.querySelector(".confirm-pickup-btn");
+    if (confirmPickup) {
+        confirmPickup.addEventListener("click", (event) => {
+            event.preventDefault();
+            const form = confirmPickup.closest("form");
+            const formInputs = form.querySelectorAll("input, textarea");
+            let isValid = true;
 
-  if (pickupDateInput) {
-      pickupDateInput.addEventListener("input", validateDate);
-  } else {
-      console.error("Element with ID 'pickup_date' not found.");
-  }
+            formInputs.forEach((input) => {
+                if (input.required && input.value.trim() === "") {
+                    input.classList.add("error");
+                    isValid = false;
+                } else {
+                    input.classList.remove("error");
+                }
+            });
+
+            // Validate item description
+            validateDescription({ target: itemDescriptionInput });
+
+            if (isValid && errorMessages.description.textContent === "") {
+                form.submit();
+            }
+        });
+    }
+
+    // Add event listeners for time, date, description, and phone validation
+    pickupTimeInput.addEventListener("input", validateTime);
+    pickupDateInput.addEventListener("input", validateDate);
+    itemDescriptionInput.addEventListener("input", validateDescription);
+    phoneNumberInput.addEventListener("input", validatePhoneNumber);
 });

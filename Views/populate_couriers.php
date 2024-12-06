@@ -2,13 +2,17 @@
 require_once '../config/database.php';
 
 try {
-    $stmt = $pdo->prepare("INSERT INTO Couriers (first_name, last_name, phone_number, available_time) VALUES (?, ?, ?, ?)");
+    // Prepare the insert statement with all required and optional fields
+    $stmt = $pdo->prepare("
+        INSERT INTO Couriers (first_name, last_name, available_time, is_available, available, rating, contact_info) 
+        VALUES (?, ?, ?, ?, ?, ?, ?)
+    ");
     
-    // Sample data
+    // Sample data with all required and optional fields
     $couriers = [
-        ['John', 'Doe', '1234567890', '09:00:00'],
-        ['Jane', 'Smith', '0987654321', '10:00:00'],
-        ['Michael', 'Brown', '5551234567', '11:00:00'],
+        ['John', 'Doe', '09:00:00', 1, 1, 0.00, 'john.doe@example.com'],
+        ['Jane', 'Smith', '10:00:00', 1, 1, 0.00, 'jane.smith@example.com'],
+        ['Michael', 'Brown', '11:00:00', 1, 1, 0.00, 'michael.brown@example.com'],
     ];
 
     foreach ($couriers as $courier) {
@@ -17,6 +21,7 @@ try {
 
     echo "Sample couriers added successfully.";
 } catch (PDOException $e) {
-    error_log($e->getMessage()); // Log error instead of displaying
-    echo "Error occurred while adding couriers.";
+    // Log detailed error message
+    error_log("Database error: " . $e->getMessage());
+    echo "Error occurred while adding couriers: " . htmlspecialchars($e->getMessage());
 }

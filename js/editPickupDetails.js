@@ -2,48 +2,68 @@ document.addEventListener("DOMContentLoaded", () => {
     const pickupDateInput = document.getElementById("pickup_date");
     const pickupTimeInput = document.getElementById("pickup_time");
     const phoneNumberInput = document.getElementById("phone_number");
+    const itemDescriptionInput = document.getElementById("item_description");
+    const errorMessages = {
+        date: document.getElementById('error_date'),
+        time: document.getElementById('error_time'),
+        description: document.getElementById('error_description'),
+        phone: document.getElementById('error_phone_number')
+    };
 
-    // Ensure only today or future dates can be picked
-    const today = new Date().toISOString().split("T")[0];
-    pickupDateInput.setAttribute("min", today);
+    // Set the minimum date for pickup to today and maximum to 3 months from today
+    const today = new Date();
+    const minDate = today.toISOString().split("T")[0];
+    const maxDate = new Date();
+    maxDate.setMonth(maxDate.getMonth() + 3);
+    const maxDateString = maxDate.toISOString().split("T")[0];
+
+    pickupDateInput.setAttribute("min", minDate);
+    pickupDateInput.setAttribute("max", maxDateString);
 
     const validateTime = (event) => {
         const [hours] = event.target.value.split(":").map(Number);
-        const errorTime = document.getElementById('error_time');
         if (hours < 9 || hours >= 17) {
-            errorTime.textContent = "Please select a time between 9:00 AM and 5:00 PM.";
+            errorMessages.time.textContent = "Please select a time between 9:00 AM and 5:00 PM.";
             event.target.value = ""; // Reset invalid time
         } else {
-            errorTime.textContent = ""; // Clear error message
+            errorMessages.time.textContent = ""; // Clear error message
         }
     };
 
     const validateDate = (event) => {
         const dayOfWeek = new Date(event.target.value).getDay();
-        const errorDate = document.getElementById('error_date');
         if (dayOfWeek === 0 || dayOfWeek === 6) {
-            errorDate.textContent = "Pickup is only available Monday to Friday.";
+            errorMessages.date.textContent = "Pickup is only available Monday to Friday.";
             event.target.value = ""; // Reset invalid date
         } else {
-            errorDate.textContent = ""; // Clear error message
+            errorMessages.date.textContent = ""; // Clear error message
         }
     };
 
-    // Validate Nigerian phone numbers
+    const validateDescription = (event) => {
+        const words = event.target.value.trim().split(/\s+/);
+        if (words.length < 3) {
+            errorMessages.description.textContent = "Description must be at least 3 words.";
+        } else {
+            errorMessages.description.textContent = ""; // Clear error message
+        }
+    };
+
     const validatePhoneNumber = (event) => {
         const phoneNumber = event.target.value;
         const phoneRegex = /^(?:\+234|0)\d{10}$/;
-        const errorPhone = document.getElementById('error_phone_number');
         if (!phoneRegex.test(phoneNumber)) {
-            errorPhone.textContent = "Please enter a valid Nigerian phone number (e.g., +234XXXXXXXXXX or 0XXXXXXXXXX).";
+            errorMessages.phone.textContent = "Please enter a valid Nigerian phone number (e.g., +234XXXXXXXXXX or 0XXXXXXXXXX).";
             event.target.classList.add('error');
         } else {
-            errorPhone.textContent = "";  // Clear error message
+            errorMessages.phone.textContent = "";  // Clear error message
             event.target.classList.remove('error');
         }
     };
 
+    // Adding event listeners for time, date, description, and phone validation
     pickupTimeInput.addEventListener("input", validateTime);
     pickupDateInput.addEventListener("input", validateDate);
+    itemDescriptionInput.addEventListener("input", validateDescription);
     phoneNumberInput.addEventListener("input", validatePhoneNumber);
 });

@@ -19,17 +19,17 @@ try {
     $stmt->execute();
     $couriers = $stmt->fetchAll(PDO::FETCH_ASSOC);
 } catch (Exception $e) {
-    $_SESSION['error_message'] = "Error fetching couriers: " . $e->getMessage();
-    $couriers = [];
+    $_SESSION['error_message'] = "Error fetching couriers: " . htmlspecialchars($e->getMessage());
 }
 
 // Handle courier selection
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['courier_id'])) {
     try {
+        // Update the booking with selected courier
         $courier_id = $_POST['courier_id'];
         $booking_id = $_SESSION['current_booking']['booking_id'];
 
-        // Update the booking with selected courier
+        // Update Booking with selected Courier ID and change status to Confirmed
         $stmt = $pdo->prepare("
             UPDATE Bookings 
             SET courier_id = ?, status = 'Confirmed' 
@@ -43,13 +43,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['courier_id'])) {
         // Redirect to confirmation page
         header('Location: confirmPickup.php');
         exit();
-
+        
     } catch (Exception $e) {
-        $_SESSION['error_message'] = "Error selecting courier: " . $e->getMessage();
+        $_SESSION['error_message'] = "Error selecting courier: " . htmlspecialchars($e->getMessage());
     }
 }
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -77,8 +76,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['courier_id'])) {
                     <div class="courier-options">
                         <?php foreach ($couriers as $courier): ?>
                             <div class="courier-item">
-                                <input type="radio" name="courier_id" id="courier_<?= $courier['courier_id'] ?>" value="<?= $courier['courier_id'] ?>" required>
-                                <label for="courier_<?= $courier['courier_id'] ?>">
+                                <input type="radio" name="courier_id" id="courier_<?= htmlspecialchars($courier['courier_id']) ?>" value="<?= htmlspecialchars($courier['courier_id']) ?>" required>
+                                <label for="courier_<?= htmlspecialchars($courier['courier_id']) ?>">
                                     <strong><?= htmlspecialchars($courier['first_name'] . ' ' . $courier['last_name']) ?></strong>
                                     <p>Phone: <?= htmlspecialchars($courier['contact_info']) ?></p>
                                     <p>Available Time: <?= htmlspecialchars($courier['available_time']) ?></p>
@@ -87,7 +86,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['courier_id'])) {
                         <?php endforeach; ?>
                     </div>
 
-                    <button type="submit" class="select-courier-btn" aria-label="Confirm courier selection">Select Courier</button>
+                    <button type="submit" class="select-courier-btn">Select Courier</button>
                 </form>
             <?php else: ?>
                 <p class="no-courier-message">No available couriers at this time.</p>
@@ -95,7 +94,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['courier_id'])) {
         </div>
 
         <div class="actions">
-            <a href="schedulePickup.php" class="back-btn" aria-label="Return to schedule page">Back to Schedule</a>
+            <a href="schedulePickup.php" class="back-btn">Back to Schedule</a>
         </div>
     </main>
+</body>
 </html>

@@ -19,17 +19,17 @@ try {
     $stmt->execute([$_SESSION['user_id']]);
     $bookings = $stmt->fetchAll(PDO::FETCH_ASSOC);
 } catch (Exception $e) {
-    $_SESSION['error_message'] = $e->getMessage();
+    $_SESSION['error_message'] = "Error fetching bookings: " . htmlspecialchars($e->getMessage());
     $bookings = [];
 }
 
 // Fetch available couriers for the user to choose
 try {
-    $courier_stmt = $pdo->prepare("SELECT courier_id, first_name, last_name, phone_number, available_time FROM Couriers WHERE available_time > NOW() AND is_available = 1");
+    $courier_stmt = $pdo->prepare("SELECT courier_id, first_name, last_name, contact_info FROM Couriers WHERE available = 1");
     $courier_stmt->execute();
     $couriers = $courier_stmt->fetchAll(PDO::FETCH_ASSOC);
 } catch (Exception $e) {
-    $_SESSION['error_message'] = "Error fetching couriers: " . $e->getMessage();
+    $_SESSION['error_message'] = "Error fetching couriers: " . htmlspecialchars($e->getMessage());
     $couriers = [];
 }
 
@@ -37,20 +37,50 @@ try {
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     try {
         $booking_id = $_POST['booking_id'];
+        
+        $stmt = $pdo->prepare("
+            SELECT * FROM Bookings 
+            WHERE booking_id = ? AND user_id = ?
+        ");
+        $stmt->execute([$booking_id, $_SESSION['user_id']]);
+        $booking = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        if (!$booking) {
+            throw new Exception('Booking not found.');
+        }
+
         $new_date = $_POST['pickup_date'];
         $new_time = $_POST['pickup_time'];
         $new_address = $_POST['pickup_address'];
         $selected_courier = $_POST['courier_id'];
-        $phone_number = $_POST['phone_number']; // Added phone number field
+        $phone_number = $_POST['phone_number'];
 
         // Validate input
         if (empty($new_date) || empty($new_time) || empty($new_address) || empty($selected_courier) || empty($phone_number)) {
             throw new Exception('All fields are required');
         }
 
-        // Validate Nigerian phone number (starts with 0, followed by 9 digits)
-        if (!preg_match('/^0\d{9}$/', $phone_number)) {
-            throw new Exception('Invalid Nigerian phone number. Must start with 0 and contain 10 digits.');
+        $today = new DateTime();
+        $maxDate = (clone $today)->modify('+3 months');
+        $selectedDate = new DateTime($new_date);
+
+        // Check if the selected date is a weekend
+        if ($selectedDate->format('N') >= 6) {
+            throw new Exception('Pickup date cannot be on a weekend.');
+        } elseif ($selectedDate < $today) {
+            throw new Exception('Pickup date cannot be in the past.');
+        } elseif ($selectedDate > $maxDate) {
+            throw new Exception('Pickup date cannot be more than 3 months in the future.');
+        }
+
+        // Validate working hours (9 AM to 5 PM)
+        $time = DateTime::createFromFormat('H:i', $new_time);
+        if ($time < DateTime::createFromFormat('H:i', '09:00') || $time > DateTime::createFromFormat('H:i', '17:00')) {
+            throw new Exception('Pickup time must be between 9 AM and 5 PM.');
+        }
+
+        if (!preg_match('/^(?:\+234|0)\d{10}$/', $phone_number)) {
+            throw new Exception('Invalid Nigerian phone number format. Use +234XXXXXXXXXX or 0XXXXXXXXXX.');
         }
 
         // Update booking
@@ -70,11 +100,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         ]);
 
         $_SESSION['success_message'] = 'Booking updated successfully!';
-        header('Location: scheduledPickups.php');
+        header('Location: scheduledPick ups.php');
         exit();
 
     } catch (Exception $e) {
+        $_SESSION['error_message'] = "Error updating booking: " . htmlspecialchars($e->getMessage());
     }
+}
+
 // Fetch the selected booking details if editing a specific booking
 if (isset($_GET['booking_id'])) {
     $booking_id = $_GET['booking_id'];
@@ -93,7 +126,7 @@ if (isset($_GET['booking_id'])) {
             exit();
         }
     } catch (Exception $e) {
-        $_SESSION['error_message'] = "Error fetching booking: " . $e->getMessage();
+        $_SESSION['error_message'] = "Error fetching booking: " . htmlspecialchars($e->getMessage());
     }
 }
 ?>
@@ -106,7 +139,7 @@ if (isset($_GET['booking_id'])) {
     <title>Edit Pickup Details</title>
     <link rel="stylesheet" href="../css/navbar.css">
     <link rel="stylesheet" href="../css/editPickupDetails.css">
-    <script src="../js/editPickupDetails.js" defer></script>
+    <script src="../js/validatePickup.js" defer></script>
 </head>
 <body>
     <?php include '../Views/navbar.php'; ?>
@@ -114,59 +147,77 @@ if (isset($_GET['booking_id'])) {
     <main class="edit-pickup">
         <h1>Edit Pickup Details</h1>
         
+        <?php if (!empty($_SESSION['error_message'])): ?>
+            <div class="error-message" role="alert">
+                <?= htmlspecialchars($_SESSION['error_message']); ?>
+                <?php unset($_SESSION['error_message']); ?>
+            </div>
+        <?php elseif (!empty($_SESSION['success_message'])): ?>
+            <div class="success-message" role="alert">
+                <?= htmlspecialchars($_SESSION['success_message']); ?>
+                <?php unset($_SESSION['success_message']); ?>
+            </div>
+        <?php endif; ?>
+
         <?php if (!empty($bookings)): ?>
             <form method="POST" action="">
                 <div class="booking-select">
                     <label for="booking_id">Select Booking to Edit:</label>
-                    <select name="booking_id" id="booking_id" required>
-                        <?php foreach ($bookings as $booking): ?>
-                            <option value="<?= htmlspecialchars($booking['booking_id']) ?>" <?= isset($booking['booking_id']) && $booking['booking_id'] == $booking['booking_id'] ? 'selected' : '' ?>>
-                                <?= htmlspecialchars($booking['pickup_date'] . ' at ' . $booking['pickup_time']) ?>
+                    <select name="booking_id" id="booking_id" required onchange="this.form.submit()">
+                        <option value="">Select a booking</option>
+                        <?php foreach ($bookings as $b): ?>
+                            <option value="<?= htmlspecialchars($b['booking_id']) ?>" <?= isset($booking) && ($booking['booking_id'] == $b['booking_id']) ? 'selected' : '' ?>>
+                                <?= htmlspecialchars($b['pickup_date'] . ' at ' . date('H:i', strtotime($b['pickup_time']))) ?>
                             </option>
                         <?php endforeach; ?>
                     </select>
                 </div>
 
-                <div class="form-group">
-                    <label for="pickup_date">New Pickup Date:</label>
-                    <input type="date" name="pickup_date" id="pickup_date" value="<?= isset($booking['pickup_date']) ? htmlspecialchars($booking['pickup_date']) : '' ?>" required>
-                </div>
+                <?php if (isset($booking)): ?>
+                    <div class="form-group">
+                        <label for="pickup_date">New Pickup Date:</label>
+                        <input type="date" name="pickup_date" id="pickup_date" value="<?= htmlspecialchars($booking['pickup_date']) ?>" required>
+                    </div>
 
-                <div class="form-group">
-                    <label for="pickup_time">New Pickup Time:</label>
-                    <input type="time" name="pickup_time" id="pickup_time" value="<?= isset($booking['pickup_time']) ? htmlspecialchars($booking['pickup_time']) : '' ?>" required>
-                </div>
+                    <div class="form-group">
+                        <label for="pickup_time">New Pickup Time:</label>
+                        <input type="time" name="pickup_time" id="pickup_time" value="<?= htmlspecialchars($booking['pickup_time']) ?>" required>
+                    </div>
 
-                <div class="form-group">
-                    <label for="pickup_address">New Pickup Address:</label>
-                    <textarea name="pickup_address" id="pickup_address" required><?= isset($booking['pickup_location']) ? htmlspecialchars($booking['pickup_location']) : '' ?></textarea>
-                </div>
+                    <div class="form-group">
+                        <label for="pickup_address">New Pickup Address:</label>
+                        <textarea name="pickup_address" id="pickup_address" required><?= htmlspecialchars($booking['pickup_location']) ?></textarea>
+                    </div>
 
-                <div class="form-group">
-                    <label for="phone_number">Phone Number (Nigerian only):</label>
-                    <input type="text" name="phone_number" id="phone_number" value="<?= isset($booking['phone_number']) ? htmlspecialchars($booking['phone_number']) : '' ?>" required>
-                </div>
+                    <div class="form-group">
+                        <label for="phone_number">Phone Number (Nigerian only):</label>
+                        <input type="text" name="phone_number" id="phone_number" value="<?= htmlspecialchars($booking['phone_number']) ?>" required placeholder="e.g., +234XXXXXXXXXX">
+                    </div>
 
-                <div class="form-group">
-                    <label for="courier_id">Select Courier:</label>
-                    <select name="courier_id" id="courier_id" required>
-                        <?php if (!empty($couriers)): ?>
-                            <?php foreach ($couriers as $courier): ?>
-                                <option value="<?= htmlspecialchars($courier['courier_id']) ?>" <?= isset($booking['courier_id']) && $booking['courier_id'] == $courier['courier_id'] ? 'selected' : '' ?>>
-                                    <?= htmlspecialchars($courier['first_name'] . ' ' . $courier['last_name']) ?> - <?= htmlspecialchars($courier['phone_number']) ?> 
-                                </option>
-                            <?php endforeach; ?>
-                        <?php else: ?>
-                            <option value="">No couriers available</option>
-                        <?php endif; ?>
-                    </select>
-                </div>
+                    <div class="form-group">
+                        <label for="courier_id">Select Courier:</label>
+                        <select name="courier_id" id="courier_id" required>
+                            <?php if (!empty($couriers)): ?>
+                                <?php foreach ($couriers as $courier): ?>
+                                    <option value="<?= htmlspecialchars($courier['courier_id']) ?>" <?= isset($booking) && ($booking['courier_id'] == $courier['courier_id']) ? 'selected' : '' ?>>
+                                        <?= htmlspecialchars($courier['first_name'] . ' ' . $courier['last_name']) ?>
+                                        <?= htmlspecialchars($courier['contact_info']) ?> 
+                                    </option>
+                                <?php endforeach; ?>
+                            <?php else: ?>
+                                <option value="">No couriers available</option>
+                            <?php endif; ?>
+                        </select>
+                    </div>
 
-                <button type="submit">Update Booking</button>
+                    <button type="submit">Update Booking</button>
+                <?php endif; ?>
             </form>
         <?php else: ?>
             <p>No upcoming bookings to edit.</p>
         <?php endif; ?>
+        
     </main>
+    <script src="../js/editPickupDetails.js" defer></script>
 </body>
 </html>
