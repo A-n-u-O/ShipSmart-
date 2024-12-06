@@ -138,15 +138,7 @@
             <!-- Footer Taskbar -->
             <div class="footer-taskbar">
                 <div class="footer-company">
-<<<<<<< HEAD
-<<<<<<< HEAD
                     <img src="../Assets/images/shipsmartLogoDark.png" alt="ShipSma Logo" class="footer-logo">
-=======
-                    <img src="../Assets/images/Shipsmart-icon-dark.png" alt="ShipSma Logo" class="footer-logo">
->>>>>>> tomisin
-=======
-                    <img src="../Assets/images/Shipsmart-icon-dark.png" alt="ShipSma Logo" class="footer-logo">
->>>>>>> terdo
                     <span>ShipSmart</span>
                 </div>
                 <ul class="nav">
@@ -181,8 +173,4 @@
 <!-- The defer attribute in a <script> tag is used to indicate that the script should be executed after the HTML document has been completely 
     parsed. -->
 <script src="../js/landingPage.js" defer></script>
-<<<<<<< HEAD
-=======
-
->>>>>>> terdo
 </html>
