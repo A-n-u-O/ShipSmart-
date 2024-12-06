@@ -110,7 +110,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     <header>
         <div class="company-info">
-            <h1>Your Company Name</h1>
+            <h4>Shipsmart Pickup Service</h4>
         </div>
     </header>
 
