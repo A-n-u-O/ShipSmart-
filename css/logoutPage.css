@@ -1,0 +1,115 @@
+/* Adjusting body background */
+body {
+    background-color: #002233;
+    color: #fff;
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+/* Main form container styling */
+.form-container {
+    max-width: 700px;
+    margin: 30px auto;
+    background-color: #002233;
+    padding: 30px;
+    border-radius: 20px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 80vh; /* Center vertically */
+}
+
+/* Form styling */
+.form {
+    width: 100%;
+    text-align: center;
+}
+
+/* Heading */
+.heading {
+    color: #fff;
+    font-size: 1.5rem;
+    font-weight: 800;
+    margin-bottom: 20px;
+}
+
+/* Subtitle text */
+.c1 {
+    color: #87a4b6;
+    font-size: 1rem;
+    margin-bottom: 30px;
+}
+
+/* Button container for Yes and No buttons */
+.button-container {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+}
+
+/* Styling for the No button container */
+.reset-button-container {
+    flex-basis: 48%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.reset-button a {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #7F7FFF;
+    padding: 10px 20px;
+    color: #fff;
+    font-weight: bold;
+    border-radius: 20px;
+    text-decoration: none;
+    width: 100%;
+    text-align: center;
+    box-sizing: border-box;
+}
+
+/* Styling for the Yes button container */
+.send-button {
+    flex-basis: 48%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.send-button button {
+    background-color: #FF6090;
+    padding: 10px 20px;
+    color: #fff;
+    font-weight: bold;
+    border-radius: 20px;
+    border: none;
+    width: auto;
+    text-align: center;
+    box-sizing: border-box;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.send-button button:hover {
+    background-color: #FF4990;
+}
+
+/* Icon size and positioning */
+.reset-button a img, .send-button button img {
+    width: 18px;
+    height: 18px;
+    margin-right: 10px;
+    object-fit: contain;
+}
+
+/* Hover effect for the No button */
+.reset-button a:hover {
+    background-color: #B08CFF;
+}
+
