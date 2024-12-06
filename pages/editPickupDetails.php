@@ -74,10 +74,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         exit();
 
     } catch (Exception $e) {
-        $_SESSION['error_message'] = $e->getMessage();
     }
-}
-
 // Fetch the selected booking details if editing a specific booking
 if (isset($_GET['booking_id'])) {
     $booking_id = $_GET['booking_id'];

@@ -1,5 +1,8 @@
 document.addEventListener("DOMContentLoaded", () => {
+<<<<<<< HEAD
   // Edit pickup button functionality
+=======
+>>>>>>> terdo
   const editButtons = document.querySelectorAll(".edit-pickup-btn");
   editButtons.forEach(button => {
       button.addEventListener("click", (event) => {
@@ -8,12 +11,21 @@ document.addEventListener("DOMContentLoaded", () => {
       });
   });
 
+<<<<<<< HEAD
   // Redirect back to the scheduling page when the "Edit Schedule" button is clicked
   document.getElementById("edit-schedule-btn").addEventListener("click", () => {
     window.location.href = "schedulePickup.php"; // Redirect back to the scheduling page
   });
 
   // Cancel pickup modal functionality
+=======
+document.getElementById("edit-schedule-btn").addEventListener("click", () => {
+  window.location.href = "schedulePickup.php"; // Redirect back to the scheduling page
+});
+
+
+document.addEventListener("DOMContentLoaded", () => {
+>>>>>>> terdo
   const cancelButtons = document.querySelectorAll(".cancel-btn");
   const modal = document.getElementById("cancelModal");
   const closeModalBtn = document.querySelector(".close-modal-btn");

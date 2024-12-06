@@ -6,468 +6,509 @@ body {
 
 /* Navbar Styles */
 .navbar {
-  display: flex;
-  align-items: center; /* Vertically center items */
-  justify-content: flex-start; /* Align items to the left */
-  padding: 1rem 2rem;
-  background-color: white;
-  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+    display: flex;
+    align-items: center; /* Vertically center items */
+    justify-content: flex-start; /* Align items to the left */
+    padding: 1rem 2rem;
+    background-color: white;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
 }
 
 .header-company {
-  display: flex;
-  align-items: center; /* Center logo and title vertically */
-  margin-right: 2rem; /* Space between company header and nav links */
-}
-.header-company img {
-  width: auto;
+    display: flex;
+    align-items: center; /* Center logo and title vertically */
+    margin-right: 2rem; /* Space between company header and nav links */
 }
 
 .footer-logo {
-  height: 40px; 
-  margin-right: 1rem; /* Space between logo and title */
-  width: 100px;
+    height: 40px; /* Adjust the height of the logo as needed */
+    margin-right: 1rem; /* Space between logo and title */
 }
 
 .navbar h1 {
-  margin: 0; /* Remove default margin */
-  font-size: 1.5rem; /* Adjust font size as needed */
-  color: #333; /* Color for the title */
+    margin: 0; /* Remove default margin */
+    font-size: 1.5rem; /* Adjust font size as needed */
+    color: #333; /* Color for the title */
 }
 
 .nav-links {
-  list-style: none;
-  display: flex;
-  gap: 1.5rem; /* Space between nav links */
-  margin: 0;
-  padding: 0;
+    list-style: none;
+    display: flex;
+    gap: 1.5rem; /* Space between nav links */
+    margin: 0;
+    padding: 0;
 }
 
 .nav-links a {
-  text-decoration: none;
-  color: #333;
-  transition: color 0.3s;
+    text-decoration: none;
+    color: #333;
+    transition: color 0.3s;
 }
 
 .nav-links a:hover {
-  color: #00b2a9; /* Change color on hover */
+    color: #007bff; /* Change color on hover */
 }
 
 .login-button {
-  background-color: #ffffff;
-  color: #00b2a9;
-  border: 2px solid #00b2a9;
-  padding: 10px 20px;
-  text-decoration: none;
-  border-radius: 5px;
-  transition: background-color 0.3s;
-  margin-left: auto; /* Push the signup button to the right */
+    background-color: #ffffff;
+    color: #007bff;
+    border: 2px solid #007bff;
+    padding: 10px 20px;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+    margin-left: auto; /* Push the signup button to the right */
 }
 
+
 .login-button:hover {
-  background-color: #00b2a9;
-  color: #ffffff;
+    background-color: #007bff; 
+    color:#ffffff
 }
 
 /* Hero Section Styles */
 .hero {
-  background-image: url("https://th.bing.com/th/id/R.772cbf9948064135058b2fe77d72261b?rik=J7kJu2cWfuIeQQ&pid=ImgRaw&r=0");
-  background-size: cover;
-  background-position: center;
-  padding: 6rem 2rem;
-  text-align: center;
-  color: white;
+    background-image: url('https://th.bing.com/th/id/R.772cbf9948064135058b2fe77d72261b?rik=J7kJu2cWfuIeQQ&pid=ImgRaw&r=0');
+    background-size: cover;
+    background-position: center;
+    padding: 6rem 2rem;
+    text-align: center;
+    color: white;
 }
 
 .hero-content {
-  background-color: rgba(0, 0, 0, 0.5);
-  padding: 4rem 2rem;
-  border-radius: 10px;
+    background-color: rgba(0, 0, 0, 0.5);
+    padding: 4rem 2rem;
+    border-radius: 10px;
 }
 
 .hero-content h1 {
-  font-size: 3.5rem;
-  margin-bottom: 1.5rem;
+    font-size: 3.5rem;
+    margin-bottom: 1.5rem;
 }
 
 .hero-content p {
-  font-size: 1.2rem;
-  margin-bottom: 2rem;
+    font-size: 1.2rem;
+    margin-bottom: 2rem;
 }
 
 .track-button {
-  padding: 0.75rem 2rem;
-  background-color: #00b2a9;
-  color: #ffffff;
-  border: 2px solid #00b2a9;
-  border-radius: 5px;
-  font-size: 1.2rem;
-  cursor: pointer;
+    padding: 0.75rem 2rem;
+    background-color: #007bff;
+    color: #ffffff;
+    border: 2px solid #007bff;
+    border-radius: 5px;
+    font-size: 1.2rem;
+    cursor: pointer;
 }
 
-.track-button a {
-  text-decoration: none;
-  color: #ddd;
+.track-button a{
+    text-decoration: none;
+    color: #ddd;
 }
 
-.track-button:hover {
-  background-color: #ffffff9b;
-  color: #068b85;
+.track-button:hover{
+    background-color: #ffffff9b;
+    color: #007bff;
 }
 
 /* Features Section Styles */
 .features {
-  padding: 2rem 0;
+    padding: 2rem 0;
 }
 
 .features h2 {
-  text-align: center;
-  margin-bottom: 2rem;
+    text-align: center;
+    margin-bottom: 2rem;
 }
 
 .feature-container {
-  width: 83.34%;
-  max-width: 1200px;
-  margin: 0 auto;
-  display: flex;
-  justify-content: space-between;
-  gap: 1rem;
+    width: 83.34%;
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
 }
 
 .feature {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  flex: 1;
-  min-width: 250px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    flex: 1;
+    min-width: 250px;
 }
 
 .feature-text {
-  text-align: left;
-  flex: 1;
+    text-align: left;
+    flex: 1;
 }
 
 .learn-more {
-  display: inline-block;
-  padding: 0.5rem 1rem;
-  border: 2px solid #00b2a9;
-  color: #00b2a9;
-  text-decoration: none;
-  border-radius: 5px;
-  transition: background-color 0.3s, color 0.3s;
+    display: inline-block;
+    padding: 0.5rem 1rem;
+    border: 2px solid #007bff;
+    color: #007bff;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: background-color 0.3s, color 0.3s;
 }
 
 .learn-more:hover {
-  background-color: #00b2a9;
-  color: white;
+    background-color: #007bff;
+    color: white;
 }
 
 .feature img {
-  width: 136px;
-  height: 200px;
-  margin-left: 1rem;
-  background-color: #ddd;
+    width: 136px;
+    height: 200px;
+    margin-left: 1rem;
+    background-color: #ddd;
 }
 
 /* Testimonials Section Styles */
 .testimonials {
-  background-color: #f9f9f9;
-  padding: 4rem 1rem; /* Reduced padding for a more compact look */
-  text-align: center;
-  max-width: 1200px; /* Set a max-width for the section */
-  margin: 0 auto; /* Center the section */
-  border-radius: 10px; /* Rounded corners for the section */
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+    background-color: #f9f9f9;
+    padding: 4rem 1rem; /* Reduced padding for a more compact look */
+    text-align: center;
+    max-width: 1200px; /* Set a max-width for the section */
+    margin: 0 auto; /* Center the section */
+    border-radius: 10px; /* Rounded corners for the section */
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
 }
 
 .testimonials h2 {
-  margin-bottom: 2rem;
-  font-size: 2rem; /* Increased font size for emphasis */
-  color: #333; /* Darker color for better readability */
+    margin-bottom: 2rem;
+    font-size: 2rem; /* Increased font size for emphasis */
+    color: #333; /* Darker color for better readability */
 }
 
 .testimonial-container {
-  display: flex; /* Use flexbox to arrange testimonials in a row */
-  overflow-x: hidden; /* Hide overflow to prevent showing part of fourth testimonial */
-  gap: 2rem; /* Space between testimonials */
-  justify-content: flex-start; /* Align items to the start */
+    display: flex; /* Use flexbox to arrange testimonials in a row */
+    overflow-x: hidden; /* Hide overflow to prevent showing part of fourth testimonial */
+    gap: 2rem; /* Space between testimonials */
+    justify-content: flex-start; /* Align items to the start */
 }
 
 .testimonial {
-  background-color: white;
-  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1); /* Slightly larger shadow for depth */
-  padding: 2rem;
-  border-radius: 8px;
-  width: 320px; /* Adjusted width to fit exactly three testimonials */
-  flex-shrink: 0; /* Prevent testimonials from shrinking */
-  transition: transform 0.3s; /* Smooth transition for hover effect */
+    background-color: white;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1); /* Slightly larger shadow for depth */
+    padding: 2rem;
+    border-radius: 8px;
+    width: 320px; /* Adjusted width to fit exactly three testimonials */
+    flex-shrink: 0; /* Prevent testimonials from shrinking */
+    transition: transform 0.3s; /* Smooth transition for hover effect */
 }
 
 .testimonial:hover {
-  transform: translateY(-5px); /* Lift effect on hover */
+    transform: translateY(-5px); /* Lift effect on hover */
 }
 
 .testimonial img {
-  border-radius: 50%;
-  width: 100px;
-  height: 100px;
-  margin-bottom: 1rem;
-  border: 2px solid #e0e0e0; /* Optional border around images */
+    border-radius: 50%;
+    width: 100px;
+    height: 100px;
+    margin-bottom: 1rem;
+    border: 2px solid #e0e0e0; /* Optional border around images */
 }
 
 .testimonial p {
-  font-size: 1rem; /* Standard font size for text */
-  color: #555; /* Slightly lighter color for text */
-  line-height: 1.5; /* Improved line height for readability */
+    font-size: 1rem; /* Standard font size for text */
+    color: #555; /* Slightly lighter color for text */
+    line-height: 1.5; /* Improved line height for readability */
 }
 
 /* Call to Action Section Styles */
 .cta {
-  background-color: rgba(236, 209, 227, 0.6);
-  padding: 4rem 2rem;
-  text-align: center;
+    background-color: rgba(209, 222, 252, 0.6);
+    padding: 4rem 2rem;
+    text-align: center;
 }
 
-a h1 {
-  color: #00b2a9;
-  font-size: 3.5rem;
-  margin-bottom: 1.5rem;
-}
-
-.cta p {
-  font-size: 1.2rem;
-  margin-bottom: 2rem;
-}
-
+/* Updated Button Styles */
 .cta-button {
-  padding: 0.75rem 2rem;
-  background-color: #00b2a9;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  font-size: 1.2rem;
-  cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 16px 32px;
+    background-color: #006aff;
+    border: 8px solid #c0dfff;
+    color: white;
+        font-family: "Parkinsans", sans-serif;
+    gap: 8px;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: all 0.3s;
+    margin: 0 auto; /* Center the button horizontally */
+    transform: scale(0.8);    
+}
+.text {
+    font-size: 1.7em;
+    font-family: "Parkinsans", sans-serif;
+    font-weight: 700;
+    letter-spacing: 1px;
+}
+.svg {
+    padding-top: 5px;
+    height: 100%;
+    width: fit-content;
+}
+.svg svg {
+    width: 50px;
+    height: 30px;
 }
 .cta-button:hover {
-  background-color: #ffffff;
-  color: #00b2a9;
-  border: 2px solid #00b2a9;
+    border: 8px solid #b1d8ff;
+    background-color: #1b7aff;
+}
+.cta-button:active {
+    border: 5px solid #c0dfff;
+}
+.cta-button:hover .svg svg {
+    animation: jello-vertical 0.9s both;
+    transform-origin: left;
+}
+
+@keyframes jello-vertical {
+    0% {
+        transform: scale3d(1, 1, 1);
+    }
+    30% {
+        transform: scale3d(0.75, 1.25, 1);
+    }
+    40% {
+        transform: scale3d(1.25, 0.75, 1);
+    }
+    50% {
+        transform: scale3d(0.85, 1.15, 1);
+    }
+    65% {
+        transform: scale3d(1.05, 0.95, 1);
+    }
+    75% {
+        transform: scale3d(0.95, 1.05, 1);
+    }
+    100% {
+        transform: scale3d(1, 1, 1);
+    }
 }
 
 /* Pricing Section Styles */
 .pricing {
-  background-color: #f9f9f9;
-  padding: 4rem 0;
+    background-color: #f9f9f9;
+    padding: 4rem 0;
 }
 
 .pricing h2 {
-  text-align: center;
+    text-align: center;
 }
 
 .pricing-container {
-  width: 90%;
-  max-width: 1200px;
-  margin: 0 auto;
-  display: flex;
-  justify-content: space-between;
-  gap: 2rem;
-  margin-top: 2rem;
+    width: 90%;
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    gap: 2rem;
+    margin-top: 2rem;
 }
 
 .pricing-plan {
-  flex: 1;
-  padding: 1rem;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  text-align: center;
+    flex: 1;
+    padding: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    text-align: center;
 }
 
 .pricing-plan h3 {
-  margin: 0;
+    margin: 0;
 }
 
 .pricing-plan p {
-  margin: 0.5rem 0;
+    margin: 0.5rem 0;
 }
 
 /* Footer Styles */
 .footer {
-  background-color: #222;
-  color: #fff;
-  padding: 40px 0;
-  font-size: 14px;
+    background-color: #222;
+    color: #fff;
+    padding: 40px 0;
+    font-size: 14px;
 }
 
 .footer .container {
-  max-width: 1200px;
-  margin: 0 auto;
+    max-width: 1200px;
+    margin: 0 auto;
 }
 
 .subscribe-section {
-  text-align: center;
-  margin-bottom: 20px;
+    text-align: center;
+    margin-bottom: 20px;
 }
 
 .subscribe-section p {
-  font-size: 16px;
-  color: #fff;
-  margin: 0;
+    font-size: 16px;
+    color: #fff;
+    margin: 0;
 }
 
 .subscribe-section .highlight {
-  font-weight: bold;
-  color: #00b2a9;
+    font-weight: bold;
+    color: #007bff;
 }
 
 .subscribe-form {
-  margin-top: 10px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 10px;
+    margin-top: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
 }
 
 .subscribe-input {
-  padding: 10px 15px;
-  border: none;
-  border-radius: 4px;
-  font-size: 14px;
-  width: 250px;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 4px;
+    font-size: 14px;
+    width: 250px;
 }
 
 .subscribe-button {
-  background-color: #00b2a9;
-  color: #fff;
-  border: none;
-  border-radius: 4px;
-  padding: 10px 20px;
-  cursor: pointer;
-  font-size: 14px;
-  transition: background-color 0.3s;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    padding: 10px 20px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.3s;
 }
 
 .subscribe-button:hover {
-  background-color: #00897b;
+    background-color: #007bff;
 }
 
 .footer-content {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
 }
 
 .footer-taskbar {
-  display: flex;
-  align-items: center;
-  justify-content: space-evenly;
-  width: 100%;
-  margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    width: 100%;
+    margin-bottom: 20px;
 }
 
 .footer-company {
-  display: flex;
-  align-items: center;
-  gap: 10px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
 }
 
 .footer-company img.footer-logo {
-  max-width: 30px;
+    max-width: 30px;
 }
 
 .nav {
-  list-style: none;
-  display: flex;
-  gap: 15px;
-  padding: 0;
+    list-style: none;
+    display: flex;
+    gap: 15px;
+    padding: 0;
 }
 
 .nav a {
-  color: #fff;
-  text-decoration: none;
-  transition: color 0.3s;
+    color: #fff;
+    text-decoration: none;
+    transition: color 0.3s;
 }
 
 .nav a:hover {
-  color: #00b2a9;
+    color: #007bff;
 }
 
 .footer-legal {
-  text-align: center;
-  margin-bottom: 20px;
+    text-align: center;
+    margin-bottom: 20px;
 }
 
 .footer-legal p {
-  margin: 0;
-  font-size: 14px;
+    margin: 0;
+    font-size: 14px;
 }
 
 .footer-legal a {
-  color: #00b2a9;
-  text-decoration: none;
+    color: #007bff;
+    text-decoration: none;
 }
 
 .footer-legal a:hover {
-  text-decoration: underline;
+    text-decoration: underline;
 }
 
+
 .social-links {
-  list-style: none;
-  display: flex;
-  justify-content: center; /* Center the social links in the footer */
-  gap: 10px;
-  margin: 10px 0 0 0; /* Add margin to separate from footer text */
+    list-style: none;
+    display: flex;
+    justify-content: center; /* Center the social links in the footer */
+    gap: 10px;
+    margin: 10px 0 0 0; /* Add margin to separate from footer text */
 }
 
 .social-links a {
-  color: #fff;
-  font-size: 18px;
-  transition: color 0.3s;
+    color: #fff;
+    font-size: 18px;
+    transition: color 0.3s;
 }
 
 .social-links a:hover {
-  color: #00b2a9;
+    color: #00B2A9;
 }
 
 .social-links .fab.fa-twitter {
-  color: #1da1f2;
+    color: #1DA1F2;
 }
 
 .social-links .fab.fa-facebook-f {
-  color: #4267b2;
+    color: #4267B2;
 }
 
 .social-links .fab.fa-linkedin-in {
-  color: #0077b5;
+    color: #0077B5;
 }
 
 .social-links .fab.fa-youtube {
-  color: #ff0000;
+    color: #FF0000;
 }
 
+
 .left-button {
-  left: 10px;
-  top: 50%;
-  transform: translateY(-50%);
+    left: 10px;
+    top: 50%;
+    transform: translateY(-50%);
 }
 
 .right-button {
-  right: 10px;
-  top: 50%;
-  transform: translateY(-50%);
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
 }
 
 .testimonial-container {
-  display: flex;
-  overflow-x: scroll;
+    display: flex;
+    overflow-x: scroll;
 }
 
 section {
-  opacity: 0;
-  transition: opacity 0.5s ease;
+    opacity: 0;
+    transition: opacity 0.5s ease;
 }
 
 section.visible {
-  opacity: 1;
+    opacity: 1;
 }

@@ -63,35 +63,55 @@ $current_page = basename($_SERVER['SCRIPT_NAME']);
 
     <!-- Available Couriers with sub-menu -->
     <li>
+<<<<<<< HEAD
       <a href="../pages/couriers.php" class="<?= $current_page == 'couriers.php' ? 'active' : '' ?>">
         <img src="../Assets/icons/courier.svg" alt="Courier Icon" class="nav-icon">
+=======
+
+      <a href="../pages/couriers.php" class="<?= $current_page == 'couriers.php' ? 'active' : '' ?>">
+>>>>>>> terdo
         Available Couriers
         <span class="toggle-icon">▼</span>
       </a>
       <ul class="drop-down">
+<<<<<<< HEAD
         <li><a href="../pages/chooseCourier.php" class="<?= $current_page == 'chooseCourier.php' ? 'active' : '' ?>">
             Choose Courier</a></li>
         <li><a href="../pages/courierProfiles.php" class="<?= $current_page == 'courierProfiles.php' ? 'active' : '' ?>">
             Courier Profiles</a></li>
         <li><a href="../pages/courierRatings.php" class="<?= $current_page == 'courierRatings.php' ? 'active' : '' ?>">
             Courier Ratings</a></li>
+=======
+      <li><a href="../pages/chooseCourier.php" class="<?= $current_page == 'chooseCourier.php' ? 'active' : '' ?>">Choose Courier</a></li>
+        <li><a href="../pages/courierProfiles.php" class="<?= $current_page == 'courierProfiles.php' ? 'active' : '' ?>">Courier Profiles</a></li>
+        <li><a href="../pages/courierRatings.php" class="<?= $current_page == 'courierRatings.php' ? 'active' : '' ?>">Courier Ratings</a></li>
+>>>>>>> terdo
       </ul>
     </li>
 
     <!-- Rates & Pricing with sub-menu -->
     <li>
       <a href="../pages/ratesAndPricing.php" class="<?= $current_page == 'ratesAndPricing.php' ? 'active' : '' ?>">
+<<<<<<< HEAD
         <img src="../Assets/icons/priceTagIcon.svg" alt="Rates Icon" class="nav-icon">
+=======
+>>>>>>> terdo
         Rates & Pricing
         <span class="toggle-icon">▼</span>
       </a>
       <ul class="drop-down">
+<<<<<<< HEAD
         <li><a href="../pages/domesticRates.php" class="<?= $current_page == 'domesticRates.php' ? 'active' : '' ?>">
             Domestic Rates</a></li>
         <li><a href="../pages/internationalRates.php" class="<?= $current_page == 'internationalRates.php' ? 'active' : '' ?>">
             International Rates</a></li>
         <li><a href="../pages/discountsAndOffers.php" class="<?= $current_page == 'discountsAndOffers.php' ? 'active' : '' ?>">
             Discounts & Offers</a></li>
+=======
+        <li><a href="../pages/domesticRates.php" class="<?= $current_page == 'domesticRates.php' ? 'active' : '' ?>">Domestic Rates</a></li>
+        <li><a href="../pages/internationalRates.php" class="<?= $current_page == 'internationalRates.php' ? 'active' : '' ?>">International Rates</a></li>
+        <li><a href="../pages/discountsAndOffers.php" class="<?= $current_page == 'discountsAndOffers.php' ? 'active' : '' ?>">Discounts & Offers</a></li>
+>>>>>>> terdo
       </ul>
     </li>
 

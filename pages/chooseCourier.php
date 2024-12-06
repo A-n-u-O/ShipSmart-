@@ -98,5 +98,4 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['courier_id'])) {
             <a href="schedulePickup.php" class="back-btn" aria-label="Return to schedule page">Back to Schedule</a>
         </div>
     </main>
-</body>
 </html>

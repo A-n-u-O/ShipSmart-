@@ -16,7 +16,6 @@ function sanitizeOutput($value)
 // Handle delete action
 if (isset($_POST['delete_booking_id'])) {
     $booking_id = $_POST['delete_booking_id'];
-
     try {
         $pdo->beginTransaction();
 
@@ -38,7 +37,6 @@ if (isset($_POST['delete_booking_id'])) {
         $delete_stmt->execute([$booking_id]);
 
         $pdo->commit();
-
         $_SESSION['success_message'] = "Pickup successfully canceled.";
         header('Location: scheduledPickups.php');
         exit();
@@ -74,10 +72,9 @@ try {
 <!DOCTYPE html>
 <html lang="en">
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Scheduled Pickups</title>
+
+<!DOCTYPE html>
+<html lang="en">
     <link rel="stylesheet" href="../css/navbar.css">
     <link rel="stylesheet" href="../css/scheduledPickups.css">
     <script src="../js/scheduledPickups.js" defer></script>
@@ -89,7 +86,6 @@ try {
 
     <main class="scheduled-pickups">
 
-        <?php
         $messages = [
             'error' => $_SESSION['error_message'] ?? null,
             'success' => $_SESSION['success_message'] ?? null,
@@ -105,18 +101,6 @@ try {
             endif;
         endforeach; ?>
 
-        <?php if (!empty($pickups)): ?>
-            <div class="pickup-list">
-                <?php foreach ($pickups as $pickup): ?>
-                    <div class="pickup-item">
-                        <h3>Pickup on <?= sanitizeOutput($pickup['pickup_date']) ?></h3>
-                        <p>Time: <?= sanitizeOutput($pickup['pickup_time']) ?></p>
-                        <p>Address: <?= sanitizeOutput($pickup['pickup_location']) ?></p>
-                        <p class="status <?= strtolower(sanitizeOutput($pickup['status'])) ?>">
-                            Booking Status: <?= sanitizeOutput($pickup['status']) ?>
-                        </p>
-
-                        <?php if ($pickup['tracking_number']): ?>
                             <p>Tracking Number: <?= sanitizeOutput($pickup['tracking_number']) ?></p>
                             <p>Shipment Status: <?= sanitizeOutput($pickup['current_status']) ?></p>
                         <?php endif; ?>
