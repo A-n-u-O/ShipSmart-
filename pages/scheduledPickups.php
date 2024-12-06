@@ -85,9 +85,9 @@ try {
 
 <body>
     <?php include '../Views/navbar.php'; ?>
+    <header>Schedule Pickup > Your Scheduled Pickups</header>
 
     <main class="scheduled-pickups">
-        <h1>Your Scheduled Pickups</h1>
 
         <?php
         $messages = [
@@ -150,7 +150,7 @@ try {
             </div>
         <?php else: ?>
             <div class="no-pickups">
-            <img src="../Assets/icons/emptyIcon.svg" alt="No pickups scheduled">
+                <img src="../Assets/icons/emptyIcon.svg" alt="No pickups scheduled">
                 <p>No scheduled pickups.</p>
             </div>
         <?php endif; ?>

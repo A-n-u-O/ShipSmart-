@@ -84,7 +84,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     <main class="schedule-pickup-form">
 
-
         <?php if (!empty($error_messages)): ?>
             <div class="error-messages">
                 <ul>
@@ -97,37 +96,37 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         <form action="schedulePickup.php" method="POST" class="scheduling-form">
             <div class="inputs">
-                <div class="form-input">
+                <div id="pickup_date_input" class="form-input">
                     <label for="pickup_date">Pickup Date</label>
                     <input type="date" id="pickup_date" name="pickup_date" required>
                 </div>
 
-                <div class="form-input">
+                <div id="pickup_time_input" class="form-input">
                     <label for="pickup_time">Pickup Time</label>
                     <input type="time" id="pickup_time" name="pickup_time" required>
                 </div>
 
-                <div class="form-input">
+                <div id="pickup_address_input" class="form-input">
                     <label for="pickup_address">Pickup Address</label>
                     <textarea id="pickup_address" name="pickup_address" required></textarea>
                 </div>
 
-                <div class="form-input">
+                <div id="delivery_location_input" class="form-input">
                     <label for="delivery_location">Delivery Address</label>
                     <textarea id="delivery_location" name="delivery_location" required></textarea>
                 </div>
 
-                <div class="form-input">
+                <div id="phone_number_input" class="form-input">
                     <label for="phone_number">Phone Number</label>
                     <input type="tel" id="phone_number" name="phone_number" required placeholder="Enter phone number">
                 </div>
 
-                <div class="form-input">
+                <div id="item_weight_input" class="form-input">
                     <label for="item_weight">Item Weight (kg)</label>
                     <input type="number" id="item_weight" name="item_weight" required step="0.1">
                 </div>
 
-                <div class="form-input">
+                <div id="item_description_input" class="form-input">
                     <label for="item_description">Item Description</label>
                     <input type="text" id="item_description" name="item_description" required>
                 </div>
