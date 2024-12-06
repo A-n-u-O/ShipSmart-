@@ -30,8 +30,7 @@ header {
 }
 
 main {
-  max-width: 800px;
-  margin: 20px auto;
+width: 100%;  margin: 20px auto;
   padding: 20px;
   padding-top: 100px; /* Increased padding to ensure the form is below the header */
   background-color: #fff;
@@ -40,11 +39,13 @@ main {
   display: flex;
   align-items: center;
   flex-direction: column;
+  background-color: #6db1ff;
 }
 
 .scheduling-form {
   display: flex;
   flex-direction: column;
+  width: 800px;
 }
 
 .inputs {
@@ -61,7 +62,7 @@ main {
 }
 
 .form-input label {
-  font-size: 20px;
+  font-size: 18px;
   align-self: flex-start;
 }
 
