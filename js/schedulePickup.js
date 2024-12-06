@@ -30,28 +30,44 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Confirm pickup and validate form before submission
   const confirmPickup = document.getElementById("confirm-pickup-btn");
-  confirmPickup.addEventListener("click", (event) => {
-    event.preventDefault();
-    const form = confirmPickup.closest("form");
-    const formData = new FormData(form);
-    const formInputs = form.querySelectorAll("input");
-    let isValid = true;
+  if (confirmPickup) {
+      confirmPickup.addEventListener("click", (event) => {
+          event.preventDefault();
+          const form = confirmPickup.closest("form");
+          const formData = new FormData(form);
+          const formInputs = form.querySelectorAll("input, textarea");
+          let isValid = true;
 
-    formInputs.forEach((input) => {
-      if (input.required && input.value.trim() === "") {
-        input.classList.add("error");
-        isValid = false;
-      } else {
-        input.classList.remove("error");
-      }
-    });
+          formInputs.forEach((input) => {
+              if (input.required && input.value.trim() === "") {
+                  input.classList.add("error");
+                  isValid = false;
+              } else {
+                  input.classList.remove("error");
+              }
+          });
 
-    if (isValid) {
-      form.submit();
-    }
-  });
+          if (isValid) {
+              form.submit();
+          }
+      });
+  } else {
+      console.error("Element with ID 'confirm-pickup-btn' not found.");
+  }
 
   // Add event listeners for time and date validation
-  document.getElementById("pickup_time").addEventListener("input", validateTime);
-  document.getElementById("pickup_date").addEventListener("input", validateDate);
+  const pickupTimeInput = document.getElementById("pickup_time");
+  const pickupDateInput = document.getElementById("pickup_date");
+
+  if (pickupTimeInput) {
+      pickupTimeInput.addEventListener("input", validateTime);
+  } else {
+      console.error("Element with ID 'pickup_time' not found.");
+  }
+
+  if (pickupDateInput) {
+      pickupDateInput.addEventListener("input", validateDate);
+  } else {
+      console.error("Element with ID 'pickup_date' not found.");
+  }
 });

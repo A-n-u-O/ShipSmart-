@@ -17,5 +17,6 @@ try {
 
     echo "Sample couriers added successfully.";
 } catch (PDOException $e) {
-    echo "Error: " . $e->getMessage();
+    error_log($e->getMessage()); // Log error instead of displaying
+    echo "Error occurred while adding couriers.";
 }

@@ -2,10 +2,8 @@ body {
   font-family: Arial, sans-serif;
   background-color: #f9f9f9;
   color: #333;
-  margin-left: 300px;/*space for navbar*/
+  margin-left: 280px; /* Space for navbar */
 }
-
-
 
 .fade-in {
   opacity: 0;
@@ -14,23 +12,62 @@ body {
 
 @keyframes fadeIn {
   to {
-      opacity: 1;
+    opacity: 1;
   }
 }
 
-.schedule-pickup {
+/* Header styles */
+header {
+  position: fixed;
+  top: 0;
+  width: 80%;
+  background-color: #ffffff; /* White background for header */
+  padding: 15px; /* Increased padding for better spacing */
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+  font-size: 2rem; /* Font size for header */
+  text-align: center;
+  z-index: 1000; /* Ensure header is above other content */
+}
+
+.schedule-pickup-form {
   max-width: 800px;
   margin: 20px auto;
   padding: 20px;
   background-color: #fff;
   border-radius: 8px;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  display: flex;
+  align-items: center;
+  flex-direction: column;
 }
 
-.error-message {
+.scheduling-form {
+  display: flex;
+  flex-direction: column;
+  padding-top: 100px; /* Increased padding to ensure the form is below the header */
+}
+
+.inputs {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr); /* Two equal columns */
+  gap: 10px;
+}
+.form-input {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+}
+
+.form-input:last-child {
+  grid-column: span 2; /* Make the last item span both columns */
+}
+
+.error-messages {
   color: red;
   font-size: 0.9em;
   transition: opacity 0.5s ease;
+  margin-bottom: 20px; /* Added margin for spacing */
 }
 
 .confirm-pickup-btn {
@@ -49,9 +86,4 @@ body {
 
 .error {
   border: 1px solid red;
-}
-
-.error-message {
-  color: red;
-  font-size: 0.875em;
 }

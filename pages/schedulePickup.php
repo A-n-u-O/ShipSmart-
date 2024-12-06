@@ -69,6 +69,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 ?>
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -76,11 +77,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <link rel="stylesheet" href="../css/navbar.css">
     <link rel="stylesheet" href="../css/schedulePickup.css">
 </head>
+
 <body>
     <?php include '../Views/navbar.php'; ?>
+    <header>Schedule Pickup</header>
 
     <main class="schedule-pickup-form">
-        <h1>Schedule Pickup</h1>
+
 
         <?php if (!empty($error_messages)): ?>
             <div class="error-messages">
@@ -92,30 +95,49 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             </div>
         <?php endif; ?>
 
-        <form action="schedulePickup.php" method="POST">
-            <label for="pickup_date">Pickup Date</label>
-            <input type="date" id="pickup_date" name="pickup_date" required>
+        <form action="schedulePickup.php" method="POST" class="scheduling-form">
+            <div class="inputs">
+                <div class="form-input">
+                    <label for="pickup_date">Pickup Date</label>
+                    <input type="date" id="pickup_date" name="pickup_date" required>
+                </div>
 
-            <label for="pickup_time">Pickup Time</label>
-            <input type="time" id="pickup_time" name="pickup_time" required>
+                <div class="form-input">
+                    <label for="pickup_time">Pickup Time</label>
+                    <input type="time" id="pickup_time" name="pickup_time" required>
+                </div>
 
-            <label for="pickup_address">Pickup Address</label>
-            <textarea id="pickup_address" name="pickup_address" required></textarea>
+                <div class="form-input">
+                    <label for="pickup_address">Pickup Address</label>
+                    <textarea id="pickup_address" name="pickup_address" required></textarea>
+                </div>
 
-            <label for="delivery_location">Delivery Address</label>
-            <textarea id="delivery_location" name="delivery_location" required></textarea>
+                <div class="form-input">
+                    <label for="delivery_location">Delivery Address</label>
+                    <textarea id="delivery_location" name="delivery_location" required></textarea>
+                </div>
 
-            <label for="phone_number">Phone Number</label>
-            <input type="tel" id="phone_number" name="phone_number" required placeholder="Enter phone number">
+                <div class="form-input">
+                    <label for="phone_number">Phone Number</label>
+                    <input type="tel" id="phone_number" name="phone_number" required placeholder="Enter phone number">
+                </div>
 
-            <label for="item_description">Item Description</label>
-            <input type="text" id="item_description" name="item_description" required>
+                <div class="form-input">
+                    <label for="item_weight">Item Weight (kg)</label>
+                    <input type="number" id="item_weight" name="item_weight" required step="0.1">
+                </div>
 
-            <label for="item_weight">Item Weight (kg)</label>
-            <input type="number" id="item_weight" name="item_weight" required step="0.1">
+                <div class="form-input">
+                    <label for="item_description">Item Description</label>
+                    <input type="text" id="item_description" name="item_description" required>
+                </div>
+            </div>
 
-            <button type="submit">Schedule Pickup</button>
+
+            <button type="submit" id="confirm-pickup-btn" class="confirm-pickup-btn">Schedule Pickup</button>
         </form>
     </main>
+    <script src="../js/schedulePickup.js"></script>
 </body>
+
 </html>
