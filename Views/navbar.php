@@ -98,7 +98,6 @@ $current_page = basename($_SERVER['SCRIPT_NAME']);
       <a href="../pages/support.php" class="<?= $current_page == 'support.php' ? 'active' : '' ?>">
         <img src="../Assets/icons/supportIcon.svg" alt="Support Icon" class="nav-icon">
         Support
-        <span class="toggle-icon">▼</span>
       </a>
     </li>
 
@@ -127,8 +126,6 @@ $current_page = basename($_SERVER['SCRIPT_NAME']);
         <span class="toggle-icon">▼</span>
       </a>
       <ul class="drop-down">
-        <li><a href="../pages/profile.php" class="<?= $current_page == 'profile.php' ? 'active' : '' ?>">
-            Profile</a></li>
         <li><a href="../pages/messages.php" class="<?= $current_page == 'editProfile.php' ? 'active' : '' ?>">
             Messages</a></li>
         <li><a href="../pages/notificationSettings.php" class="<?= $current_page == 'notificationSettings.php' ? 'active' : '' ?>">
