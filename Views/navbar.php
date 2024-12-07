@@ -84,12 +84,6 @@ $current_page = basename($_SERVER['SCRIPT_NAME']);
         <span class="toggle-icon">▼</span>
       </a>
       <ul class="drop-down">
-        <li><a href="../pages/domesticRates.php" class="<?= $current_page == 'domesticRates.php' ? 'active' : '' ?>">
-            Domestic Rates</a></li>
-        <li><a href="../pages/internationalRates.php" class="<?= $current_page == 'internationalRates.php' ? 'active' : '' ?>">
-            International Rates</a></li>
-        <li><a href="../pages/discountsAndOffers.php" class="<?= $current_page == 'discountsAndOffers.php' ? 'active' : '' ?>">
-            Discounts & Offers</a></li>
         <li><a href="../pages/domesticRates.php" class="<?= $current_page == 'domesticRates.php' ? 'active' : '' ?>">Domestic Rates</a></li>
         <li><a href="../pages/internationalRates.php" class="<?= $current_page == 'internationalRates.php' ? 'active' : '' ?>">International Rates</a></li>
         <li><a href="../pages/discountsAndOffers.php" class="<?= $current_page == 'discountsAndOffers.php' ? 'active' : '' ?>">Discounts & Offers</a></li>

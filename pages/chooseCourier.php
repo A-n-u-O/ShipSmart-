@@ -10,7 +10,7 @@ if (!isset($_SESSION['user_id'])) {
 
 // Fetch available couriers for the user to choose
 try {
-    $courier_stmt = $pdo->prepare("SELECT courier_id, first_name, last_name, contact_info FROM Couriers WHERE is_available = 1");
+    $courier_stmt = $pdo->prepare("SELECT courier_id, first_name, last_name, phone_number FROM Couriers WHERE available = 1");
     $courier_stmt->execute();
     $couriers = $courier_stmt->fetchAll(PDO::FETCH_ASSOC);
 } catch (Exception $e) {
@@ -61,7 +61,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['courier_id'])) {
                         <div class="courier-item">
                             <input type="radio" name="courier_id" id="courier_<?= htmlspecialchars($courier['courier_id']) ?>" value="<?= htmlspecialchars($courier['courier_id']) ?>" required>
                             <label for="courier_<?= htmlspecialchars($courier['courier_id']) ?>">
-                                <?= htmlspecialchars($courier['first_name'] . ' ' . $courier['last_name']) ?> - <?= htmlspecialchars($courier['contact_info']) ?>
+                                <?= htmlspecialchars($courier['first_name'] . ' ' . $courier['last_name']) ?> - <?= htmlspecialchars($courier['phone_number']) ?>
                             </label>
                         </div>
                     <?php endforeach; ?>

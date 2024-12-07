@@ -1,115 +1,84 @@
 body {
-  font-family: Arial, sans-serif;
-  background-color: #f9f9f9;
+  font-family: 'Arial', sans-serif;
+  background-color: #e3f2fd; /* Light blue background */
   color: #333;
-  margin-left: 280px; /* Space for navbar */
-}
-
-.fade-in {
-  opacity: 0;
-  animation: fadeIn 0.5s forwards;
-}
-
-@keyframes fadeIn {
-  to {
-    opacity: 1;
-  }
-}
-
-/* Header styles */
-header {
-  position: fixed;
-  top: 0;
-  width: 80%;
-  background-color: #ffffff; /* White background for header */
-  padding: 2px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
-  font-size: 1.5rem; /* Font size for header */
-  z-index: 1000; /* Ensure header is above other content */
-}
-
-header .company-info {
-  display: flex;
-}
-
-main {
-  width: 80%;
-  margin: 20px auto;
+  margin-left: 300px; /* Space for navbar */
   padding: 20px;
-  padding-top: 100px; /* Increased padding to ensure the form is below the header */
+}
+
+.schedule-pickup-form {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 30px;
   background-color: #fff;
   border-radius: 8px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-  display: flex;
-  align-items: center;
-  flex-direction: column;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  border: 1px solid #90caf9; /* Light blue border */
 }
 
-.scheduling-form {
-  display: flex;
-  flex-direction: column;
-  width: 800px;
+.schedule-pickup-form h1 {
+  text-align: center;
+  color: #1976d2; /* Medium blue */
+  font-size: 28px;
+  margin-bottom: 20px;
 }
 
-.inputs {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr); /* Two equal columns */
-  gap: 20px;
-  min-height: 27pc;
+.form-group {
+  margin-bottom: 20px;
 }
 
-.form-input {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 5px;
+.form-group label {
+  font-size: 16px;
+  font-weight: bold;
+  color: #1976d2; /* Medium blue for labels */
+  display: block;
+  margin-bottom: 5px;
 }
 
-.form-input label {
-  font-size: 18px;
-  align-self: flex-start;
-}
-
-.form-input:last-child {
-  grid-column: span 2; /* Make the last item span both columns */
-}
-
-.form-input:last-child #item_description,
-.form-input #item_weight,
-.form-input #item_description,
-.form-input #phone_number,
-.form-input #delivery_location,
-.form-input #pickup_address,
-.form-input #pickup_date,
-.form-input #pickup_time,
-.form-input #destination_zone,
-.form-input #courier {
+.form-group input,
+.form-group textarea {
   width: 100%;
-  height: 40px;
-  border-radius: 10px;
+  padding: 12px;
+  font-size: 16px;
+  border: 1px solid #90caf9; /* Light blue border for inputs */
+  border-radius: 4px;
+  box-sizing: border-box;
+  margin-bottom: 10px;
 }
 
 .error-messages {
-  color: red;
-  font-size: 0.9em;
-  transition: opacity 0.5s ease;
-  margin-bottom: 20px; /* Added margin for spacing */
+  color: #d32f2f; /* Red for errors */
+  font-size: 14px;
+  margin-bottom: 10px;
 }
 
-.confirm-pickup-btn {
-  background-color: #007bff;
+.form-group input[type="date"],
+.form-group input[type="time"] {
+  display: block;
+  width: 100%;
+}
+
+.form-group textarea {
+  height: 100px;
+}
+
+.submit-btn {
+  background-color: #1976d2; /* Blue */
   color: white;
-  padding: 10px 15px;
+  padding: 15px 25px;
+  font-size: 16px;
   border: none;
-  border-radius: 5px;
+  border-radius: 4px;
+  width: 100%;
   cursor: pointer;
-  margin-top: 20px;
+  transition: background-color 0.3s ease;
 }
 
-.confirm-pickup-btn:hover {
-  background-color: #0056b3;
+.submit-btn:hover {
+  background-color: #1565c0; /* Darker blue on hover */
 }
 
-.error {
-  border: 1px solid red;
+input.error {
+  border-color: #d32f2f;
+  box-shadow: 0 0 5px rgba(211, 47, 47, 0.5); /* Red focus shadow */
 }
