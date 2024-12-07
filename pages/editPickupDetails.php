@@ -1,4 +1,4 @@
-<?php 
+<?php
 session_start();
 require_once 'db_connection.php';
 
@@ -25,7 +25,7 @@ try {
 
 // Fetch available couriers for the user to choose
 try {
-    $courier_stmt = $pdo->prepare("SELECT courier_id, first_name, last_name, contact_info FROM Couriers WHERE available = 1");
+    $courier_stmt = $pdo->prepare("SELECT courier_id, first_name, last_name, phone_number FROM Couriers WHERE available = 1");
     $courier_stmt->execute();
     $couriers = $courier_stmt->fetchAll(PDO::FETCH_ASSOC);
 } catch (Exception $e) {

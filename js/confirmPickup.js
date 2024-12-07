@@ -1,44 +1,53 @@
-document.addEventListener("DOMContent Loaded", () => {
-    // Retrieve pickup details from localStorage
+document.addEventListener("DOMContentLoaded", () => {
     const pickupDetails = JSON.parse(localStorage.getItem("pickupDetails"));
 
-    // Display the pickup details
     if (pickupDetails) {
         document.getElementById("confirm-date").textContent = `Date: ${pickupDetails.pickupDate || 'Not available'}`;
         document.getElementById("confirm-time").textContent = `Time: ${pickupDetails.pickupTime || 'Not available'}`;
         document.getElementById("confirm-address").textContent = `Pickup Address: ${pickupDetails.pickupAddress || 'Not available'}`;
     } else {
-        // Handle the case where pickupDetails is null
         document.getElementById("confirm-date").textContent = "Date: Not available";
         document.getElementById("confirm-time").textContent = "Time: Not available";
         document.getElementById("confirm-address").textContent = "Pickup Address: Not available";
     }
 
-    // Confirm button event listener
     const confirmBtn = document.getElementById("confirm-btn");
     if (confirmBtn) {
         confirmBtn.addEventListener("click", (event) => {
-            event.preventDefault(); // Prevent form submission
-            // Sending the details to the server
+            event.preventDefault(); 
+
+            if (!pickupDetails) {
+                showAlert("No pickup details available to confirm.", true);
+                return;
+            }
+
             fetch("./schedulePickupHandler.php", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(pickupDetails),
             })
-            .then(response => response.json())
-            .then(data => {
-                showAlert(data.message);
-                // display a success message
-            })
-            .catch(() => showAlert("Error confirming pickup. Please try again later.", true));
+                .then((response) => {
+                    if (!response.ok) throw new Error("Network response was not ok");
+                    return response.json();
+                })
+                .then((data) => {
+                    if (data.success) {
+                        showAlert(data.message || "Pickup confirmed successfully!");
+                        localStorage.removeItem("pickupDetails");
+                    } else {
+                        showAlert(data.message || "Failed to confirm pickup. Please try again.", true);
+                    }
+                })
+                .catch(() =>
+                    showAlert("Error confirming pickup. Please try again later.", true)
+                );
         });
     }
 
-    // Edit button event listener
     const editBtn = document.getElementById("edit-btn");
     if (editBtn) {
         editBtn.addEventListener("click", () => {
-            window.location.href = "schedulePickup.php"; // Redirect back to the scheduling page
+            window.location.href = "schedulePickup.php";
         });
     }
 
