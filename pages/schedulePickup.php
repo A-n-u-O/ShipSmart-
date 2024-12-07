@@ -5,6 +5,15 @@ require_once 'db_connection.php';
 // Initialize error messages array
 $error_messages = [];
 
+// Fetch shipping ports from the database
+try {
+    $ports_stmt = $pdo->query("SELECT port_id, port_name, location FROM ShippingPorts WHERE active = TRUE");
+    $shipping_ports = $ports_stmt->fetchAll(PDO::FETCH_ASSOC);
+} catch (Exception $e) {
+    $_SESSION['error_message'] = "Error fetching shipping ports: " . htmlspecialchars($e->getMessage());
+    $shipping_ports = [];
+}
+
 // Fetch couriers from the database
 try {
     $courier_stmt = $pdo->prepare("SELECT courier_id, CONCAT(first_name, ' ', last_name) AS name, contact_info FROM Couriers WHERE is_available = 1");
@@ -50,8 +59,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $destination_zone = trim($_POST['destination_zone'] ?? ''); // Destination zone from the form
     $courier = trim($_POST['courier'] ?? ''); // Courier from the form
 
-    // Validate inputs...
-   // Validate inputs
+    // Validate inputs
     if (empty($pickup_date)) {
         $error_messages['pickup_date'] = 'Pickup date is required.';
     } else {
@@ -106,12 +114,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (empty($courier)) {
         $error_messages['courier'] = 'Courier selection is required.';
     }
+    $shipping_port = trim($_POST['shipping_port'] ?? '');
 
+    if (empty($shipping_port)) {
+        $error_messages['shipping_port'] = 'Shipping port is required.';
+    }
     // If no errors, process the form and insert data into the database
     if (empty($error_messages)) {
         try {
-            $stmt = $pdo->prepare("INSERT INTO Bookings (user_id, pickup_date, pickup_time, pickup_location, delivery_location, phone_number, item_description, item_weight, destination_zone, courier, status) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 'Pending')");
-            $stmt->execute([$_SESSION['user_id'], $pickup_date, $pickup_time, $pickup_address, $delivery_location, $phone_number, $item_description, $item_weight, $destination_zone, $courier]);
+            $stmt = $pdo->prepare("INSERT INTO Bookings (user_id, pickup_date, pickup_time, pickup_location, delivery_location, phone_number, item_description, item_weight, destination_zone, courier,  shipping_port, status) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 'Pending')");
+            $stmt->execute([$_SESSION['user_id'], $pickup_date, $pickup_time, $pickup_address, $delivery_location, $phone_number, $item_description, $item_weight, $destination_zone, $courier, $shipping_port]);
 
             // Redirect or process further
             $_SESSION['current_booking'] = [
@@ -124,9 +136,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 'item_weight' => $item_weight,
                 'destination_zone' => $destination_zone,
                 'courier' => $courier,
+                'shipping_port' => $shipping_port,
             ];
-
-            header('Location: chooseCourier.php');
+            $_SESSION['current_booking']['shipping_port'] = $shipping_port;
+            header('Location: ratesAndPricing.php');
             exit();
         } catch (Exception $e) {
             $_SESSION['error_message'] = "Error processing your request: " . htmlspecialchars($e->getMessage());
@@ -223,7 +236,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     </select>
                     <span id="error_courier" class="error-message"></span>
                 </div>
-                 <div id='item_description_input' class='form-input'>
+                <div id="shipping_port_input" class="form-input">
+                    <label for="shipping_port">Select Shipping Port</label>
+                    <select id="shipping_port" name="shipping_port" required>
+                        <option value="">Select Shipping Port</option>
+                        <?php foreach ($shipping_ports as $port): ?>
+                            <option value="<?= htmlspecialchars($port['port_id']) ?>">
+                                <?= htmlspecialchars($port['port_name']) ?> (<?= htmlspecialchars($port['location']) ?>)
+                            </option>
+                        <?php endforeach; ?>
+                    </select>
+                    <span id="error_shipping_port" class="error-message"></span>
+                </div>
+                <div id='item_description_input' class='form-input'>
                     <label for='item_description'>Item Description</label>
                     <input type='text' id='item_description' name='item_description' required placeholder='At least 3 words'>
                     <span id='error_item_description' class='error-message'></span> <!-- Error message for item description -->
