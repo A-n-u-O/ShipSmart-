@@ -96,7 +96,7 @@ main {
   margin-bottom: 20px; /* Added margin for spacing */
 }
 
-.confirm-pickup-btn {
+#submit_button_input {
   background-color: #007bff;
   color: white;
   padding: 10px 15px;
@@ -106,7 +106,7 @@ main {
   margin-top: 20px;
 }
 
-.confirm-pickup-btn:hover {
+#submit_button_input {
   background-color: #0056b3;
 }
 

@@ -1,6 +1,724 @@
+/* General Styles */
 body {
-    font-family: Arial, sans-serif;
-    background-color: #f9f9f9;
-    color: #333;
-    margin-left: 300px;/*space for navbar*/
+  font-family: Arial, sans-serif;
+  background-color: #f9f9f9;
+  color: #333;
+  margin-left: 300px; /* Space for navbar */
+}
+
+
+
+.header-company {
+  display: flex;
+  align-items: center; /* Center logo and title vertically */
+  margin-right: 2rem; /* Space between company header and nav links */
+}
+
+.footer-logo {
+  height: 40px; /* Adjust the height of the logo as needed */
+  margin-right: 1rem; /* Space between logo and title */
+}
+
+
+.nav-links {
+  list-style: none;
+  display: flex;
+  gap: 1.5rem;
+}
+
+.nav-links a {
+  font-size: 1rem;
+  color: #333;
+  text-decoration: none;
+  transition: color 0.3s;
+}
+
+.nav-links a:hover {
+  color: #006aff;
+}
+
+.signup-button {
+  background-color: #ffffff;
+  color: #006aff;
+  border: 2px solid #006aff;
+  padding: 10px 20px;
+  text-decoration: none;
+  border-radius: 5px;
+  transition: all 0.3s;
+  margin-left: auto; /* Push the signup button to the right */
+}
+
+.signup-button:hover {
+  background-color: #006aff;
+  color: #ffffff;
+}
+
+/* Hero Section */
+.hero {
+  text-align: center;
+  background-color: #b1bac7;
+  padding: 6rem 2rem;
+  color: #006aff;
+}
+
+.hero h1 {
+  font-size: 2.5rem;
+  margin-bottom: 1.5rem;
+  color: #035cd8; /* blue shade */
+  text-align: center;
+}
+
+.hero p {
+  font-size: 1.2rem;
+  margin-bottom: 2rem;
+  text-align: center;
+}
+
+.hero-content {
+  max-width: 800px;
+  margin: 0 auto;
+  background-color: #ffffff;
+  padding: 2rem;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  text-align: left;
+}
+
+/* Search Section */
+.search-box {
+  margin-top: 2rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+}
+
+.search-box input {
+  padding: 0.75rem 1rem;
+  width: 300px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 1rem;
+}
+
+.search-box button {
+  padding: 0.75rem 1.5rem;
+  background-color: #006aff;
+  color: #ffffff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.search-box button:hover {
+  background-color: #007bff;
+}
+
+/* Footer */
+.footer {
+  padding: 1rem;
+  background-color: #f0f0f0;
+  text-align: center;
+  color: #666;
+  font-size: 0.9rem;
+  margin-top: 2rem;
+}
+
+/* Help Section */
+/* From Uiverse.io by dylanharriscameron */
+body {
+  margin: 0;
+  background-color: #f8f9fa; /* Light background color for contrast */
+}
+
+.help-section {
+  background-color: #fff;
+  padding: 2rem;
+  border-radius: 10px; /* Rounded corners for the section */
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+  max-width: 100%; /* Maximum width for the section */
+  margin: 0 auto; /* Center the section horizontally */
+}
+
+.help-section h2 {
+  text-align: center;
+  font-size: 2rem;
+  margin-bottom: 2rem;
+}
+
+.search-bar {
+  display: block;
+  margin: 0 auto 2rem;
+  padding: 0.5rem;
+  width: 80%;
+  max-width: 500px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+}
+
+.help-categories {
+  display: flex; /* Use flexbox for centering */
+  justify-content: center; /* Center items horizontally */
+  flex-wrap: wrap; /* Allow items to wrap to the next line */
+  gap: 2rem; /* Space between items */
+}
+
+.card {
+  position: relative;
+  width: 550px; /* Increased width */
+  height: 350px; /* Height remains the same */
+  border-radius: 14px;
+  z-index: 1111;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 20px 20px 60px #bebebe, -20px -20px 60px #ffffff;
+}
+
+.bg {
+  position: absolute;
+  top: 5px;
+  left: 0; /* Set left to 0 */
+  right: 0; /* Set right to 0 */
+  width: 100%; /* Full width */
+  height: 340px; /* Adjusted height */
+  z-index: 2;
+  background: rgba(207, 226, 241, 0.95);
+  backdrop-filter: blur(24px);
+  border-radius: 10px;
+  overflow: hidden;
+  outline: 2px solid white; /* Optional: Keep the outline if desired */
+}
+
+.blob {
+  position: absolute;
+  z-index: 1;
+  top: 50%;
+  left: 50%;
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  background-color: #007bff; /* Changed to blue */
+  opacity: 1;
+  filter: blur(12px);
+  animation: blob-move 10s infinite ease; /* Adjusted animation duration */
+}
+
+@keyframes blob-move {
+  0% {
+      transform: translate(-50%, -50%) translate(0px, 0px);
   }
+  25% {
+      transform: translate(-50%, -50%) translate(200px, 0px); /* Move further right */
+  }
+  50% {
+      transform: translate(-50%, -50%) translate(200px, 200px); /* Move down */
+  }
+  75% {
+      transform: translate(-50%, -50%) translate(0px, 200px); /* Move left */
+  }
+  100% {
+      transform: translate(-50%, -50%) translate(0px, 0px); /* Return to start */
+  }
+}
+
+.help-item {
+  position: relative;
+  z-index: 3; /* Ensure text is above the background */
+  text-align: center;
+  padding: 1rem;
+}
+
+.help-item h3 {
+  font-size: 1.8rem;
+  font-weight: bold;
+  margin: 0.5rem 0;
+}
+
+.help-item p {
+  font-size: 1.2rem;
+  margin: 0.5rem 0;
+}
+
+.help-item a {
+  color: #007bff; /* Bold blue color for links */
+  font-weight: bold;
+  text-decoration: none;
+}
+
+.card:hover .bg {
+  background: rgba(255, 255, 255, 0.8); /* Change background on hover */
+}
+
+.card:hover {
+  transform: translateY(-5px); /* Lift effect on card hover ```css
+}
+
+.card:hover .blob {
+  animation: blob-move-fast 5s infinite ease; /* Faster animation on hover */
+}
+
+@keyframes blob-move-fast {
+  0% {
+      transform: translate(-50%, -50%) translate(0px, 0px);
+  }
+  25% {
+      transform: translate(-50%, -50%) translate(250px, 0px); /* Move further right */
+  }
+  50% {
+      transform: translate(-50%, -50%) translate(250px, 250px); /* Move down */
+  }
+  75% {
+      transform: translate(-50%, -50%) translate(0px, 250px); /* Move left */
+  }
+  100% {
+      transform: translate(-50%, -50%) translate(0px, 0px); /* Return to start */
+  }
+}
+/* Add background images */
+
+/* Contact Section */
+.contact-section {
+  background-color: #f9f9f9;
+  padding: 2rem;
+  display: flex; /* Use flexbox for layout */
+  align-items: center; /* Center items vertically */
+  justify-content: center; /* Center items horizontally */
+}
+
+.contact-content {
+  display: flex; /* Flexbox for inner content */
+  width: 100%; /* Full width */
+  max-width: 1200px; /* Limit the maximum width for better layout */
+}
+
+.contact-text {
+  flex: 1; /* Take up remaining space */
+  text-align: left; /* Align text to the left */
+  padding-right: 2rem; /* Add some space between text and form */
+}
+
+.contact-text h2 {
+  font-size: 4rem; /* Increase font size for "Contact Us" */
+  font-weight: bold; /* Make it bold */
+  margin-bottom: 1rem; /* Space below the heading */
+  color: #006aff; /* Optional: Change color to make it stand out */
+}
+
+.catchy-text {
+  font-size: 3rem; /* Increase font size for catchy text */
+  font-weight: bold; /* Make it bold */
+  margin-bottom: 1.5rem; /* Space below the catchy text */
+  color: #006aff; /* Optional: Change color to make it stand out */
+}
+
+/* From Uiverse.io by david-mohseni */ 
+.face {
+  position: relative;
+  width: 180px;
+  height: 180px;
+  border-radius: 50%;
+  outline: 10px solid #333;
+  background: repeating-radial-gradient(circle at 50% 50%, 
+  rgba(253, 253, 253, 0.2) 0%, rgba(200,200,200,.2) 2%, 
+  transparent 2%, transparent 3%, rgba(200,200,200,.2) 3%, 
+  transparent 3%), conic-gradient(white 0%, silver 10%, 
+  white 35%, silver 45%, white 60%, silver 70%, 
+  white 80%, silver 95%, white 100%);
+  box-shadow: inset 0 0 20px #0007;
+}
+
+.hour {
+  position: absolute;
+  width: 5px;
+  height: 60px;
+  background: #aaa;
+  left: 87.5px;
+  top: 43px;
+  border-radius: 3px 3px 1px 1px;
+  transform-origin: 2px 47px;
+  box-shadow: 0 0 5px #0005,inset 1.5px 3px 0px #333, inset -1.5px -3px 0px #333;
+  z-index: 1;
+  animation: watch 43200s linear infinite;
+}
+
+.minute {
+  position: absolute;
+  width: 4px;
+  height: 78px;
+  background: #aaa;
+  left: 88px;
+  top: 25px;
+  border-radius: 3px 3px 1px 1px;
+  transform-origin: 2px 65px;
+  box-shadow: 0 0 5px #0005, inset 1.5px 3px 0px #333, inset -1.5px -3px 0px #333;
+  z-index: 2;
+  animation: watch 3600s linear infinite;
+}
+
+.second {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  background: red;
+  left: 85px;
+  top: 85px;
+  border-radius: 50%;
+  border: 1px solid #eee;
+  z-index: 3;
+  animation: watch 60s steps(60, end) 0s infinite;
+}
+
+.second::before {
+  content: "";
+  position: absolute;
+  width: 1px;
+  height: 85px;
+  left: 3px;
+  bottom: -10px;
+  background: red;
+  border-radius: 2px;
+  box-shadow: 5px 0 2px rgba(128, 128, 128, 0.2);
+}
+
+.second::after {
+  content: "";
+  position: absolute;
+  width: 4px;
+  height: 4px;
+  left: 2px;
+  top: 2px;
+  background: #555;
+  border-radius: 50%;
+}
+
+.v-index {
+  position: absolute;
+  color: #333;
+  font-size: 24px;
+  left: 83.5px;
+  top: -3px;
+  text-shadow: 0 157px 0 #333;
+  z-index: 1
+}
+
+.h-index {
+  position: absolute;
+  color: #333;
+  font-size: 24px;
+  top: 72px;
+  left: 5px;
+  transform: rotate(-90deg);
+  text-shadow: 0 158px 0 #333;
+  z-index: 1;
+}
+
+@keyframes watch {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+
+.contact-form-container {
+  flex: 1; /* Take up remaining space */
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end; /* Align items to the right */
+}
+
+.form-box {
+  background-color: #fff; /* White background for the form box */
+  padding: 2rem; /* Padding inside the box */
+  border-radius: 10px; /* Rounded corners */
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1); /* Subtle shadow for floating effect */
+  width: 100%; /* Full width */
+  max-width: 500px; /* Limit the maximum width of the form box */
+  margin-top: 1rem; /* Space above the form box */
+}
+
+.contact-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  width: 100%; /* Full width */
+}
+
+.contact-form input,
+.contact-form textarea {
+  padding: 0.8rem;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  font-size: 1rem;
+  width: 100%; /* Make inputs full width */
+}
+
+.contact-form button {
+  background-color: #006aff;
+  color: #fff;
+  padding: 0.8rem;
+  font-size: 1rem;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  width: 100%; /* Make button full width */
+}
+
+
+.contact-form button:hover {
+  background-color: #006aff; 
+  color:#ffffff
+}
+
+.contact-info {
+  text-align: left; /* Align contact info to the left */
+  margin-top: 1rem; /* Space above contact info */
+}
+
+.contact-info p {
+  font-size: 1rem;
+  margin: 0.5rem 0;
+}
+
+/* FAQs Section */
+.faq-section {
+  background-color: #fff;
+  padding: 2rem;
+}
+
+.faq-section h2 {
+  text-align: center;
+  font-size: 2rem;
+  margin-bottom: 2rem;
+}
+
+.faq-item {
+  max-width: 600px;
+  margin: 1rem auto;
+  border-bottom: 1px solid #ddd;
+  padding-bottom: 1rem;
+}
+
+.faq-item h3 {
+  font-size: 1.2rem;
+  margin-bottom: 0.5rem;
+}
+
+.faq-item p {
+  font-size: 1rem;
+  color: #555;
+}
+
+/* Footer */
+.footer {
+  background-color: #333;
+  color: #fff;
+  padding: 1rem 2rem;
+  text-align: center;
+}
+
+.footer .social-links {
+  list-style: none;
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin: 1rem 0 0;
+}
+
+.footer .social-links li a {
+  color: #fff;
+  font-size: 1.5rem;
+  transition: color 0.3s;
+}
+
+.footer .social-links li a:hover {
+  color: #007bff;
+}
+/* footer*/
+.footer {
+  background-color: #222;
+  color: #fff;
+  padding: 40px 0;
+  font-size: 14px;
+}
+
+.footer .container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.subscribe-section {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.subscribe-section p {
+  font-size: 16px;
+  color: #fff;
+  margin: 0;
+}
+
+.subscribe-section .highlight {
+  font-weight: bold;
+  color: #007bff;
+}
+
+.subscribe-form {
+  margin-top: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+
+.subscribe-input {
+  padding: 10px 15px;
+  border: none;
+  border-radius: 4px;
+  font-size: 14px;
+  width: 250px;
+}
+
+.subscribe-button {
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  padding: 10px 20px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background-color 0.3s;
+}
+
+.subscribe-button:hover {
+  background-color: #007bff;
+}
+
+.footer-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.footer-taskbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+.footer-company {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.footer-company img.footer-logo {
+  max-width: 30px;
+}
+
+.nav {
+  list-style: none;
+  display: flex;
+  gap: 15px;
+  padding: 0;
+}
+
+.nav a {
+  color: #fff;
+  text-decoration: none;
+  transition: color 0.3s;
+}
+
+.nav a:hover {
+  color: #007bff;
+}
+
+.footer-legal {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.footer-legal p {
+  margin: 0;
+  font-size: 14px;
+}
+
+.footer-legal a {
+  color: #007bff;
+  text-decoration: none;
+}
+
+.footer-legal a:hover {
+  text-decoration: underline;
+}
+
+
+.social-links {
+  list-style: none;
+  display: flex;
+  justify-content: center; /* Center the social links in the footer */
+  gap: 10px;
+  margin: 10px 0 0 0; /* Add margin to separate from footer text */
+}
+
+.social-links a {
+  color: #fff;
+  font-size: 18px;
+  transition: color 0.3s;
+}
+
+.social-links a:hover {
+  color: #00B2A9;
+}
+
+.social-links .fab.fa-twitter {
+  color: #1DA1F2;
+}
+
+.social-links .fab.fa-facebook-f {
+  color: #4267B2;
+}
+
+.social-links .fab.fa-linkedin-in {
+  color: #0077B5;
+}
+
+.social-links .fab.fa-youtube {
+  color: #FF0000;
+}
+
+
+.left-button {
+  left: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.right-button {
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.testimonial-container {
+  display: flex;
+  overflow-x: scroll;
+}
+
+
+section.visible {
+  opacity: 1;
+}
+
