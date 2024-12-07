@@ -1,13 +1,12 @@
 <?php
 session_start();
-require_once 'db_connection.php'; // Ensure this file contains the PDO connection setup
+require_once 'db_connection.php';
 
 // Initialize error messages array
 $error_messages = [];
 
 // Handle form submission
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // Retrieve and sanitize input data
     $pickup_date = trim($_POST['pickup_date'] ?? '');
     $pickup_time = trim($_POST['pickup_time'] ?? '');
     $pickup_address = trim($_POST['pickup_address'] ?? '');
@@ -20,16 +19,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (empty($pickup_date)) {
         $error_messages['pickup_date'] = 'Pickup date is required.';
     } else {
+        // Validate date
         $today = new DateTime();
-        $maxDate = (clone $today)->modify('+3 months');
-        $selectedDate = new DateTime($pickup_date);
-        
-        // Check if the selected date is a weekend
-        if ($selectedDate->format('N') >= 6) {
-            $error_messages['pickup_date'] = 'Pickup date cannot be on a weekend.';
-        } elseif ($selectedDate < $today) {
+        $selected_date = new DateTime($pickup_date);
+        if ($selected_date < $today) {
             $error_messages['pickup_date'] = 'Pickup date cannot be in the past.';
-        } elseif ($selectedDate > $maxDate) {
+        } elseif ($selected_date > (clone $today)->modify('+3 months')) {
             $error_messages['pickup_date'] = 'Pickup date cannot be more than 3 months in the future.';
         }
     }
@@ -37,29 +32,33 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (empty($pickup_time)) {
         $error_messages['pickup_time'] = 'Pickup time is required.';
     } else {
-        // Validate working hours (9 AM to 5 PM)
-        $time = DateTime::createFromFormat('H:i', $pickup_time);
-        if ($time < DateTime::createFromFormat('H:i', '09:00') || $time > DateTime::createFromFormat('H:i', '17:00')) {
-            $error_messages['pickup_time'] = 'Pickup time must be between 9 AM and 5 PM.';
+        // Validate time (9 AM to 5 PM)
+        $hour = (int)explode(':', $pickup_time)[0];
+        if ($hour < 9 || $hour >= 17) {
+            $error_messages['pickup_time'] = "Please select a time between 9:00 AM and 5:00 PM.";
         }
     }
 
     if (empty($pickup_address)) {
         $error_messages['pickup_address'] = 'Pickup address is required.';
     }
+    
     if (empty($delivery_location)) {
         $error_messages['delivery_location'] = 'Delivery address is required.';
     }
+    
     if (empty($phone_number)) {
         $error_messages['phone_number'] = 'Phone number is required.';
     } elseif (!preg_match('/^(?:\+234|0)\d{10}$/', $phone_number)) {
         $error_messages['phone_number'] = 'Invalid phone number format. Use +234XXXXXXXXXX or 0XXXXXXXXXX.';
     }
+    
     if (empty($item_description)) {
         $error_messages['item_description'] = 'Item description is required.';
     } elseif (str_word_count($item_description) < 3) {
         $error_messages['item_description'] = 'Item description must be at least 3 words.';
     }
+
     if (empty($item_weight)) {
         $error_messages['item_weight'] = 'Item weight is required.';
     } elseif (!is_numeric($item_weight) || $item_weight <= 0) {
@@ -92,93 +91,88 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             header('Location: chooseCourier.php');
             exit();
         } catch (Exception $e) {
-            $_SESSION['error_message'] = "Error scheduling pickup: " . htmlspecialchars($e->getMessage());
+            // Store error message in the session
+            $_SESSION['error_message'] = "Error processing your request: " . htmlspecialchars($e->getMessage());
         }
     }
 }
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Schedule Pickup</title>
     <link rel="stylesheet" href="../css/navbar.css">
     <link rel="stylesheet" href="../css/schedulePickup.css">
 </head>
 <body>
-    <?php include '../Views/navbar.php'; ?>
-    <header>Schedule a Pickup</header>
+<?php include '../Views/navbar.php'; ?>
+<header>
+<p>Schedule Pickup</p>
+</header>
 
-    <header>
-        <div class="company-info">
-            <h4>Shipsmart Pickup Service</h4>
-        </div>
-    </header>
+<main class="schedule-pickup-form">
+<?php if (!empty($error_messages)): ?>
+<div class="error-messages">
+<ul>
+<?php foreach ($error_messages as $message): ?>
+<li><?= htmlspecialchars($message) ?></li>
+<?php endforeach; ?>
+</ul>
+</div>
+<?php endif; ?>
 
-    <main>
-        <div class="scheduling-form fade-in">
-            <h2>Schedule a Pickup</h2>
-            <form id="pickup-form" method="POST" action="schedulePickup.php">
-                <div class="inputs">
-                    <div class="form-input">
-                        <label for="pickup_date">Pickup Date:</label>
-                        <input type="date" name="pickup_date" id="pickup_date" required>
-                        <?php if (isset($error_messages['pickup_date'])): ?>
-                            <div class="error"><?= htmlspecialchars($error_messages['pickup_date']); ?></div>
-                        <?php endif; ?>
-                    </div>
+<form action="schedulePickup.php" method="POST" class="scheduling-form">
+<div class="inputs">
+<!-- Input fields for pickup details -->
+<div id="pickup_date_input" class="form-input">
+<label for="pickup_date">Pickup Date</label>
+<input type="date" id="pickup_date" name="pickup_date" required>
+<span id="error_date" class="error-message"></span> <!-- Error message for date -->
+</div>
 
-                    <div class="form-input">
-                        <label for="pickup_time">Pickup Time:</label>
-                        <input type="time" name="pickup_time" id="pickup_time" required>
-                        <?php if (isset($error_messages['pickup_time'])): ?>
-                            <div class="error"><?= htmlspecialchars($error_messages['pickup_time']); ?></div>
-                        <?php endif; ?>
-                    </div>
+<div id="pickup_time_input" class="form-input">
+<label for="pickup_time">Pickup Time</label>
+<input type="time" id="pickup_time" name="pickup_time" required>
+<span id="error_time" class="error-message"></span> <!-- Error message for time -->
+</div>
 
-                    <div class="form-input">
-                        <label for="pickup_address">Pickup Address:</label>
-                        <input type="text" name="pickup_address" id="pickup_address" required>
-                        <?php if (isset($error_messages['pickup_address'])): ?>
-                            <div class="error"><?= htmlspecialchars($error_messages['pickup_address']); ?></div>
-                        <?php endif; ?>
-                    </div>
+<div id="pickup_address_input" class="form-input">
+<label for="pickup_address">Pickup Address</label>
+<textarea id="pickup_address" name="pickup_address" required></textarea>
+<span id="error_pickup_address" class="error-message"></span> <!-- Error message for pickup address -->
+</div>
 
-                    <div class="form-input">
-                        <label for="delivery_location">Delivery Location:</label>
-                        <input type="text" name="delivery_location" id="delivery_location" required>
-                        <?php if (isset($error_messages['delivery_location'])): ?>
-                            <div class="error"><?= htmlspecialchars($error_messages['delivery_location']); ?></div>
-                        <?php endif; ?>
-                    </div>
+<div id="delivery_location_input" class="form-input">
+<label for="delivery_location">Delivery Address</label>
+<textarea id="delivery_location" name="delivery_location" required></textarea>
+<span id="error_delivery_location" class="error-message"></span> <!-- Error message for delivery location -->
+</div>
 
-                    <div class="form-input">
-                        <label for="phone_number">Phone Number:</label>
-                        <input type="text" name="phone_number" id="phone_number" required>
-                        <?php if (isset($error_messages['phone_number'])): ?>
-                            <div class="error"><?= htmlspecialchars($error_messages['phone_number']); ?></div>
-                        <?php endif; ?>
-                    </div>
+<div id="phone_number_input" class="form-input">
+<label for="phone_number">Phone Number</label>
+<input type="tel" id="phone_number" name="phone_number" required placeholder="+234XXXXXXXXXX">
+<span id="error_phone_number" class="error-message"></span> <!-- Error message for phone number -->
+</div>
 
-                    <div class="form-input">
-                        <label for="item_description">Item Description:</label>
-                        <textarea name="item_description" id="item_description" required></textarea>
-                        <?php if (isset($error_messages['item_description'])): ?>
-                            <div class="error"><?= htmlspecialchars($error_messages['item_description']); ?></div>
-                        <?php endif; ?>
-                    </div>
+<div id="item_weight_input" class="form-input">
+<label for="item_weight">Item Weight (kg)</label>
+<input type="number" id="item_weight" name="item_weight" required step=".1">
+<span id='error_item_weight' class='error-message'></span> <!-- Error message for item weight -->
+</div>
 
-                    <div class="form-input">
-                        <label for="item_weight">Item Weight (kg):</label>
-                        <input type="number" name="item_weight" id="item_weight" required>
-                        <?php if (isset($error_messages['item_weight'])): ?>
-                            <div class="error"><?= htmlspecialchars($error_messages['item_weight']); ?></div>
-                        <?php endif; ?>
-                    </div>
-                </div>
-                <button type="submit" class="confirm-pickup-btn">Confirm Pickup</button>
-            </form>
-        </div>
-    </main>
-    <script src="../js/schedulePickup.js" defer></script>
+<div id='item_description_input' class='form-input'>
+<label for='item_description'>Item Description</label>
+<input type='text' id='item_description' name='item_description' required placeholder='At least 3 words'>
+<span id='error_item_description' class='error-message'></span> <!-- Error message for item description -->
+</div>
+</div>
+
+<button type='submit' id='confirm-pickup-btn' class='confirm-pickup-btn'>Choose Courier</button>
+</form>
+</main>
+
+<script src="../js/schedulePickup.js"></script>
 </body>
 </html>

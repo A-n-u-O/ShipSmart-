@@ -73,11 +73,6 @@ $current_page = basename($_SERVER['SCRIPT_NAME']);
             Choose Courier</a></li>
         <li><a href="../pages/courierProfiles.php" class="<?= $current_page == 'courierProfiles.php' ? 'active' : '' ?>">
             Courier Profiles</a></li>
-        <li><a href="../pages/courierRatings.php" class="<?= $current_page == 'courierRatings.php' ? 'active' : '' ?>">
-            Courier Ratings</a></li>
-      <li><a href="../pages/chooseCourier.php" class="<?= $current_page == 'chooseCourier.php' ? 'active' : '' ?>">Choose Courier</a></li>
-        <li><a href="../pages/courierProfiles.php" class="<?= $current_page == 'courierProfiles.php' ? 'active' : '' ?>">Courier Profiles</a></li>
-        <li><a href="../pages/courierRatings.php" class="<?= $current_page == 'courierRatings.php' ? 'active' : '' ?>">Courier Ratings</a></li>
       </ul>
     </li>
 
@@ -162,8 +157,8 @@ $current_page = basename($_SERVER['SCRIPT_NAME']);
       <ul class="drop-down">
         <li><a href="../pages/profile.php" class="<?= $current_page == 'profile.php' ? 'active' : '' ?>">
             Profile</a></li>
-        <li><a href="../pages/editProfile.php" class="<?= $current_page == 'editProfile.php' ? 'active' : '' ?>">
-            Edit Profile</a></li>
+        <li><a href="../pages/messages.php" class="<?= $current_page == 'editProfile.php' ? 'active' : '' ?>">
+            Messages</a></li>
         <li><a href="../pages/notificationSettings.php" class="<?= $current_page == 'notificationSettings.php' ? 'active' : '' ?>">
             Notifications</a></li>
       </ul>
