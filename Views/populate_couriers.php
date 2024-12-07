@@ -10,9 +10,9 @@ try {
     
     // Sample data with all required and optional fields
     $couriers = [
-        ['John', 'Doe', '09:00:00', 1, 1, 0.00, 'john.doe@example.com'],
-        ['Jane', 'Smith', '10:00:00', 1, 1, 0.00, 'jane.smith@example.com'],
-        ['Michael', 'Brown', '11:00:00', 1, 1, 0.00, 'michael.brown@example.com'],
+        ['David', 'Mark', '09:00:00', 1, 1, 100.00, 'john.doe@example.com'],
+        ['Berverly', 'Smith', '10:00:00', 1, 1, 500.00, 'jane.smith@example.com'],
+        ['Michael', 'Jones', '11:00:00', 0, 1, 20.00, 'michael.brown@example.com'],
     ];
 
     foreach ($couriers as $courier) {
@@ -24,4 +24,4 @@ try {
     // Log detailed error message
     error_log("Database error: " . $e->getMessage());
     echo "Error occurred while adding couriers: " . htmlspecialchars($e->getMessage());
-}
+}?>

@@ -81,7 +81,9 @@ main {
 .form-input #delivery_location,
 .form-input #pickup_address,
 .form-input #pickup_date,
-.form-input #pickup_time {
+.form-input #pickup_time,
+.form-input #destination_zone,
+.form-input #courier {
   width: 100%;
   height: 40px;
   border-radius: 10px;
