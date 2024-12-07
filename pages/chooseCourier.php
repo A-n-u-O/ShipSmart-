@@ -2,13 +2,11 @@
 session_start();
 require_once 'db_connection.php';
 
-// Check if user is logged in
 if (!isset($_SESSION['user_id'])) {
     header('Location: login.php');
     exit();
 }
 
-// Fetch available couriers for the user to choose
 try {
     $courier_stmt = $pdo->prepare("SELECT courier_id, first_name, last_name, phone_number FROM Couriers WHERE available = 1");
     $courier_stmt->execute();
@@ -18,13 +16,10 @@ try {
     $couriers = [];
 }
 
-// Handle courier selection
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['courier_id'])) {
     try {
-        // Store selected courier ID in session
         $_SESSION['current_booking']['courier_id'] = $_POST['courier_id'];
 
-        // Redirect to rates and pricing page
         header('Location: ratesAndPricing.php');
         exit();
     } catch (Exception $e) {
