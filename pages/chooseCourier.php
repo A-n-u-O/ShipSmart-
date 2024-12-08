@@ -8,7 +8,7 @@ if (!isset($_SESSION['user_id'])) {
 }
 
 try {
-    $courier_stmt = $pdo->prepare("SELECT courier_id, first_name, last_name, phone_number FROM Couriers WHERE available = 1");
+    $courier_stmt = $pdo->prepare("SELECT courier_id, company_name, rating FROM Couriers WHERE available = 1");
     $courier_stmt->execute();
     $couriers = $courier_stmt->fetchAll(PDO::FETCH_ASSOC);
 } catch (Exception $e) {
@@ -24,6 +24,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['courier_id'])) {
         exit();
     } catch (Exception $e) {
         $_SESSION['error_message'] = "Error selecting courier: " . htmlspecialchars($e->getMessage());
+    }
+}
+
+function getCourierLogo($courierName) {
+    switch (strtolower($courierName)) {
+        case 'fedex':
+            return 'fedex.png';
+        case 'dhl express':
+            return 'dhl_express.png';
+        case 'gig logistics':
+            return 'gig_logistics.png';
+        case 'ups':
+            return 'ups.png';
+        default:
+            return 'default_logo.png';
     }
 }
 ?>
@@ -53,10 +68,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['courier_id'])) {
             <div class="courier-options">
                 <?php if (!empty($couriers)): ?>
                     <?php foreach ($couriers as $courier): ?>
+                        <?php
+                            $courierLogo = getCourierLogo($courier['company_name']);
+                        ?>
                         <div class="courier-item">
                             <input type="radio" name="courier_id" id="courier_<?= htmlspecialchars($courier['courier_id']) ?>" value="<?= htmlspecialchars($courier['courier_id']) ?>" required>
-                            <label for="courier_<?= htmlspecialchars($courier['courier_id']) ?>">
-                                <?= htmlspecialchars($courier['first_name'] . ' ' . $courier['last_name']) ?> - <?= htmlspecialchars($courier['phone_number']) ?>
+                            <label for="courier_<?= htmlspecialchars($courier['courier_id']) ?>" class="courier-item">
+                                <img src="../images/logos/<?= htmlspecialchars($courierLogo) ?>" alt="<?= htmlspecialchars($courier['company_name']) ?> Logo" class="courier-logo">
+                                <div class="courier-info">
+                                    <h3><?= htmlspecialchars($courier['company_name']) ?></h3>
+                                    <p><?= htmlspecialchars($courier['rating']) ?></p>
+                                </div>
                             </label>
                         </div>
                     <?php endforeach; ?>
