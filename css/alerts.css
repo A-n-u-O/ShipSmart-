@@ -1,0 +1,93 @@
+/* General styles */
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Arial', sans-serif;
+    background-color: #f0f8ff; /* Light blue background */
+    color: #05386b; /* Deep ocean blue text */
+}
+
+header {
+    background-color: #05386b; /* Deep ocean blue */
+    color: #ffffff; /* White text */
+    text-align: center;
+    padding: 20px;
+    font-size: 1.5em;
+    font-weight: bold;
+    border-bottom: 5px solid #1d3c6e; /* Darker blue accent */
+}
+
+/* Main container for the tracking alerts */
+.tracking-alerts {
+    max-width: 900px;
+    margin: 40px auto;
+    padding: 30px;
+    background-color: #ffffff; /* White background */
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.tracking-alerts h1 {
+    text-align: center;
+    color: #05386b;
+    font-size: 2em;
+    margin-bottom: 20px;
+}
+
+/* Alert List Styles */
+.alert-list {
+    list-style: none;
+    padding: 0;
+}
+
+.alert-item {
+    background-color: #e0f7fa; /* Light blue background for alerts */
+    border: 1px solid #1d3c6e;
+    padding: 15px;
+    margin-bottom: 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.alert-item.read {
+    background-color: #f1f1f1; /* Grayish background for read alerts */
+}
+
+.alert-item.unread {
+    border-left: 5px solid #1d3c6e; /* Left border for unread alerts */
+}
+
+.alert-item p {
+    margin: 5px 0;
+}
+
+/* Button styles */
+.mark-read-btn {
+    background-color: #1d3c6e; /* Dark blue */
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    text-align: center;
+}
+
+.mark-read-btn:hover {
+    background-color: #05386b;
+}
+
+/* Responsive Design */
+@media screen and (max-width: 768px) {
+    .tracking-alerts {
+        padding: 20px;
+        margin: 20px;
+    }
+
+    .alert-item {
+        padding: 10px;
+    }
+
+    .mark-read-btn {
+        font-size: 0.9em;
+    }
+}

@@ -16,7 +16,7 @@ try {
 
 // Fetch couriers from the database
 try {
-    $courier_stmt = $pdo->prepare("SELECT courier_id, CONCAT(first_name, ' ', last_name) AS name, contact_info FROM Couriers WHERE is_available = 1");
+    $courier_stmt = $pdo->prepare("SELECT courier_id, company_name AS name FROM Couriers WHERE available = 1");
     $courier_stmt->execute();
     $couriers = $courier_stmt->fetchAll(PDO::FETCH_ASSOC);
 } catch (Exception $e) {
@@ -51,7 +51,7 @@ try {
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $pickup_date = trim($_POST['pickup_date'] ?? '');
     $pickup_time = trim($_POST['pickup_time'] ?? '');
-    $pickup_address = trim($_POST['pickup_address'] ?? '');
+    $pickup_location = trim($_POST['pickup_location'] ?? '');
     $delivery_location = trim($_POST['delivery_location'] ?? '');
     $phone_number = trim($_POST['phone_number'] ?? '');
     $item_description = trim($_POST['item_description'] ?? '');
@@ -81,8 +81,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
     }
 
-    if (empty($pickup_address)) {
-        $error_messages['pickup_address'] = 'Pickup address is required.';
+    if (empty($pickup_location)) {
+        $error_messages['pickup_location'] = 'Pickup address is required.';
     }
 
     if (empty($delivery_location)) {
@@ -123,13 +123,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (empty($error_messages)) {
         try {
             $stmt = $pdo->prepare("INSERT INTO Bookings (user_id, pickup_date, pickup_time, pickup_location, delivery_location, phone_number, item_description, item_weight, destination_zone, courier,  shipping_port, status) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 'Pending')");
-            $stmt->execute([$_SESSION['user_id'], $pickup_date, $pickup_time, $pickup_address, $delivery_location, $phone_number, $item_description, $item_weight, $destination_zone, $courier, $shipping_port]);
+            $stmt->execute([$_SESSION['user_id'], $pickup_date, $pickup_time, $pickup_location, $delivery_location, $phone_number, $item_description, $item_weight, $destination_zone, $courier, $shipping_port]);
 
             // Redirect or process further
             $_SESSION['current_booking'] = [
                 'pickup_date' => $pickup_date,
                 'pickup_time' => $pickup_time,
-                'pickup_address' => $pickup_address,
+                'pickup_location' => $pickup_location,
                 'delivery_location' => $delivery_location,
                 'phone_number' => $phone_number,
                 'item_description' => $item_description,
@@ -157,6 +157,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <title>Schedule Pickup</title>
     <link rel="stylesheet" href="../css/navbar.css">
     <link rel="stylesheet" href="../css/schedulePickup.css">
+    <script src="../js/schedulePickup.js" defer></script>
+
 </head>
 
 <body>
@@ -192,8 +194,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 </div>
 
                 <div id="pickup_address_input" class="form-input">
-                    <label for="pickup_address">Pickup Address</label>
-                    <textarea id="pickup_address" name="pickup_address" required></textarea>
+                    <label for="pickup_location">Pickup Address</label>
+                    <textarea id="pickup_location" name="pickup_location" required></textarea>
                     <span id="error_pickup_address" class="error-message"></span>
                 </div>
 

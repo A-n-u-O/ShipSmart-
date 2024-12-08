@@ -25,9 +25,8 @@ try {
 
 // Fetch available couriers for the user to choose
 try {
-    $courier_stmt = $pdo->prepare("SELECT courier_id, first_name, last_name, phone_number FROM Couriers WHERE available = 1");
-    $courier_stmt->execute();
-    $couriers = $courier_stmt->fetchAll(PDO::FETCH_ASSOC);
+    $couriers = $pdo->prepare("SELECT company_name, courier_id FROM Couriers WHERE available = 1");
+    $couriers->execute();
 } catch (Exception $e) {
     $_SESSION['error_message'] = "Error fetching couriers: " . htmlspecialchars($e->getMessage());
     $couriers = [];
@@ -200,8 +199,7 @@ if (isset($_GET['booking_id'])) {
                             <?php if (!empty($couriers)): ?>
                                 <?php foreach ($couriers as $courier): ?>
                                     <option value="<?= htmlspecialchars($courier['courier_id']) ?>" <?= isset($booking) && ($booking['courier_id'] == $courier['courier_id']) ? 'selected' : '' ?>>
-                                        <?= htmlspecialchars($courier['first_name'] . ' ' . $courier['last_name']) ?>
-                                        <?= htmlspecialchars($courier['contact_info']) ?> 
+                                        <?= htmlspecialchars($courier['company_name']) ?>
                                     </option>
                                 <?php endforeach; ?>
                             <?php else: ?>

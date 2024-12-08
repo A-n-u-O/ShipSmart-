@@ -18,8 +18,8 @@
         <button class="edit-button">Edit</button>
       </div>
       <div class="user-details">
-        <h1>John Doe</h1>
-        <p>Email: john.doe@example.com</p>
+        <h1>User 1</h1>
+        <p>Email: user1@gmail.com</p>
         <p>Phone: 123-456-7890</p>
         <button class="edit-button">Edit Profile</button>
       </div>

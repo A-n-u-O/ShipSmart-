@@ -1,6 +1,133 @@
+/* General Styles */
 body {
-    font-family: Arial, sans-serif;
-    background-color: #f9f9f9;
-    color: #333;
-    margin-left: 300px;/*space for navbar*/
+  font-family: 'Arial', sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #f4f9fb; /* Light ocean background */
+  color: #333;
+}
+
+h1, h2 {
+  color: #004f6d; /* Deep blue for titles */
+  font-size: 2rem;
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+
+main {
+  max-width: 900px;
+  margin: 2rem auto;
+  padding: 2rem;
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* Navbar Styles */
+.navbar {
+  background-color: #0077b6; /* Ocean blue */
+  padding: 1rem;
+  text-align: center;
+}
+
+.navbar a {
+  color: white;
+  text-decoration: none;
+  margin: 0 15px;
+  font-weight: bold;
+  transition: color 0.3s ease;
+}
+
+.navbar a:hover {
+  color: #ffe600; /* Yellow for hover */
+}
+
+/* Form Styles */
+.form-group {
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+label {
+  display: block;
+  font-size: 1rem;
+  margin-bottom: 0.5rem;
+  color: #333;
+}
+
+input[type="text"] {
+  width: 100%;
+  padding: 10px;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  transition: border-color 0.3s;
+  box-sizing: border-box;
+  margin: 0 auto;
+}
+
+input[type="text"]:focus {
+  border-color: #004f6d; /* Focus border color matching theme */
+  outline: none;
+}
+
+button.submit-btn {
+  background-color: #0096c7; /* Light ocean blue */
+  color: white;
+  padding: 12px 24px;
+  font-size: 1.1rem;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  width: 100%;
+}
+
+button.submit-btn:hover {
+  background-color: #0077b6; /* Darker ocean blue on hover */
+}
+
+/* Error Message Styles */
+.error-message {
+  background-color: #ffebeb; /* Light red */
+  color: #d9534f; /* Red */
+  padding: 1rem;
+  margin-bottom: 1.5rem;
+  border-radius: 4px;
+  border: 1px solid #d9534f;
+  text-align: center;
+}
+
+/* Shipment Information Styles */
+.shipment-info {
+  background-color: #e0f7fa; /* Light cyan */
+  padding: 1.5rem;
+  border-radius: 8px;
+  margin-top: 2rem;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+.shipment-info p {
+  font-size: 1rem;
+  margin: 0.5rem 0;
+}
+
+.shipment-info p strong {
+  color: #004f6d; /* Deep blue for emphasis */
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  main {
+      padding: 1rem;
   }
+
+  .form-group {
+      margin-bottom: 1rem;
+  }
+
+  button.submit-btn {
+      width: 100%;
+  }
+}

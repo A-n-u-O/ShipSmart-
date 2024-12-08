@@ -12,9 +12,9 @@ if (!isset($_SESSION['user_id'])) {
 try {
     $stmt = $pdo->prepare("
         SELECT b.booking_id, b.pickup_date, b.pickup_time, b.pickup_location, b.status, 
-               s.tracking_number, s.current_status, 
-               c.first_name AS courier_first_name, c.last_name AS courier_last_name, 
-               c.contact_info AS courier_phone, c.available AS courier_available
+               s.tracking_id, s.current_status,
+               c.company_name AS company_name,
+               c.available AS courier_available
         FROM Bookings b
         LEFT JOIN Shipments s ON b.booking_id = s.booking_id
         LEFT JOIN Couriers c ON b.courier_id = c.courier_id
@@ -34,10 +34,11 @@ try {
 <head>
     <link rel="stylesheet" href="../css/navbar.css">
     <link rel="stylesheet" href="../css/scheduledPickups.css">
+    <script src="../js/scheduledPickups.js"></script>
 </head>
 <body>
     <?php include '../Views/navbar.php'; ?>
-    <header>Schedule Pickup > Your Scheduled Pickups</header>
+    <header>Your Scheduled Pickups</header>
 
     <main class="scheduled-pickups">
 
@@ -69,15 +70,14 @@ try {
                         <p><strong>Pickup Time:</strong> <?= htmlspecialchars($pickup['pickup_time']); ?></p>
                         <p><strong>Pickup Location:</strong> <?= htmlspecialchars($pickup['pickup_location']); ?></p>
                         <p><strong>Status:</strong> <?= htmlspecialchars($pickup['status']); ?></p>
-                        <?php if ($pickup['tracking_number']): ?>
-                            <p><strong>Tracking Number:</strong> <?= htmlspecialchars($pickup['tracking_number']); ?></p>
-                            <p><strong>Shipment Status:</strong> <?= htmlspecialchars($pickup['current_status']); ?></p>
+                        <?php if ($pickup['tracking_id']): ?>
+                            <p><strong>Tracking Number:</strong> <?= htmlspecialchars($pickup['tracking_id']); ?></p>
+                            <p><strong>Shipment Status:</strong> <?= htmlspecialchars($pickup['status']); ?></p>
                         <?php endif; ?>
 
-                        <?php if ($pickup['courier_first_name']): ?>
+                        <?php if ($pickup['company_name']): ?>
                             <h4>Courier Information</h4>
-                            <p>Name: <?= htmlspecialchars($pickup['courier_first_name'] . ' ' . $pickup['courier_last_name']); ?></p>
-                            <p>Phone: <?= htmlspecialchars($pickup['courier_phone']); ?></p>
+                            <p>Name: <?= htmlspecialchars($pickup['company_name']); ?></p>
                             <p>Available: <?= $pickup['courier_available'] ? 'Yes' : 'No'; ?></p>
                         <?php else: ?>
                             <p>No courier has been assigned yet.</p>

@@ -23,7 +23,7 @@ try {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Confirm Pickup</title>
     <link rel="stylesheet" href="../css/navbar.css">
-    <link rel="stylesheet" href="../css/schedulePickup.css">
+    <link rel="stylesheet" href="../css/confirmPickup.css">
     <script src="../js/confirmPickup.js"></script>
 
 </head>
