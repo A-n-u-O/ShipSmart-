@@ -54,7 +54,7 @@ $couriers = [
         <?php endforeach; ?>
     </div>
 
-    <script src="../js/courierProfiles.js"></script>
+    <!-- <script src="../js/courierProfiles.js"></script> -->
 </body>
 
 </html>

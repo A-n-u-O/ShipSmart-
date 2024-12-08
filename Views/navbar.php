@@ -52,8 +52,6 @@ $current_page = basename($_SERVER['SCRIPT_NAME']);
         <span class="toggle-icon">▼</span>
       </a>
       <ul class="drop-down">
-        <li><a href="../pages/realTimeTracking.php" class="<?= $current_page == 'realTimeTracking.php' ? 'active' : '' ?>">
-            Real-Time Tracking</a></li>
         <li><a href="../pages/shipmentHistory.php" class="<?= $current_page == 'shipmentHistory.php' ? 'active' : '' ?>">
             Shipment History</a></li>
         <li><a href="../pages/alerts.php" class="<?= $current_page == 'alerts.php' ? 'active' : '' ?>">
@@ -66,14 +64,7 @@ $current_page = basename($_SERVER['SCRIPT_NAME']);
       <a href="../pages/couriers.php" class="<?= $current_page == 'couriers.php' ? 'active' : '' ?>">
         <img src="../Assets/icons/courier.svg" alt="Courier Icon" class="nav-icon">
         Available Couriers
-        <span class="toggle-icon">▼</span>
       </a>
-      <ul class="drop-down">
-        <li><a href="../pages/chooseCourier.php" class="<?= $current_page == 'chooseCourier.php' ? 'active' : '' ?>">
-            Choose Courier</a></li>
-        <li><a href="../pages/courierProfiles.php" class="<?= $current_page == 'courierProfiles.php' ? 'active' : '' ?>">
-            Courier Profiles</a></li>
-      </ul>
     </li>
 
     <!-- Rates & Pricing with sub-menu -->
@@ -83,11 +74,6 @@ $current_page = basename($_SERVER['SCRIPT_NAME']);
         Rates & Pricing
         <span class="toggle-icon">▼</span>
       </a>
-      <ul class="drop-down">
-        <li><a href="../pages/domesticRates.php" class="<?= $current_page == 'domesticRates.php' ? 'active' : '' ?>">Domestic Rates</a></li>
-        <li><a href="../pages/internationalRates.php" class="<?= $current_page == 'internationalRates.php' ? 'active' : '' ?>">International Rates</a></li>
-        <li><a href="../pages/discountsAndOffers.php" class="<?= $current_page == 'discountsAndOffers.php' ? 'active' : '' ?>">Discounts & Offers</a></li>
-      </ul>
     </li>
 
     <!-- Manage Bookings with sub-menu -->
@@ -112,16 +98,7 @@ $current_page = basename($_SERVER['SCRIPT_NAME']);
       <a href="../pages/support.php" class="<?= $current_page == 'support.php' ? 'active' : '' ?>">
         <img src="../Assets/icons/supportIcon.svg" alt="Support Icon" class="nav-icon">
         Support
-        <span class="toggle-icon">▼</span>
       </a>
-      <ul class="drop-down">
-        <li><a href="../pages/contactUs.php" class="<?= $current_page == 'contactUs.php' ? 'active' : '' ?>">
-            Contact Us</a></li>
-        <li><a href="../pages/helpCenter.php" class="<?= $current_page == 'helpCenter.php' ? 'active' : '' ?>">
-            Help Center</a></li>
-        <li><a href="../pages/faqs.php" class="<?= $current_page == 'faqs.php' ? 'active' : '' ?>">
-            FAQs</a></li>
-      </ul>
     </li>
 
     <!-- About Us with sub-menu -->
@@ -149,8 +126,6 @@ $current_page = basename($_SERVER['SCRIPT_NAME']);
         <span class="toggle-icon">▼</span>
       </a>
       <ul class="drop-down">
-        <li><a href="../pages/profile.php" class="<?= $current_page == 'profile.php' ? 'active' : '' ?>">
-            Profile</a></li>
         <li><a href="../pages/messages.php" class="<?= $current_page == 'editProfile.php' ? 'active' : '' ?>">
             Messages</a></li>
         <li><a href="../pages/notificationSettings.php" class="<?= $current_page == 'notificationSettings.php' ? 'active' : '' ?>">

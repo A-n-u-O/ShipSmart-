@@ -4,3 +4,118 @@ body {
     color: #333;
     margin-left: 300px;/*space for navbar*/
   }
+  body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f4f4f4;
+    color: #333;
+    margin: 0;
+    padding: 0;
+    line-height: 1.6;
+  }
+  
+  .profile-page {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 30px;
+    background-color: #ffffff;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+  }
+  
+  .profile-info {
+    display: flex;
+    align-items: center;
+    margin-bottom: 30px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid #e0e0e0;
+  }
+  
+  .profile-picture img {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    margin-right: 30px;
+    object-fit: cover;
+    border: 3px solid #007bff;
+  }
+  
+  .user-details h1 {
+    font-size: 28px;
+    margin: 0 0 10px 0;
+    color: #2c3e50;
+  }
+  
+  .user-details p {
+    margin: 5px 0;
+    color: #7f8c8d;
+  }
+  
+  .account-settings {
+    margin-top: 40px;
+  }
+  
+  .setting-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 25px;
+    padding: 15px;
+    background-color: #f9f9f9;
+    border-radius: 6px;
+    transition: background-color 0.3s ease;
+  }
+  
+  .setting-item:hover {
+    background-color: #f0f0f0;
+  }
+  
+  .edit-button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    cursor: pointer;
+    font-size: 14px;
+    border-radius: 4px;
+    transition: background-color 0.2s ease;
+  }
+  
+  .edit-button:hover {
+    background-color: #0056b3;
+  }
+  
+  .logout-button {
+    background-color: #dc3545;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: background-color 0.2s ease;
+  }
+  
+  .logout-button:hover {
+    background-color: #c82333;
+  }
+  
+  /* Responsive adjustments */
+  @media (max-width: 768px) {
+    .profile-page {
+      padding: 20px;
+      margin: 0 10px;
+    }
+  
+    .profile-info {
+      flex-direction: column;
+      text-align: center;
+    }
+  
+    .profile-picture {
+      margin-bottom: 20px;
+    }
+  
+    .profile-picture img {
+      margin-right: 0;
+    }
+  }
