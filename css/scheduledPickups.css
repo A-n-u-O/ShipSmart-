@@ -18,32 +18,44 @@ body {
   }
 }
 
-* Header styles */
-header {
-  position: fixed;
-  top: 0;
-  width: 80%;
-  background-color: #ffffff; /* White background for header */
-  padding: 15px; /* Increased padding for better spacing */
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
-  font-size: 2rem; /* Font size for header */
-  text-align: center;
-  z-index: 1000; /* Ensure header is above other content */
-}
-.scheduled-pickups {
-  max-width: 60%;
-  margin: 20px auto;
+.scheduled-pickups{
+  width: 95%;
+  margin: auto;
   padding: 20px;
   background-color: #fff;
   border-radius: 8px;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-  padding-top: 100px; /* Increased padding to ensure the form is below the header */
-
+  display: flex;
+  align-items: center;
+  flex-direction: column;
 }
 
+.scheduled-pickups h1{
+  font-size: 24px;
+  margin-bottom: 20px;
+  text-align: center;
+  color: #007bff;
+}
+.scheduled-pickups .pickup-list{
+  display: flex;
+  gap: 20px;
+  flex-direction: column;
+  align-items: center;
+}
 .pickup-item {
   border-bottom: 1px solid #ddd;
   padding: 10px 0;
+  width: 800px;
+}
+.pickup-item p {
+  margin: 5px 0;
+  font-size: 14px;
+}
+
+.pickup-item h4 {
+  margin: 10px 0;
+  font-size: 16px;
+  color: #333;
 }
 
 .edit-pickup-btn {

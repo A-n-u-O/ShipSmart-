@@ -72,7 +72,6 @@ $current_page = basename($_SERVER['SCRIPT_NAME']);
       <a href="../pages/ratesAndPricing.php" class="<?= $current_page == 'ratesAndPricing.php' ? 'active' : '' ?>">
         <img src="../Assets/icons/priceTagIcon.svg" alt="Rates Icon" class="nav-icon">
         Rates & Pricing
-        <span class="toggle-icon">▼</span>
       </a>
     </li>
 
@@ -81,16 +80,6 @@ $current_page = basename($_SERVER['SCRIPT_NAME']);
       <a href="../pages/manageBookings.php" class="<?= $current_page == 'manageBookings.php' ? 'active' : '' ?>">
         <img src="../Assets/icons/manageIcon.svg" alt="Bookings Icon" class="nav-icon">
         Manage Bookings
-        <span class="toggle-icon">▼</span>
-      </a>
-      <ul class="drop-down">
-        <li><a href="../pages/viewBookings.php" class="<?= $current_page == 'viewBookings.php' ? 'active' : '' ?>">
-            View Bookings</a></li>
-        <li><a href="../pages/cancelBooking.php" class="<?= $current_page == 'cancelBooking.php' ? 'active' : '' ?>">
-            Cancel Booking</a></li>
-        <li><a href="../pages/modifyBooking.php" class="<?= $current_page == 'modifyBooking.php' ? 'active' : '' ?>">
-            Modify Booking</a></li>
-      </ul>
     </li>
 
     <!-- Support with sub-menu -->
@@ -128,6 +117,8 @@ $current_page = basename($_SERVER['SCRIPT_NAME']);
       <ul class="drop-down">
         <li><a href="../pages/messages.php" class="<?= $current_page == 'editProfile.php' ? 'active' : '' ?>">
             Messages</a></li>
+            <li><a href="../pages/notificationSettings.php" class="<?= $current_page == 'notificationSettings.php' ? 'active' : '' ?>">
+            Payment</a></li>
         <li><a href="../pages/notificationSettings.php" class="<?= $current_page == 'notificationSettings.php' ? 'active' : '' ?>">
             Notifications</a></li>
       </ul>

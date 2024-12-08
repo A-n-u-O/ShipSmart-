@@ -9,8 +9,8 @@ body {
 
 /* Main content styling */
 .edit-pickup {
-  max-width: 800px;
-  margin: 20px auto;
+  max-width: 95%;
+  margin: auto;
   padding: 20px;
   background-color: #fff;
   border-radius: 8px;

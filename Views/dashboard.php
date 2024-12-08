@@ -93,39 +93,35 @@ $recent_bookings = $stmt->fetchAll();
 
                 <div class="recent-bookings">
                     <h3>Recent Bookings</h3>
-                    <ul>
-                        <?php foreach ($recent_bookings as $booking): ?>
-                            <li>
-                                <strong>Booking #<?= htmlspecialchars($booking['booking_id']); ?></strong><br>
-                                Pickup Location: <?= htmlspecialchars($booking['pickup_location']); ?><br>
-                                Delivery Location: <?= htmlspecialchars($booking['delivery_location']); ?><br>
-                                Pickup Date: <?= htmlspecialchars($booking['pickup_date']); ?><br>
-                                Pickup Time: <?= htmlspecialchars($booking['pickup_time']); ?><br>
-                                Status: <?= htmlspecialchars($booking['status']); ?>
-                                <!-- View Details Button -->
-                                <button class="view-details button" onclick="showModal(<?= htmlspecialchars($booking['booking_id']); ?>)">
-                                    View Details
-                                    <div class="hoverEffect">
-                                        <div></div>
-                                    </div>
-                                </button>
-                            </li>
-                        <?php endforeach; ?>
-                    </ul>
+                    <div class="table-container">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Booking ID</th>
+                                    <th>Pickup Location</th>
+                                    <th>Delivery Location</th>
+                                    <th>Pickup Date</th>
+                                    <th>Pickup Time</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php foreach ($recent_bookings as $booking): ?>
+                                    <tr>
+                                        <td><?= htmlspecialchars($booking['booking_id']); ?></td>
+                                        <td><?= htmlspecialchars($booking['pickup_location']); ?></td>
+                                        <td><?= htmlspecialchars($booking['delivery_location']); ?></td>
+                                        <td><?= htmlspecialchars($booking['pickup_date']); ?></td>
+                                        <td><?= htmlspecialchars($booking['pickup_time']); ?></td>
+                                        <td><?= htmlspecialchars($booking['status']); ?></td>
+                                    </tr>
+                                <?php endforeach; ?>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </main>
-
-        <!-- Modal to View Shipment/Booking Details -->
-        <div id="modal" class="modal">
-            <div class="modal-content">
-                <span class="close-btn" onclick="closeModal()">&times;</span>
-                <h2>Booking/Shipment Details</h2>
-                <div id="modal-details">
-                    <!-- Dynamic details will be populated here -->
-                </div>
-            </div>
-        </div>
 
         <script src="../js/dashboard.js" defer></script>
     </div>
