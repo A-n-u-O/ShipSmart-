@@ -27,6 +27,7 @@ try {
     $_SESSION['error_message'] = "Error fetching bookings: " . $e->getMessage();
     $bookings = [];
 }
+
 ?>
 
 <!DOCTYPE html>

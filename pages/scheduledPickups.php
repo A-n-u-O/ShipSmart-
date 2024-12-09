@@ -8,20 +8,33 @@ if (!isset($_SESSION['user_id'])) {
     exit();
 }
 
-// Fetch user's scheduled pickups with courier details
+// Handle delete request
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete_booking_id'])) {
+    try {
+        $stmt = $pdo->prepare("DELETE FROM Bookings WHERE booking_id = ? AND user_id = ?");
+        $stmt->execute([$_POST['delete_booking_id'], $_SESSION['user_id']]);
+        $_SESSION['success_message'] = "Booking removed successfully.";
+    } catch (Exception $e) {
+        $_SESSION['error_message'] = "Error deleting booking: " . $e->getMessage();
+    }
+    header('Location: scheduledPickups.php');
+    exit();
+}
+
+// Fetch user's scheduled pickups excluding "In Progress" or "Confirmed"
 try {
     $stmt = $pdo->prepare("
-    SELECT b.booking_id, b.pickup_date, b.pickup_time, b.pickup_location, b.status, 
-           b.item_weight, b.phone_number, b.item_description,
-           s.tracking_number, s.current_status, 
-           c.first_name AS courier_first_name, c.last_name AS courier_last_name, 
-           c.contact_info AS courier_phone, c.available AS courier_available
-    FROM Bookings b
-    LEFT JOIN Shipments s ON b.booking_id = s.booking_id
-    LEFT JOIN Couriers c ON b.courier_id = c.courier_id
-    WHERE b.user_id = ?
-    ORDER BY b.pickup_date DESC, b.pickup_time DESC
-");
+        SELECT b.booking_id, b.pickup_date, b.pickup_time, b.pickup_location, b.status, 
+               b.item_weight, b.phone_number, b.item_description,
+               s.tracking_number, s.current_status, 
+               c.first_name AS courier_first_name, c.last_name AS courier_last_name, 
+               c.contact_info AS courier_phone, c.available AS courier_available
+        FROM Bookings b
+        LEFT JOIN Shipments s ON b.booking_id = s.booking_id
+        LEFT JOIN Couriers c ON b.courier_id = c.courier_id
+        WHERE b.user_id = ? AND b.status NOT IN ('In Progress', 'Confirmed')
+        ORDER BY b.pickup_date DESC, b.pickup_time DESC
+    ");
     $stmt->execute([$_SESSION['user_id']]);
     $pickups = $stmt->fetchAll(PDO::FETCH_ASSOC);
 } catch (Exception $e) {
@@ -92,6 +105,7 @@ try {
         <?php else: ?>
             <p>No scheduled pickups found.</p>
         <?php endif; ?>
+
         <?php
         // Display messages
         $messages = [

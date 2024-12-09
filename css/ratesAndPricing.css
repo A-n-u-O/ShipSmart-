@@ -3,22 +3,34 @@ body {
   font-family: Arial, sans-serif;
   background-color: #f9f9f9;
   color: #333;
-  margin-left: calc(300px + 20px); /* Account for navbar width and some padding */
-  padding: 20px; /* Add padding around the content to prevent it from touching the edges */
+  margin: 0; /* Reset default margins */
+  padding: 0;
+}
+
+.container {
+  margin-left: 300px; /* Account for the navbar width */
+  padding: 20px;
+  box-sizing: border-box; /* Include padding in width calculations */
 }
 
 /* Headings */
-h1 {
-  text-align: center;
-  margin-top: 20px;
+h1, h2, h3 {
+  margin: 0 0 15px;
   color: #1a73e8;
-  font-size: 28px; /* Increased font size for main heading */
+  text-align: center;
+}
+
+h1 {
+  font-size: 28px;
+  margin-top: 20px;
 }
 
 h2 {
-  color: #1a73e8;
-  margin-bottom: 10px;
-  font-size: 24px; /* Increased font size for subheadings */
+  font-size: 24px;
+}
+
+h3 {
+  font-size: 20px;
 }
 
 /* Results Section */
@@ -28,40 +40,35 @@ h2 {
   border-radius: 8px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   margin: 20px auto;
-  width: 80%;
+  width: calc(100% - 40px); /* Responsive width */
   max-width: 800px;
 }
 
-/* Table Styles */
-table {
-  width: 100%;
-  border-collapse: collapse;
-  margin-top: 20px;
+#results p {
+  line-height: 1.6;
+  margin-bottom: 10px;
 }
 
-th, td {
+#results ul {
+  list-style: none; /* Remove bullet points */
+  padding: 0;
+}
+
+#results ul li {
+  background-color: #f0f8ff;
+  margin: 5px 0;
   padding: 10px;
-  text-align: left;
-  border-bottom: 1px solid #ddd;
-}
-
-th {
-  background-color: #f7f7f7;
-  font-weight: bold; /* Make header text bold */
-}
-
-td {
+  border-radius: 4px;
   font-size: 14px;
 }
 
 /* Button Styles */
 button {
-  display: block;
   width: 100%;
   padding: 12px;
   margin-top: 20px;
   background-color: #1a73e8;
-  color: white;
+  color: #fff;
   border: none;
   border-radius: 4px;
   font-size: 16px;
@@ -79,7 +86,7 @@ form {
   flex-direction: column;
   gap: 15px;
   margin: 20px auto;
-  width: 80%;
+  width: calc(100% - 40px);
   max-width: 400px;
 }
 
@@ -88,28 +95,25 @@ input, select {
   font-size: 14px;
   border: 1px solid #ccc;
   border-radius: 4px;
-}
-
-input[type="number"] {
-  width: 100%;
-}
-
-select {
   width: 100%;
 }
 
 /* Responsive Styles */
 @media (max-width: 768px) {
+  .container {
+      margin-left: 0; /* Remove margin for small screens */
+  }
+
   h1 {
       font-size: 24px;
   }
 
   #results {
-      width: 90%;
+      width: 100%;
   }
 
   form {
-      width: 90%;
+      width: 100%;
   }
 
   button {
@@ -117,27 +121,10 @@ select {
   }
 }
 
-/* Additional Styles for Better UX */
-ul {
-  list-style-type: none; /* Remove default list styling */
-  padding: 0; /* Remove padding */
-}
-
-ul li {
-  background-color: #f0f8ff; /* Light background for list items */
-  margin: 5px 0; /* Space between list items */
-  padding: 10px; /* Padding for list items */
-  border-radius: 4px; /* Rounded corners */
-}
-
-p {
-  line-height: 1.6; /* Improve readability with line height */
-}
-
 /* Alert/Error Message Styles */
 .error-message {
   color: red;
-  background-color: #ffe6e6; /* Light red background */
+  background-color: #ffe6e6;
   border: 1px solid red;
   padding: 10px;
   border-radius: 4px;
@@ -146,7 +133,7 @@ p {
 
 .success-message {
   color: green;
-  background-color: #e6ffe6; /* Light green background */
+  background-color: #e6ffe6;
   border: 1px solid green;
   padding: 10px;
   border-radius: 4px;
