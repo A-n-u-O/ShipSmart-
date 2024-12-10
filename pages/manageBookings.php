@@ -12,9 +12,8 @@ if (!isset($_SESSION['user_id'])) {
 try {
     $stmt = $pdo->prepare("
         SELECT b.booking_id, b.pickup_date, b.pickup_time, b.pickup_location, b.status,
-               s.tracking_number, s.current_status, 
-               c.first_name AS courier_first_name, c.last_name AS courier_last_name, 
-               c.contact_info AS courier_phone
+               s.tracking_id, s.current_status, 
+               c.company_name AS courier_name
         FROM Bookings b
         LEFT JOIN Shipments s ON b.booking_id = s.booking_id
         LEFT JOIN Couriers c ON b.courier_id = c.courier_id
@@ -65,15 +64,14 @@ try {
                     <p><strong>Time:</strong> <?= htmlspecialchars($booking['pickup_time']); ?></p>
                     <p><strong>Location:</strong> <?= htmlspecialchars($booking['pickup_location']); ?></p>
                     <p><strong>Status:</strong> <?= htmlspecialchars($booking['status']); ?></p>
-                    <?php if ($booking['tracking_number']): ?>
-                        <p><strong>Tracking Number:</strong> <?= htmlspecialchars($booking['tracking_number']); ?></p>
+                    <?php if ($booking['tracking_id']): ?>
+                        <p><strong>Tracking Number:</strong> <?= htmlspecialchars($booking['tracking_id']); ?></p>
                         <p><strong>Shipment Status:</strong> <?= htmlspecialchars($booking['current_status']); ?></p>
                     <?php endif; ?>
 
-                    <?php if ($booking['courier_first_name']): ?>
+                    <?php if ($booking['company_name']): ?>
                         <h4>Courier Information</h4>
-                        <p>Name: <?= htmlspecialchars($booking['courier_first_name'] . ' ' . $booking['courier_last_name']); ?></p>
-                        <p>Phone: <?= htmlspecialchars($booking['courier_phone']); ?></p>
+                        <p>Name: <?= htmlspecialchars($booking['company_name']); ?></p>
                     <?php endif; ?>
                 </div>
             <?php endforeach; ?>

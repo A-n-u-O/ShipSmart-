@@ -83,6 +83,7 @@ try {
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -90,6 +91,7 @@ try {
     <link rel="stylesheet" href="../css/navbar.css">
     <link rel="stylesheet" href="../css/ratesAndPricing.css"> <!-- External CSS file -->
 </head>
+
 <body>
     <?php include '../Views/navbar.php'; ?> <!-- Include the reusable navbar -->
 
@@ -97,10 +99,10 @@ try {
 
     <div id="results">
         <h2>Shipping Details</h2>
-        <p><strong>Courier:</strong> <?= htmlspecialchars($courier['first_name'] . ' ' . $courier['last_name']); ?></p>
+        <p><strong>Courier:</strong> <img src="<?= htmlspecialchars($courier['logo'] ?? 'default_logo.png') ?>" alt="<?= htmlspecialchars($courier['company_name']) ?> " width="50"> <?= htmlspecialchars($courier['first_name'] . ' ' . $courier['last_name']); ?></p>
         <p><strong>Delivery Company:</strong> <?= htmlspecialchars($courier['company_name']); ?></p>
         <p><strong>Item Weight:</strong> <?= htmlspecialchars($item_weight); ?> kg</p>
-        
+
         <h3>Cost Breakdown</h3>
         <ul>
             <li><strong>Base Rate:</strong> $<?= number_format($baseRate, 2); ?></li>
@@ -108,13 +110,13 @@ try {
             <li><strong>Weight of Item:</strong> <?= htmlspecialchars($item_weight); ?> kg</li>
             <li><strong>Weight Cost:</strong> $<?= number_format($item_weight * $weightFactor, 2); ?></li>
         </ul>
-        
-        <p><strong>Total Cost:</strong> 
+
+        <p><strong>Total Cost:</strong>
             $<?= number_format($totalCostUSD, 2); ?> (₦<?= number_format($totalCostNGN, 2); ?>)
         </p>
-        
+
         <h3>Shipping Port Details</h3>
-        <p><strong>Shipping Port:</strong> <?= htmlspecialchars($port_details['port_name'] ?? 'Unknown'); ?> 
+        <p><strong>Shipping Port:</strong> <?= htmlspecialchars($port_details['port_name'] ?? 'Unknown'); ?>
             (<?= htmlspecialchars($port_details['location'] ?? 'Unknown'); ?>)
         </p>
     </div>
@@ -126,4 +128,5 @@ try {
 
     <script src="../js/ratesAndPricing.js"></script> <!-- Include JavaScript file -->
 </body>
+
 </html>

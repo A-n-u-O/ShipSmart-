@@ -13,8 +13,7 @@ document.querySelectorAll(".view-details-btn").forEach(function (button) {
     // Populate the modal with courier details
     var details = `
             <img src="${courierData.photo_url}" alt="Courier Photo" style="width: 100px; height: auto;">
-            <p><strong>Name:</strong> ${courierData.first_name} ${courierData.last_name}</p>
-            <p><strong>Phone:</strong> ${courierData.phone_number}</p>
+            <p><strong>Name:</strong> ${courierData.company_name}</p>
             <p><strong>Available Time:</strong> ${courierData.available_time}</p>
             <p><strong>Rating:</strong> ${courierData.rating} ★</p>
         `;

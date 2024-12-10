@@ -13,10 +13,11 @@ try {
     $stmt = $pdo->prepare("
         SELECT b.*, 
                d.company_name, 
+               c.logo,
                CONCAT(co.first_name, ' ', co.last_name) AS courier_name
         FROM Bookings b
         JOIN Couriers co ON b.courier_id = co.courier_id
-        JOIN deliverycompanies d ON d.delivery_company_id = co.fk_delivery_company_id
+        JOIN deliverycompanies d ON co.fk_delivery_company_id = d.delivery_company_id 
         WHERE b.user_id = :user_id
         ORDER BY b.booking_id DESC 
         LIMIT 1
@@ -43,6 +44,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $booking_id = $pickup['booking_id'];
 
         try {
+            // Update the booking status to 'Confirmed'
             $stmt = $pdo->prepare("
                 UPDATE Bookings 
                 SET status = 'Confirmed' 
@@ -50,9 +52,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             ");
             $stmt->execute([$booking_id, $_SESSION['user_id']]);
 
+            // Generate a tracking number
+            $tracking_number = uniqid('TRACK-', true);
+
+            // Insert a new shipment record
+            $stmt = $pdo->prepare("
+                INSERT INTO Shipments (booking_id, tracking_number, current_status) 
+                VALUES (?, ?, 'In Transit')
+            ");
+            $stmt->execute([$booking_id, $tracking_number]);
+
             $_SESSION['success_message'] = "Pickup confirmed! Booking status updated to 'Confirmed'.";
-            // Store relevant booking details in session for future use
-            $current_booking = [
+            $_SESSION['current_booking'] = [
                 'courier_id' => $pickup['courier_id'] ?? null,
                 'item_weight' => $pickup['item_weight'] ?? null,
                 'pickup_date' => $pickup['pickup_date'] ?? null,
@@ -64,18 +75,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 'shipping_port' => $pickup['shipping_port'] ?? null,
                 'destination_zone' => $pickup['destination_zone'] ?? null,
             ];
+
+            // Redirect to rates and pricing page after confirmation
+            header('Location: ratesAndPricing.php');
+            exit();
         } catch (Exception $e) {
             error_log("Failed to confirm pickup: " . $e->getMessage());
             $_SESSION['error_message'] = "Failed to confirm pickup. Please try again later.";
         }
     }
-    $_SESSION['current_booking'] = $current_booking;
-
-    // Redirect to rates and pricing page after confirmation
-    header('Location: ratesAndPricing.php');
-    exit();
-}
-?>
 }
 ?>
 <!DOCTYPE html>
@@ -107,7 +115,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <?php foreach ($pickup as $key => $value): ?>
                 <div class="form-group">
                     <label><?= ucfirst(str_replace('_', ' ', $key)) ?></label>
-                    <p><?= htmlspecialchars($value ?? 'Not available') ?></p>
+                    <?php if ($key === 'logo'): ?>
+                        <p>
+                            <img class="company-logo" src="<?= htmlspecialchars($value) ?>" alt="<?= htmlspecialchars($pickup['company_name']) ?> logo" width="50">
+                            <?= htmlspecialchars($pickup['courier_name']) ?>
+                        </p>
+                    <?php else: ?>
+                        <p><?= htmlspecialchars($value ?? 'Not available') ?></p>
+                    <?php endif; ?>
                 </div>
             <?php endforeach; ?>
         </div>

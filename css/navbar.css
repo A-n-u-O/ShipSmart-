@@ -1,7 +1,7 @@
 /* Styles */
 nav {
   background-color: #333;
-  width: 275px; /* Adjust the width of the sidebar */
+  width: 280px; /* Adjust the width of the sidebar */
   position: fixed; /* Fix the navbar to the left side */
   height: 100%; /* Full height of the viewport */
   top: 0;

@@ -28,10 +28,12 @@ try {
                b.item_weight, b.phone_number, b.item_description,
                s.tracking_number, s.current_status, 
                c.first_name AS courier_first_name, c.last_name AS courier_last_name, 
-               c.contact_info AS courier_phone, c.available AS courier_available
+               c.contact_info AS courier_phone, c.available AS courier_available,
+               d.company_name, d.logo_url, d.base_rate, d.weight_factor
         FROM Bookings b
         LEFT JOIN Shipments s ON b.booking_id = s.booking_id
         LEFT JOIN Couriers c ON b.courier_id = c.courier_id
+        LEFT JOIN deliverycompanies d ON c.fk_delivery_company_id = d.delivery_company_id
         WHERE b.user_id = ? AND b.status NOT IN ('In Progress', 'Confirmed')
         ORDER BY b.pickup_date DESC, b.pickup_time DESC
     ");
@@ -49,10 +51,11 @@ try {
 <head>
     <link rel="stylesheet" href="../css/navbar.css">
     <link rel="stylesheet" href="../css/scheduledPickups.css">
+    <script src="../js/scheduledPickups.js"></script>
 </head>
+<?php include '../Views/navbar.php'; ?>
 
 <body>
-    <?php include '../Views/navbar.php'; ?>
 
     <main class="scheduled-pickups">
         <h1>Schedule Pickup > Your Scheduled Pickups</h1>
@@ -75,13 +78,22 @@ try {
                             <p><strong>Shipment Status:</strong> <?= htmlspecialchars($pickup['current_status']); ?></p>
                         <?php endif; ?>
 
-                        <?php if ($pickup['courier_first_name']): ?>
-                            <h4>Courier Information</h4>
+                        <?php if ($pickup['courier_first_name'] && $pickup['courier_last_name']): ?>
+                            <p><strong>Courier Information</strong></p>
                             <p>Name: <?= htmlspecialchars($pickup['courier_first_name'] . ' ' . $pickup['courier_last_name']); ?></p>
-                            <p>Phone: <?= htmlspecialchars($pickup['courier_phone']); ?></p>
                             <p>Available: <?= $pickup['courier_available'] ? 'Yes' : 'No'; ?></p>
+                            <?php if ($pickup['company_name']): ?>
+                                <div class="delivery-company">
+                                    <img class="company-logo" src="<?= htmlspecialchars($pickup['logo_url']); ?>" width="50" alt="<?= htmlspecialchars($pickup['company_name']); ?> Logo">
+                                    <p><?= htmlspecialchars($pickup['company_name']); ?></p>
+                                    <p>Base Rate: $<?= htmlspecialchars($pickup['base_rate']); ?></p>
+                                    <p>Weight Factor: <?= htmlspecialchars($pickup['weight_factor']); ?></p>
+                                </div>
+                            <?php else: ?>
+                                <p>No courier has been assigned yet.</p>
+                            <?php endif; ?>
                         <?php else: ?>
-                            <p>No courier has been assigned yet.</p>
+                            <p>No courier information available.</p>
                         <?php endif; ?>
 
                         <div class="position-button">

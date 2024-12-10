@@ -1,159 +1,145 @@
+/* General reset and font */
 body {
-  font-family: Arial, sans-serif;
-  background-color: #f9f9f9;
-  color: #333;
-  margin-left: 280px; /* Space for navbar */
+  margin: 0;
+  padding: 0;
+  font-family: "Arial", sans-serif;
+  background-color: #f0f8ff; /* Light blue background for a soft look */
+  color: #05386b; /* Deep ocean blue for text */
+  
 }
 
-@keyframes fadeOut {
-  0% {
-    opacity: 1;
-  }
-  80% {
-    opacity: 0.9;
-  }
-  100% {
-    opacity: 0;
-    display: none;
-  }
-}
-
-.scheduled-pickups{
-  width: 95%;
-  margin: auto;
+header {
+  background-color: #05386b; /* Deep ocean blue */
+  color: #ffffff; /* White text */
+  text-align: center;
   padding: 20px;
-  background-color: #fff;
-  border-radius: 8px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-  display: flex;
-  align-items: center;
-  flex-direction: column;
+  font-size: 1.5em;
+  font-weight: bold;
+  border-bottom: 5px solid #1d3c6e; /* Darker blue accent */
 }
 
-.scheduled-pickups h1{
+.scheduled-pickups {
+  max-width: 800px;
+  margin: 30px auto;
+  padding: 20px;
+  background-color: #ffffff; /* White card background */
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  margin-left: 300px; /* Space for navbar */
+  transition: background-color 0.3s; /* Smooth background transition */
+}
+
+/* Messages */
+.success-message {
+  background-color: #1d3c6e; /* Darker blue */
+  color: #ffffff;
+  border-left: 5px solid #05386b; /* Deep blue accent */
+  padding: 10px 15px;
+  margin-bottom: 20px;
+  border-radius: 5px;
+  font-weight: bold;
+}
+
+.error-message {
+  background-color: #e63946; /* Red for errors */
+  color: #ffffff;
+  border-left: 5px solid #05386b; /* Deep blue accent */
+  padding: 10px 15px;
+  margin-bottom: 20px;
+  border-radius: 5px;
+  font-weight: bold;
+}
+
+/* Pickup list and items */
+.pickup-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.scheduled-pickups h1 {
   font-size: 24px;
   margin-bottom: 20px;
   text-align: center;
   color: #007bff;
 }
-.scheduled-pickups .pickup-list{
+.scheduled-pickups .pickup-list {
   display: flex;
   gap: 20px;
   flex-direction: column;
   align-items: center;
 }
 .pickup-item {
-  border-bottom: 1px solid #ddd;
-  padding: 10px 0;
-  width: 800px;
+  flex: 1 1 calc(33.333% - 20px);
+  background-color: #d6e4f0; /* Light blue for item backgrounds */
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s, box-shadow 0.3s;
 }
-.pickup-item p {
-  margin: 5px 0;
-  font-size: 14px;
+
+.pickup-item:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
 }
 
 .pickup-item h4 {
-  margin: 10px 0;
-  font-size: 16px;
-  color: #333;
+  color: #05386b;
+  font-weight: bold;
+  margin-bottom: 10px;
 }
 
-.edit-pickup-btn {
-  background-color: #ffc107;
-  color: white;
-  padding: 5px 10px;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
+.pickup-item p {
+  margin: 5px 0;
+  line-height: 1.5;
 }
-
-.edit-pickup-btn:hover {
-  background-color: #e0a800;
+.delivery-company .company-logo {
+  width: 20px;
+  height: 20px;
 }
-
-/* Cancel Button */
-.cancel-btn {
-  background-color: #f44336;
-  border: none;
-  color: black;
-  text-align: center;
-  padding: 10px 20px;
-  border-radius: 5px;
-  font-size: 16px;
-  cursor: pointer;
-  width: 100%;
-  opacity: 0;
-  transition: opacity 0.3s ease, transform 0.3s ease;
-}
-
-.cancel-btn:hover {
-  background-color: #d32f2f;
-}
-
-.position-button:hover .cancel-btn {
-  opacity: 1;
-  transform: translateY(0);
-}
-
+/* Buttons */
 .position-button {
-  position: relative;
+  display: flex;
+  justify-content: space-between;
+  margin-top: 15px;
 }
 
-/* Modal */
-.modal {
-  display: none;
-  position: fixed;
-  z-index: 1000;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
-  overflow-y: auto;
-  background-color: rgba(0, 0, 0, 0.5);
-}
-
-.modal-content {
-  background-color: #fff;
-  margin: 15% auto;
-  padding: 20px;
-  border-radius: 10px;
-  width: 30%;
-  text-align: center;
-}
-
-.confirm-btn {
-  background-color: red;
-  color: white;
+button {
+  padding: 10px 20px;
+  font-size: 0.9em;
   border: none;
-  padding: 10px 15px;
-  margin: 5px;
+  border-radius: 5px;
   cursor: pointer;
-  border-radius: 5px;
+  transition: background-color 0.3s ease;
 }
 
-.close-modal-btn {
-  background-color: gray;
-  color: white;
-  border: none;
-  padding: 10px 15px;
-  margin: 5px;
-  cursor: pointer;
-  border-radius: 5px;
+button.edit-btn {
+  background-color: #1d3c6e; /* Darker blue */
+  color: #ffffff;
 }
 
-.success-message {
-  background-color: #4caf50; /* Green */
-  color: white;
-  padding: 15px;
-  margin: 10px 0;
-  border-radius: 5px;
-  text-align: center;
-  animation: fadeOut 5s forwards; /* Auto dismiss after 5 seconds */
+button.edit-btn:hover {
+  background-color: #0b1d3b; /* Even darker blue */
 }
 
-/* Accessibility: Focus state */
-.edit-pickup-btn:focus,
-.cancel-btn:focus {
-  outline: 2px solid #007bff;
-  outline-offset: 2px;
+button.delete-btn {
+  background-color: #e63946; /* Red */
+  color: #ffffff;
+}
+
+button.delete-btn:hover {
+  background-color: #b71c1c; /* Darker red */
+}
+
+/* Responsive Design */
+@media screen and (max-width: 768px) {
+  .pickup-item {
+    flex: 1 1 calc(50% - 20px);
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .pickup-item {
+    flex: 1 1 100%;
+  }
 }

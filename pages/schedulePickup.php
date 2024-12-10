@@ -4,37 +4,37 @@ require_once 'db_connection.php';  // Include the database connection file
 
 $error_messages = [];  // Initialize an array to store error messages for validation
 
+// Fetch delivery companies
+try {
+    $companies_stmt = $pdo->query("SELECT delivery_company_id, company_name, base_rate, weight_factor FROM deliverycompanies");
+    $deliverycompanies = $companies_stmt->fetchAll(PDO::FETCH_ASSOC);
+} catch (Exception $e) {
+    $_SESSION['error_message'] = "Error fetching delivery companies: " . htmlspecialchars($e->getMessage());
+    $deliverycompanies = [];
+}
+
 // Fetch active shipping ports from the database
 try {
     $ports_stmt = $pdo->query("SELECT port_id, port_name, location FROM ShippingPorts WHERE active = TRUE");
     $shipping_ports = $ports_stmt->fetchAll(PDO::FETCH_ASSOC);  // Store the results in an array
 } catch (Exception $e) {
-    // Catch any database exceptions and store error message in session
     $_SESSION['error_message'] = "Error fetching shipping ports: " . htmlspecialchars($e->getMessage());
     $shipping_ports = [];
 }
 
-// Fetch available couriers from the database
+// Fetch available couriers along with their delivery company names
 try {
-    $courier_stmt = $pdo->prepare("SELECT courier_id, CONCAT(first_name, ' ', last_name) AS name, contact_info FROM Couriers WHERE is_available = 1");
+    $courier_stmt = $pdo->prepare("
+        SELECT c.courier_id, c.first_name, c.last_name, d.company_name 
+        FROM Couriers c 
+        JOIN deliverycompanies d ON c.fk_delivery_company_id = d.delivery_company_id 
+        WHERE c.available = 1
+    ");
     $courier_stmt->execute();
     $couriers = $courier_stmt->fetchAll(PDO::FETCH_ASSOC);  // Store couriers in an array
 } catch (Exception $e) {
-    // Catch any database exceptions and store error message in session
     $_SESSION['error_message'] = "Error fetching couriers: " . htmlspecialchars($e->getMessage());
     $couriers = [];
-}
-
-// If a POST request is made to select a courier
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['courier_id'])) {
-    try {
-        $_SESSION['current_booking']['courier_id'] = $_POST['courier_id'];  // Store selected courier ID in session
-        header('Location: ratesAndPricing.php');  // Redirect to the rates and pricing page
-        exit();
-    } catch (Exception $e) {
-        // Handle errors during courier selection
-        $_SESSION['error_message'] = "Error selecting courier: " . htmlspecialchars($e->getMessage());
-    }
 }
 
 // Fetch destination zones from the database
@@ -43,7 +43,6 @@ try {
     $stmt = $pdo->query("SELECT zone_id, zone_name FROM destination_zones");
     $destination_zones = $stmt->fetchAll(PDO::FETCH_ASSOC);  // Store zones in an array
 } catch (Exception $e) {
-    // Handle errors during destination zone fetch
     $_SESSION['error_message'] = "Error fetching destination zones: " . htmlspecialchars($e->getMessage());
 }
 
@@ -52,13 +51,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Retrieve form input values
     $pickup_date = trim($_POST['pickup_date'] ?? '');
     $pickup_time = trim($_POST['pickup_time'] ?? '');
-    $pickup_address = trim($_POST['pickup_address'] ?? '');
+    $pickup_location = trim($_POST['pickup_location'] ?? '');
     $delivery_location = trim($_POST['delivery_location'] ?? '');
     $phone_number = trim($_POST['phone_number'] ?? '');
     $item_description = trim($_POST['item_description'] ?? '');
     $item_weight = trim($_POST['item_weight'] ?? '');
     $destination_zone = trim($_POST['destination_zone'] ?? '');
-    $courier = trim($_POST['courier'] ?? '');
+    $delivery_company_id = trim($_POST['fk_delivery_company_id'] ?? '');
+    $courier_id = trim($_POST['courier_id'] ?? '');
     $shipping_port = trim($_POST['shipping_port'] ?? '');
 
     // Validate pickup date
@@ -84,9 +84,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
     }
 
-    // Validate pickup address
-    if (empty($pickup_address)) {
-        $error_messages['pickup_address'] = 'Pickup address is required.';
+    // Validate pickup location
+    if (empty($pickup_location)) {
+        $error_messages['pickup_location'] = 'Pickup address is required.';
     }
 
     // Validate delivery location
@@ -121,8 +121,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     // Validate courier selection
-    if (empty($courier)) {
-        $error_messages['courier'] = 'Courier selection is required.';
+    if (empty($courier_id)) {
+        $error_messages['courier_id'] = 'Courier selection is required.';
     }
 
     // Validate shipping port selection
@@ -130,47 +130,55 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $error_messages['shipping_port'] = 'Shipping port is required.';
     }
 
+    // Validate delivery company
+    if (empty($delivery_company_id)) {
+        $error_messages['fk_delivery_company_id'] = 'Delivery company is required.';
+    }
+
     if (empty($error_messages)) {
         try {
-            // Corrected the column name from 'courier' to 'courier_id' (or correct name in your DB)
             $stmt = $pdo->prepare("INSERT INTO Bookings 
-            (user_id, pickup_date, pickup_time, pickup_location, delivery_location, phone_number, item_description, item_weight, destination_zone, courier_id, shipping_port, status) 
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 'Pending')");
-    
-            // Execute the insertion query with form data
+    (user_id, pickup_date, pickup_time, pickup_location, delivery_location, 
+    phone_number, item_description, item_weight, destination_zone, 
+    courier_id, shipping_port, status) 
+    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 'Pending')");
+
             $stmt->execute([
                 $_SESSION['user_id'],
                 $pickup_date,
                 $pickup_time,
-                $pickup_address,
+                $pickup_location,
                 $delivery_location,
                 $phone_number,
                 $item_description,
                 $item_weight,
                 $destination_zone,
-                $courier,  // Ensure this is the correct field name
+                $courier_id,
                 $shipping_port
             ]);
-    
+
             // Store booking details in session for future steps
             $_SESSION['current_booking'] = [
                 'pickup_date' => $pickup_date,
                 'pickup_time' => $pickup_time,
-                'pickup_address' => $pickup_address,
+                'pickup_location' => $pickup_location,
                 'delivery_location' => $delivery_location,
                 'phone_number' => $phone_number,
                 'item_description' => $item_description,
                 'item_weight' => $item_weight,
                 'destination_zone' => $destination_zone,
-                'courier' => $courier,
+                'courier' => $courier_id,
                 'shipping_port' => $shipping_port,
+                'delivery_company_id' => $delivery_company_id
             ];
+
+            $_SESSION['success_message'] = "Pickup scheduled successfully.";
             header('Location: confirmPickup.php');  // Redirect to confirm pickup page
             exit();
         } catch (Exception $e) {
-            // Handle database insertion errors
             $_SESSION['error_message'] = "Error processing your request: " . htmlspecialchars($e->getMessage());
-        }}
+        }
+    }
 }
 ?>
 
@@ -214,14 +222,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         <?= isset($error_messages['pickup_time']) ? '<span class="error">' . $error_messages['pickup_time'] . '</span>' : '' ?>
                     </div>
 
-                    <!-- Pickup address input -->
-                    <div class="pickup-address-input">
-                        <label for="pickup_address">Pickup Address</label>
-                        <input type="text" name="pickup_address" id="pickup_address" value="<?= htmlspecialchars($pickup_address ?? '') ?>">
-                        <?= isset($error_messages['pickup_address']) ? '<span class="error">' . $error_messages['pickup_address'] . '</span>' : '' ?>
+                    <!-- Pickup location input -->
+                    <div class="pickup-location-input">
+                        <label for="pickup_location">Pickup Address</label>
+                        <input type="text" name="pickup_location" id="pickup_location" value="<?= htmlspecialchars($pickup_location ?? '') ?>">
+                        <?= isset($error_messages['pickup_location']) ? '<span class="error">' . $error_messages['pickup_location'] . '</span>' : '' ?>
                     </div>
 
-                    <!-- Delivery address input -->
+                    <!-- Delivery location input -->
                     <div class="delivery-location-input">
                         <label for="delivery_location">Delivery Location</label>
                         <input type="text" name="delivery_location" id="delivery_location" value="<?= htmlspecialchars($delivery_location ?? '') ?>">
@@ -261,16 +269,28 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         <?= isset($error_messages['destination_zone']) ? '<span class="error">' . $error_messages['destination_zone'] . '</span>' : '' ?>
                     </div>
 
-                    <!-- Courier input -->
-                    <div class="courier-input">
-                        <label for="courier">Courier</label>
-                        <select name="courier" id="courier">
-                            <option value="">Select Courier</option>
-                            <?php foreach ($couriers as $courier): ?>
-                                <option value="<?= $courier['courier_id'] ?>" <?= isset($courier) && $courier == $courier['courier_id'] ? 'selected' : '' ?>><?= htmlspecialchars($courier['name']) ?></option>
+                    <div class="delivery-company-input">
+                        <label for="fk_delivery_company_id">Delivery Company</label>
+                        <select name="fk_delivery_company_id" id="fk_delivery_company_id" onchange="fetchCouriers()">
+                            <option value="">Select Delivery Company</option>
+                            <?php foreach ($deliverycompanies as $company): ?>
+                                <option value="<?= $company['delivery_company_id'] ?>"><?= htmlspecialchars($company['company_name']) ?> <span><?= htmlspecialchars($company['base_rate']) ?> $ per <?= htmlspecialchars($company['weight_factor']) ?></span></option>
                             <?php endforeach; ?>
                         </select>
-                        <?= isset($error_messages['courier']) ? '<span class="error">' . $error_messages['courier'] . '</span>' : '' ?>
+                        <?= isset($error_messages['fk_delivery_company_id']) ? '<span class="error">' . $error_messages['fk_delivery_company_id'] . '</span>' : '' ?>
+                    </div>
+
+                    <div class="courier-input">
+                        <label for="courier_id">Courier</label>
+                        <select name="courier_id" id="courier_id" required>
+                            <option value="">Select a Courier</option>
+                            <?php foreach ($couriers as $courier): ?>
+                                <option value="<?= $courier['courier_id'] ?>">
+                                    <?= htmlspecialchars($courier['first_name'] . ' ' . $courier['last_name'] . ' (' . $courier['company_name'] . ')') ?>
+                                </option>
+                            <?php endforeach; ?>
+                        </select>
+                        <?= isset($error_messages['courier_id']) ? '<span class="error">' . $error_messages['courier_id'] . '</span>' : '' ?>
                     </div>
 
                     <!-- Shipping port input -->
@@ -288,7 +308,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                 <!-- Submit button -->
                 <div class="form-buttons">
-                    <button type="submit" class="btn" class="submit-btn">Submit</button>
+                    <button type="submit" class="btn submit-btn">Submit</button>
                 </div>
             </div>
         </form>
