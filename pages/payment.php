@@ -1,7 +1,7 @@
 <?php
 session_start();
 require_once 'db_connection.php';
-require_once '../src/Notifications/EmailNotifier.php';
+
 
 // Check if user is logged in
 if (!isset($_SESSION['user_id'])) {
@@ -23,18 +23,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['booking_id'])) {
 
         // Get the total cost from the session
         $totalCost = $_SESSION['current_booking']['totalCostNGN'];
-        $notifier = new ShipSmart\Notifications\EmailNotifier();
 
-        // Send order confirmation
-        $notifier->sendOrderConfirmation(
-            $customerEmail, 
-            $customerName, 
-            $orderId, 
-            [
-                'Shipping Method' => $shippingMethod,
-                'Total Cost' => '₦' . number_format($totalCost, 2)
-            ]
-        );
         // Redirect to the payment confirmation page with the total cost
         header('Location: paymentConfirmation.php?totalCost=' . $totalCost);
         exit();

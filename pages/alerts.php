@@ -29,6 +29,12 @@ if (isset($_GET['mark_read'])) {
         die("Error marking alert as read: " . htmlspecialchars($e->getMessage()));
     }
 }
+function addTrackingAlert($pdo, $userId, $alertMessage)
+{
+    // Insert the alert into the database
+    $stmt = $pdo->prepare("INSERT INTO TrackingAlerts (user_id, alert_message, is_read) VALUES (?, ?, 0)");
+    $stmt->execute([$userId, $alertMessage]);
+}
 ?>
 
 <!DOCTYPE html>
