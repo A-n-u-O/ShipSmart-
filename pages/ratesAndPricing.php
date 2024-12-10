@@ -94,37 +94,39 @@ try {
 
 <body>
     <?php include '../Views/navbar.php'; ?> <!-- Include the reusable navbar -->
+    <main>
+        <h1> Rates </h1>
 
-    <h1>Shipping Rates Calculator</h1>
+        <div id="results">
+            <h2>Shipping Details</h2>
+            <p><strong>Delivery Company:</strong> <?= htmlspecialchars($courier['company_name']); ?></p>            
+            <p><strong>Item Weight:</strong> <?= htmlspecialchars($item_weight); ?> kg</p>
+            <h3>Shipping Port Details</h3>
+            <p><strong>Shipping Port:</strong> <?= htmlspecialchars($port_details['port_name'] ?? 'Unknown'); ?>
+                (<?= htmlspecialchars($port_details['location'] ?? 'Unknown'); ?>)
+            </p>
 
-    <div id="results">
-        <h2>Shipping Details</h2>
-        <p><strong>Courier:</strong> <img src="<?= htmlspecialchars($courier['logo'] ?? 'default_logo.png') ?>" alt="<?= htmlspecialchars($courier['company_name']) ?> " width="50"> <?= htmlspecialchars($courier['first_name'] . ' ' . $courier['last_name']); ?></p>
-        <p><strong>Delivery Company:</strong> <?= htmlspecialchars($courier['company_name']); ?></p>
-        <p><strong>Item Weight:</strong> <?= htmlspecialchars($item_weight); ?> kg</p>
+            <h3>Cost Breakdown</h3>
+            <ul>
+                <li><strong>Base Rate:</strong> $<?= number_format($baseRate, 2); ?></li>
+                <li><strong>Weight Factor:</strong> <?= number_format($weightFactor, 2); ?> kg</li>
+                <li><strong>Weight of Item:</strong> <?= htmlspecialchars($item_weight); ?> kg</li>
+                <li><strong>Weight Cost:</strong> $<?= number_format($item_weight * $weightFactor, 2); ?></li>
+            </ul>
 
-        <h3>Cost Breakdown</h3>
-        <ul>
-            <li><strong>Base Rate:</strong> $<?= number_format($baseRate, 2); ?></li>
-            <li><strong>Weight Factor:</strong> $<?= number_format($weightFactor, 2); ?> per kg</li>
-            <li><strong>Weight of Item:</strong> <?= htmlspecialchars($item_weight); ?> kg</li>
-            <li><strong>Weight Cost:</strong> $<?= number_format($item_weight * $weightFactor, 2); ?></li>
-        </ul>
+            <p><strong>Total Cost:</strong>
+                $<?= number_format($totalCostUSD, 2); ?> (₦<?= number_format($totalCostNGN, 2); ?>)
+            </p>
 
-        <p><strong>Total Cost:</strong>
-            $<?= number_format($totalCostUSD, 2); ?> (₦<?= number_format($totalCostNGN, 2); ?>)
-        </p>
 
-        <h3>Shipping Port Details</h3>
-        <p><strong>Shipping Port:</strong> <?= htmlspecialchars($port_details['port_name'] ?? 'Unknown'); ?>
-            (<?= htmlspecialchars($port_details['location'] ?? 'Unknown'); ?>)
-        </p>
-    </div>
+        </div>
 
-    <!-- Button to proceed to payment -->
-    <form method="POST" action="payment.php">
-        <button type="submit">Proceed to Payment</button>
-    </form>
+        <!-- Button to proceed to payment -->
+        <form method="POST" action="payment.php">
+            <button type="submit">Proceed to Payment</button>
+        </form>
+    </main>
+
 
     <script src="../js/ratesAndPricing.js"></script> <!-- Include JavaScript file -->
 </body>

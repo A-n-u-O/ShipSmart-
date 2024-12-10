@@ -205,7 +205,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <?php unset($_SESSION['error_message']); ?> <!-- Clear error message after displaying -->
         <?php endif; ?>
 
-        <form method="POST" action="schedulePickup.php">
+        <form class="scheduling-form" method="POST" action="schedulePickup.php">
             <div class="inputs">
                 <div class="form-input">
                     <!-- Pickup date input -->

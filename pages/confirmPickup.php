@@ -117,7 +117,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <label><?= ucfirst(str_replace('_', ' ', $key)) ?></label>
                     <?php if ($key === 'logo'): ?>
                         <p>
-                            <img class="company-logo" src="<?= htmlspecialchars($value) ?>" alt="<?= htmlspecialchars($pickup['company_name']) ?> logo" width="50">
+                            <img class="company-logo" src="<?= htmlspecialchars($value) ?>" alt="<?= htmlspecialchars($pickup['company_name']) ?>" width="50">
                             <?= htmlspecialchars($pickup['courier_name']) ?>
                         </p>
                     <?php else: ?>

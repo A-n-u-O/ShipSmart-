@@ -3,18 +3,20 @@ body {
   font-family: Arial, sans-serif;
   background-color: #f9f9f9;
   color: #333;
-  margin: 0; /* Reset default margins */
+  margin-left: 300px; /* Account for the navbar width */
   padding: 0;
 }
 
-.container {
-  margin-left: 300px; /* Account for the navbar width */
+main {
   padding: 20px;
   box-sizing: border-box; /* Include padding in width calculations */
+
 }
 
 /* Headings */
-h1, h2, h3 {
+h1,
+h2,
+h3 {
   margin: 0 0 15px;
   color: #1a73e8;
   text-align: center;
@@ -39,7 +41,6 @@ h3 {
   padding: 20px;
   border-radius: 8px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  margin: 20px auto;
   width: calc(100% - 40px); /* Responsive width */
   max-width: 800px;
 }
@@ -90,7 +91,8 @@ form {
   max-width: 400px;
 }
 
-input, select {
+input,
+select {
   padding: 10px;
   font-size: 14px;
   border: 1px solid #ccc;
@@ -101,23 +103,23 @@ input, select {
 /* Responsive Styles */
 @media (max-width: 768px) {
   .container {
-      margin-left: 0; /* Remove margin for small screens */
+    margin-left: 0; /* Remove margin for small screens */
   }
 
   h1 {
-      font-size: 24px;
+    font-size: 24px;
   }
 
   #results {
-      width: 100%;
+    width: 100%;
   }
 
   form {
-      width: 100%;
+    width: 100%;
   }
 
   button {
-      width: auto;
+    width: auto;
   }
 }
 

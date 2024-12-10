@@ -58,7 +58,7 @@ try {
 <body>
 
     <main class="scheduled-pickups">
-        <h1>Schedule Pickup > Your Scheduled Pickups</h1>
+        <h1> Your Scheduled Pickups</h1>
 
         <?php if (!empty($pickups)): ?>
             <div class="pickup-list">

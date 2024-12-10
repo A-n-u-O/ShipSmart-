@@ -1,6 +1,7 @@
 <?php
 session_start();
 require_once 'db_connection.php';
+require_once '../src/Notifications/EmailNotifier.php';
 
 // Check if user is logged in
 if (!isset($_SESSION['user_id'])) {
@@ -12,6 +13,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['booking_id'])) {
     $booking_id = $_POST['booking_id'];
 
     try {
+        // Update the booking status to 'In Progress'
         $stmt = $pdo->prepare("
             UPDATE Bookings 
             SET status = 'In Progress' 
@@ -19,13 +21,26 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['booking_id'])) {
         ");
         $stmt->execute([$booking_id, $_SESSION['user_id']]);
 
-        $_SESSION['success_message'] = "Payment confirmed! Booking status updated to 'In Progress'.";
+        // Get the total cost from the session
+        $totalCost = $_SESSION['current_booking']['totalCostNGN'];
+        $notifier = new ShipSmart\Notifications\EmailNotifier();
+
+        // Send order confirmation
+        $notifier->sendOrderConfirmation(
+            $customerEmail, 
+            $customerName, 
+            $orderId, 
+            [
+                'Shipping Method' => $shippingMethod,
+                'Total Cost' => '₦' . number_format($totalCost, 2)
+            ]
+        );
+        // Redirect to the payment confirmation page with the total cost
+        header('Location: paymentConfirmation.php?totalCost=' . $totalCost);
+        exit();
     } catch (Exception $e) {
         $_SESSION['error_message'] = "Failed to update booking status: " . $e->getMessage();
     }
-
-    header('Location: manageBookings.php');
-    exit();
 }
 ?>
 <!DOCTYPE html>
@@ -84,11 +99,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['booking_id'])) {
                     <div id="amountError" class="error"></div>
                 </div>
 
-                <form action="paymentConfirmation.php" method="POST"  class="payment-btn">
-                    <input type="hidden" name="booking_id" value="<?= htmlspecialchars($booking['booking_id']); ?>">
-                    <button type="submit">Make Payment</button>
-                </form>
+                <form action="paymentConfirmation.php" method="POST" class="payment-btn">
+                <input type="hidden" id="totalCost" name="totalCost" value="<?= htmlspecialchars($totalCost); ?>">
+                <input type="hidden" name="booking_id" value="<?= htmlspecialchars($booking['booking_id']); ?>">
 
+                <button type="submit">Make Payment</button>
+                </form>
             </form>
         </div>
     </main>
